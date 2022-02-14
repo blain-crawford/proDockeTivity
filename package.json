@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --progress",
+    "watch": "webpack --progress --watch",
+    "server": "webpack-dev-server --open --hot"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blain-crawford/proDockeTivity.git",
-    "build": "webpack --progress -p",
-    "watch": "webpack --progress --watch",
-    "server": "webpack-dev-server --open --hot"
+    "url": "git+https://github.com/blain-crawford/proDockeTivity.git"
   },
   "author": "",
   "license": "ISC",
