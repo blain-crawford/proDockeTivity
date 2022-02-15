@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>proDockeTivity</title>
 </head>
-<body>
-  <div class="invisible" id="todo-form">
+<body class="tint">
+  <div id="todo-form">
     <div class="form-topper">
       <div class="task-label"><h2>Enter Task</h2></div>
       <div id="closing-button">x</div>
     </div>
       <div id="title-div">
         <label for="title-input">Title</label>
-        <input id="title-input" type='text'></input>
+        <textarea id="title-input" type='text'></textarea>
       </div>
       <div id="notes-div">
         <label for="notes-input">Notes</label>
@@ -25,9 +25,10 @@
         <label for="deadline-input">Deadline</label>
         <input id="deadline-input" type='date'></input>
       </div>
+      <div id="line"></div>
       <div id="form-footer">
-        <button class="form-button" id="cancel">Cancel</button>
-        <button class="form-button" id="save">Save</button>
+        <div class="form-button" id="cancel">Cancel</div>
+        <div class="form-button" id="save">Save</div>
       </div>
     </div>
   </div>

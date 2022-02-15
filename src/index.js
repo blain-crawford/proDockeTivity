@@ -1,5 +1,6 @@
 import './styles.css';
 import { compareAsc, format } from 'date-fns';
+const formClosingButton = document.querySelector("#closing-button");
 
 class toDo {
   constructor(description, notes, dueDate, priority, project) {
@@ -10,6 +11,18 @@ class toDo {
     this.project = project;
   }
 };
+
+const hideForm = (() => {
+  const formClosingButton = document.querySelector("#closing-button");
+  const toDoForm = document.querySelector('#todo-form')
+  
+  const closeForm = () => {
+    toDoForm.classList.add('invisible');
+    document.body.classList.remove('tint')
+  };
+
+  formClosingButton.addEventListener('click', closeForm, false);
+})();
 
 const toDoList = [];
 
