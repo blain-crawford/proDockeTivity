@@ -1,3 +1,16 @@
-h1 {
-  color: blue;
+#todo-form {
+  height: 350px;
+  width: 250px;
+  border: 5px solid rgb(51, 9, 9);
+  border-radius: 5%;
+  color: rgb(51, 9, 9);
+  font-family: librarian;
+  padding: 10px 10px;
+  margin: 0 auto;
+  z-index: 1;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(195, 191, 150);
 }
