@@ -1,16 +1,27 @@
 import './styles.css';
 import { compareAsc, format } from 'date-fns';
-const formClosingButton = document.querySelector("#closing-button");
+const toDoList = [];
+const titleInput = document.querySelector("#title-input")
+const notesInput = document.querySelector("#notes-input")
+const deadLineInput = document.querySelector("#deadline-input")
+const addButton = document.getElementById('add');
 
-class toDo {
-  constructor(description, notes, dueDate, priority, project) {
+
+class ToDoItem {
+  constructor(description, notes, deadLine) {
     this.description = description;
     this.notes = notes;
-    this.dueDate = dueDate;
-    this.priority = priority;
-    this.project = project;
+    this.deadLine = deadLine;
   }
 };
+
+const createToDoItem = function (title, notes, deadline) {
+  const toDo = new ToDoItem(titleInput.value, notesInput.value, deadLineInput.value);
+  toDoList.push(toDo);
+  console.log(toDoList);
+};
+
+addButton.addEventListener('click', createToDoItem, false);
 
 const hideForm = (() => {
   const formClosingButton = document.querySelector("#closing-button");
@@ -24,14 +35,7 @@ const hideForm = (() => {
   formClosingButton.addEventListener('click', closeForm, false);
 })();
 
-const toDoList = [];
 
-
-// const dates = [
-//   `Due Date: ${format(new Date(1995, 6, 2), 'yyyy-MM-dd')}`,
-//   `Due Date: ${format(new Date(1987, 1, 11), 'yyyy-MM-dd')}`,
-//   `Due Date: ${format(new Date(1989, 6, 10), 'yyyy-MM-dd')}`
-// ];
 
 // const printDates = (() => {
 //   dates.forEach((date) => {
