@@ -1,3 +1,37 @@
+html, 
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#page-header {
+  background: rgb(148,36,36);
+  background: linear-gradient(105deg, rgba(148,36,36,0.9262079831932774) 16%, rgba(241,24,10,0.758140756302521) 97%);
+  margin-top: 0;
+  padding: 10px;
+}
+
+#page-header h1 {
+  color: white;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#page-header h2 {
+  margin-left: auto;
+  text-align: right;
+  margin:0 auto;
+  color: white;
+}
+
+#side-menu {
+  background: rgb(148,36,36);
+  background: linear-gradient(105deg, rgba(148,36,36,0.9262079831932774) 16%, rgba(241,24,10,0.758140756302521) 97%);
+  height: 100%;
+  width: 15%;
+}
+
 .tint {
   background:
     linear-gradient(
