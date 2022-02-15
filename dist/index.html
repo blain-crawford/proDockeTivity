@@ -8,8 +8,27 @@
 </head>
 <body>
   <div class="invisible" id="todo-form">
-    <div class="form-topper"><div id="closing-button">x</div></div>
-   
+    <div class="form-topper">
+      <div class="task-label"><h2>Enter Task</h2></div>
+      <div id="closing-button">x</div>
+    </div>
+      <div id="title-div">
+        <label for="title-input">Title</label>
+        <input id="title-input" type='text'></input>
+      </div>
+      <div id="notes-div">
+        <label for="notes-input">Notes</label>
+        <textarea id="notes-input" name="notes-input" rows="7" cols="30">
+          </textarea>
+      </div>
+      <div id="deadline-div">
+        <label for="deadline-input">Deadline</label>
+        <input id="deadline-input" type='date'></input>
+      </div>
+      <div id="form-footer">
+        <button class="form-button" id="cancel">Cancel</button>
+        <button class="form-button" id="save">Save</button>
+      </div>
     </div>
   </div>
   <script src="./main.js"></script>

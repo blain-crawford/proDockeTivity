@@ -1,11 +1,10 @@
 #todo-form {
-  height: 350px;
-  width: 250px;
+  height: 500px;
+  width: 350px;
   border: 5px solid rgb(51, 9, 9);
-  border-radius: 5%;
+  border-radius: 2%;
   color: rgb(51, 9, 9);
   font-family: librarian;
-  padding: 10px 10px;
   margin: 0 auto;
   z-index: 1;
   position: fixed;
@@ -13,4 +12,72 @@
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: rgb(195, 191, 150);
+}
+
+.form-topper {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 2%;
+  width: 100%;
+  height: 15%;
+}
+
+.task-label {
+  padding: 0;
+}
+
+.task-label h2 {
+  font-size: 30px;
+}
+
+#closing-button {
+  line-height: 5px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+#title-div {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 20px auto 20px auto;
+  font-size: 20px;
+}
+
+#title-input {
+  height: 30px;
+}
+
+#notes-div {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 20px auto 20px auto;
+  font-size: 20px;
+}
+
+#deadline-div {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 20px auto 20px auto;
+  font-size: 20px;
+}
+
+#deadline-input {
+  height: 30px;
+}
+
+#form-footer {
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.form-button {
+  height: 40px;
+  width: 80px;
+  border-radius: 2%;
 }
