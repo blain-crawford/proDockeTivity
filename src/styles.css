@@ -116,8 +116,25 @@ body {
 #todo-lists {
   width: 85%;
   border-left: 1px solid red;
-  background-color: rgb(180, 177, 177);
+  background-color: rgb(231, 227, 227);
   overflow: scroll;
+}
+
+#list-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(34, 26, 26);
+  gap: 20px;
+  font-size: 25px;
+}
+
+#list-line {
+  margin-top: 20px;
+  width: 60%;
+  border-bottom: 2px solid rgb(173, 167, 167);
+  margin: 23px auto;
+  opacity: .6;
 }
 
 #projects {
@@ -331,7 +348,6 @@ body {
 
   #todo-lists {
     width: 100%;
-    background-color: rgb(180, 177, 177);
   }
 
   .menu-dropper {
