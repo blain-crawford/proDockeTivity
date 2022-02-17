@@ -65,6 +65,17 @@ body {
   align-items: center;
 }
 
+#timelines {
+  width: 100%;
+  margin: 20px auto;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
 .timeline-div {
   width: 80%;
   background-color: white;
@@ -72,7 +83,8 @@ body {
   border-radius: 5px;
   text-align: center;
   padding: 10px;
-  margin: 25px;
+  margin-top: 12.5px;
+  margin-bottom: 12.5px;
   cursor: pointer;
 }
 
@@ -80,6 +92,10 @@ body {
   width: 85%;
   border-left: 1px solid red;
   background-color: rgb(180, 177, 177);
+}
+
+#projects {
+
 }
 
 .tint {
