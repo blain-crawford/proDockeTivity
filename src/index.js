@@ -5,6 +5,9 @@ const titleInput = document.querySelector("#title-input")
 const notesInput = document.querySelector("#notes-input")
 const deadLineInput = document.querySelector("#deadline-input")
 const addButton = document.getElementById('add');
+const pageHeader = document.querySelector('#page-header');
+const pageBody = document.querySelector('#page-body');
+
 
 
 class ToDoItem {
@@ -29,13 +32,12 @@ const hideForm = (() => {
   
   const closeForm = () => {
     toDoForm.classList.add('invisible');
-    document.body.classList.remove('tint')
+    pageBody.classList.remove('tint');
+    pageHeader.classList.remove('tint');
   };
 
   formClosingButton.addEventListener('click', closeForm, false);
 })();
-
-
 
 // const printDates = (() => {
 //   dates.forEach((date) => {
