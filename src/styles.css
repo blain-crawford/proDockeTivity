@@ -22,7 +22,7 @@ body {
   text-align: right;
   display: flex;
   align-items: center;
-  flex-direction: space-between;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
@@ -52,13 +52,13 @@ body {
 
 #page-body {
   display: flex;
-  height: 89vh;
+  height: 91vh;
 }
 
 #side-menu {
   background-color: rgb(246, 246, 243);
   height: 100%;
-  width: 15%;
+  width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -68,7 +68,6 @@ body {
 #timelines {
   width: 100%;
   margin: 20px auto;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -95,7 +94,47 @@ body {
 }
 
 #projects {
+  border: 1px solid red;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+#projects-title {
+  background: rgb(148,36,36);
+  background: linear-gradient(105deg, rgba(148,36,36,0.9262079831932774) 16%, rgba(241,24,10,0.758140756302521) 97%);
+  color: white;
+  width: 100%;
+  height: 40px;
+  line-height: 0px;
+  padding: 0;
+  text-align: center;
+}
+
+#projects-line {
+  margin-top: 20px;
+  width: 90%;
+  border-top: .5px solid rgb(173, 167, 167);
+  margin: 23px auto;
+  opacity: .6;
+}
+
+.project {
+  width: 80%;
+  background-color: white;
+  border: 1px solid rgb(107, 102, 102);
+  border-radius: 5px;
+  text-align: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.project-name p {
+  width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tint {
