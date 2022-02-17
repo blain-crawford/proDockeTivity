@@ -3,6 +3,9 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(246, 246, 243);
 }
 
 #page-header {
@@ -10,6 +13,16 @@ body {
   background: linear-gradient(105deg, rgba(148,36,36,0.9262079831932774) 16%, rgba(241,24,10,0.758140756302521) 97%);
   margin-top: 0;
   padding: 10px;
+}
+
+#title-menu-drop {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.menu-dropper {
+  visibility: hidden;
 }
 
 #page-header h1 {
@@ -30,16 +43,19 @@ body {
   color: white;
   --fa-animation-duration: 2.1s;
   --fa-bounce-land-scale-x: 1.5;
+  --fa-animation-iteration-count: 1;
 }
 
 .logo-mid {
   color: white;
   --fa-animation-duration: 2.1s;
+  --fa-animation-iteration-count: 1;
 }
 
 .logo-large {
   color: white;
   --fa-animation-duration: 2.1s;
+  --fa-animation-iteration-count: 1;
 }
 
 #page-header h2 {
@@ -63,6 +79,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  overflow: scroll;
 }
 
 #timelines {
@@ -80,21 +97,30 @@ body {
   background-color: white;
   border: 1px solid rgb(107, 102, 102);
   border-radius: 5px;
-  text-align: center;
   padding: 10px;
   margin-top: 12.5px;
   margin-bottom: 12.5px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: .5s ease-in-out;
+}
+
+.timeline-div:hover {
+  border: 1px solid rgb(134, 8, 8);
+  background-color: rgb(246, 242, 242);
+  box-shadow: 7px -2px 17px -7px rgba(0,0,0,0.38);
 }
 
 #todo-lists {
   width: 85%;
   border-left: 1px solid red;
   background-color: rgb(180, 177, 177);
+  overflow: scroll;
 }
 
 #projects {
-  border: 1px solid red;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -125,16 +151,28 @@ body {
   background-color: white;
   border: 1px solid rgb(107, 102, 102);
   border-radius: 5px;
-  text-align: center;
-  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 10px;
   cursor: pointer;
+  transition: .5s ease-in-out;
 }
 
-.project-name p {
+.project:hover {
+  border: 1px solid rgb(134, 8, 8);
+  background-color: rgb(246, 242, 242);
+  box-shadow: 7px -2px 17px -7px rgba(0,0,0,0.38);
+
+}
+
+.project-name {
   width: 60%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-left: 5px;
 }
 
 .tint {
@@ -228,6 +266,7 @@ body {
   max-height: 100px;
   min-width: 98%;
   min-height: 100px;
+  text-align: left;
 }
 
 #deadline-div {
@@ -281,4 +320,74 @@ body {
   font-size: 25px;
   background-color: white;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 1000px) {
+  #side-menu {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+
+  #todo-lists {
+    width: 100%;
+    background-color: rgb(180, 177, 177);
+  }
+
+  .menu-dropper {
+    visibility: visible;
+    color: white;
+    border: 3px solid white;
+    border-radius: 5px;
+    padding: 15px 5px;
+    cursor: pointer;
+  }
+
+ 
+}
+
+@media only screen and (max-width: 330px) {
+  #page-header h1 {
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 25px;
+  }
+
+  .logo-small {
+    color: white;
+    --fa-animation-duration: 2.1s;
+    --fa-bounce-land-scale-x: 1.5;
+    --fa-animation-iteration-count: 1;
+    font-size: 15px;
+  }
+  
+  .logo-mid {
+    color: white;
+    --fa-animation-duration: 2.1s;
+    --fa-animation-iteration-count: 1;
+    font-size: 20px;
+  }
+  
+  .logo-large {
+    color: white;
+    --fa-animation-duration: 2.1s;
+    --fa-animation-iteration-count: 1;
+    font-size: 25px;
+  }
+
+  #todo-form {
+    width: 240px;
+    border-radius: 2%;
+    color: rgb(107, 102, 102);
+    box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
+    font-family: librarian;
+    margin: 0 auto;
+    z-index: 1;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(230, 229, 224);
+  }
 }

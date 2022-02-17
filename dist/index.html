@@ -9,7 +9,10 @@
 </head>
 <body >
   <div id="page-header" class="tint">
-    <h1>proDockeTivity!</h1>
+    <div id="title-menu-drop">
+      <i class="fa-solid fa-bars fa-xl menu-dropper"></i>
+      <h1>proDockeTivity!</h1>
+    </div>
     <div id="logo-and-statement">
       <div id="logo">
         <i class="fa-solid fa-square-check fa-lg fa-bounce logo-small"></i>
@@ -33,11 +36,26 @@
   <div id="page-body" class="tint">
     <div id="side-menu">
         <div id="timelines">
-          <div class="timeline-div">All</div>
-          <div class="timeline-div">Week</div>
-          <div class="timeline-div">Month</div>
-          <div class="timeline-div">Most Important</div>
-          <div class="timeline-div">Completed</div>
+          <div class="timeline-div">
+            <i class="fa-solid fa-calendar fa-lg"></i>
+            <span>All</span>
+          </div>
+          <div class="timeline-div">
+            <i class="fa-solid fa-calendar-week fa-lg"></i>
+            <span>Week</span>
+          </div>
+          <div class="timeline-div">
+            <i class="fa-solid fa-calendar-days fa-lg"></i>
+            <span>Month</span>
+          </div>
+          <div class="timeline-div">
+            <i class="fa-solid fa-triangle-exclamation fa-lg"></i>
+            <span>Most Important</span>
+          </div>
+          <div class="timeline-div">
+            <i class="fa-solid fa-square-check fa-lg"></i>
+            <span>Completed</span>
+          </div>
       </div>
       <div id="projects">
         <div id="projects-title">
@@ -45,9 +63,28 @@
         </div>
         <div id="projects-line"></div>
         <div class="project">
+          <i class="fa-solid fa-tag fa-lg"></i>
           <div class="project-name">
-            <p>This is the project's name!</p>
+            <span>This is the project's name!</span>
           </div>
+          <i class="fa-solid fa-pen-to-square"></i>
+          <i class="fa-solid fa-trash"></i>
+        </div>
+        <div class="project">
+          <i class="fa-solid fa-tag fa-lg"></i>
+          <div class="project-name">
+            <span>Kiss Gams!</span>
+          </div>
+          <i class="fa-solid fa-pen-to-square"></i>
+          <i class="fa-solid fa-trash"></i>
+        </div>
+        <div class="project">
+          <i class="fa-solid fa-tag fa-lg"></i>
+          <div class="project-name">
+            <span>Kiss Blams!</span>
+          </div>
+          <i class="fa-solid fa-pen-to-square"></i>
+          <i class="fa-solid fa-trash"></i>
         </div>
         <div id="projects-line"></div>
       </div>
@@ -65,8 +102,7 @@
       </div>
       <div id="notes-div">
         <label for="notes-input">Notes</label>
-        <textarea id="notes-input" name="notes-input" rows="7" cols="30">
-          </textarea>
+        <textarea id="notes-input" name="notes-input"></textarea>
       </div>
       <div id="deadline-div">
         <label for="deadline-input">Deadline</label>

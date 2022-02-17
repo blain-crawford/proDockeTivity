@@ -4,6 +4,7 @@ const toDoList = [];
 const titleInput = document.querySelector("#title-input")
 const notesInput = document.querySelector("#notes-input")
 const deadLineInput = document.querySelector("#deadline-input")
+const priorityInput = document.querySelector('#priority-input')
 const addButton = document.getElementById('add');
 const pageHeader = document.querySelector('#page-header');
 const pageBody = document.querySelector('#page-body');
@@ -11,15 +12,16 @@ const pageBody = document.querySelector('#page-body');
 
 
 class ToDoItem {
-  constructor(description, notes, deadLine) {
+  constructor(description, notes, deadLine, priority) {
     this.description = description;
     this.notes = notes;
     this.deadLine = deadLine;
+    this.priority = priority;
   }
 };
 
-const createToDoItem = function (title, notes, deadline) {
-  const toDo = new ToDoItem(titleInput.value, notesInput.value, deadLineInput.value);
+const createToDoItem = function () {
+  const toDo = new ToDoItem(titleInput.value, notesInput.value, deadLineInput.value, priorityInput.value);
   toDoList.push(toDo);
   console.log(toDoList);
 };
