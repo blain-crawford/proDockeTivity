@@ -130,11 +130,39 @@ body {
 }
 
 #list-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 20px;
   width: 60%;
   border-bottom: 2px solid rgb(173, 167, 167);
   margin: 23px auto;
   opacity: .6;
+}
+
+.todo {
+  background-color: rgb(251, 242, 242);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 60%;
+  border: 1px solid rgb(173, 167, 167);
+  border-radius: 5px;
+  margin: 23px auto;
+  padding: 5px;
+}
+
+.checkbox-and-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-icons-for-editing {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 #projects {
@@ -145,6 +173,9 @@ body {
 }
 
 #projects-title {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   background: rgb(148,36,36);
   background: linear-gradient(105deg, rgba(148,36,36,0.9262079831932774) 16%, rgba(241,24,10,0.758140756302521) 97%);
   color: white;
@@ -346,6 +377,14 @@ body {
     height: 0;
   }
 
+  .show-side-menu {
+    visibility: visible !important;
+    height: 100% !important;
+    width: 300px !important;
+    z-index: 1 !important;
+    position: absolute;
+  }
+
   #todo-lists {
     width: 100%;
   }
@@ -378,6 +417,23 @@ body {
     font-size: 15px;
   }
   
+  #todo-form {
+    width: 240px;
+    border-radius: 2%;
+    color: rgb(107, 102, 102);
+    box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
+    font-family: librarian;
+    margin: 0 auto;
+    z-index: 1;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(230, 229, 224);
+  }
+}
+
+@media only screen and (max-width: 500px) {
   .logo-mid {
     color: white;
     --fa-animation-duration: 2.1s;
@@ -392,18 +448,28 @@ body {
     font-size: 25px;
   }
 
-  #todo-form {
-    width: 240px;
-    border-radius: 2%;
-    color: rgb(107, 102, 102);
-    box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
-    font-family: librarian;
-    margin: 0 auto;
-    z-index: 1;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(230, 229, 224);
+  .todo {
+    background-color: rgb(251, 242, 242);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 70%;
+    border: 1px solid rgb(173, 167, 167);
+    border-radius: 5px;
+    margin: 23px auto;
+    padding: 5px;
+  }
+  
+  .checkbox-and-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .date-icons-for-editing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
 }

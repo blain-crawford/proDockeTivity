@@ -8,8 +8,13 @@ const priorityInput = document.querySelector('#priority-input')
 const addButton = document.getElementById('add');
 const pageHeader = document.querySelector('#page-header');
 const pageBody = document.querySelector('#page-body');
+const menuDropper = document.querySelector('.menu-dropper')
+const sideMenu = document.querySelector('#side-menu');
+const todoListsDisplay = document.querySelector('#todo-lists');
 
-
+/**
+ * checks size of window for sideMenu placement
+ */
 
 class ToDoItem {
   constructor(description, notes, deadLine, priority) {
@@ -40,6 +45,28 @@ const hideForm = (() => {
 
   formClosingButton.addEventListener('click', closeForm, false);
 })();
+
+const removeTint = (() => {
+    if(window.onresize > 1000) {
+    sideMenu.classList.remove('show-side-menu');
+    todoListsDisplay.classList.remove('tint')
+    pageHeader.classList.remove('tint');
+  };
+})();
+
+const showSideMenu = () => {
+
+
+
+  sideMenu.classList.toggle('show-side-menu');
+  todoListsDisplay.classList.toggle('tint')
+  pageHeader.classList.toggle('tint');
+};
+
+menuDropper.addEventListener('click', showSideMenu, false);
+
+
+
 
 // const printDates = (() => {
 //   dates.forEach((date) => {
