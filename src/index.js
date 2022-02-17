@@ -13,8 +13,15 @@ const sideMenu = document.querySelector('#side-menu');
 const todoListsDisplay = document.querySelector('#todo-lists');
 
 /**
- * checks size of window for sideMenu placement
+ * checks size of window for sideMenu placement/tent
  */
+ window.addEventListener('resize', () => {
+  if(window.innerWidth > 1000 && !pageBody.classList.contains('tint')) {
+    console.log(window.innerWidth);
+    todoListsDisplay.classList.remove('tint')
+    pageHeader.classList.remove('tint');
+  }
+});
 
 class ToDoItem {
   constructor(description, notes, deadLine, priority) {
@@ -46,17 +53,7 @@ const hideForm = (() => {
   formClosingButton.addEventListener('click', closeForm, false);
 })();
 
-const removeTint = (() => {
-    if(window.onresize > 1000) {
-    sideMenu.classList.remove('show-side-menu');
-    todoListsDisplay.classList.remove('tint')
-    pageHeader.classList.remove('tint');
-  };
-})();
-
 const showSideMenu = () => {
-
-
 
   sideMenu.classList.toggle('show-side-menu');
   todoListsDisplay.classList.toggle('tint')
