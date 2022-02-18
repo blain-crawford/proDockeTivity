@@ -120,6 +120,13 @@ body {
   overflow: scroll;
 }
 
+#todo-container {
+  width: 85%;
+  background-color: rgb(231, 227, 227);
+  overflow: scroll;
+  margin: 0 auto;
+}
+
 #list-name {
   display: flex;
   align-items: center;
@@ -405,6 +412,12 @@ body {
 
   #todo-lists {
     width: 100%;
+  }
+
+  #todo-container {
+    width: 110%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .menu-dropper {

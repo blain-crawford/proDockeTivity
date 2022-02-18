@@ -8,7 +8,6 @@ import { toDoForm, toDoList } from './forms';
  */
 toDoForm
 
-
 /**
  * checks size of window for sideMenu placement/removes tent
  */
