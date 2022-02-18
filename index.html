@@ -8,7 +8,7 @@
   <title>proDockeTivity</title>
 </head>
 <body >
-  <div id="page-header" class="tint">
+  <div id="page-header">
     <div id="title-menu-drop">
       <i class="fa-solid fa-bars fa-xl menu-dropper"></i>
       <h1>proDockeTivity!</h1>
@@ -32,7 +32,7 @@
       </div>
     </div>
   </div>
-  <div id="page-body" class="tint">
+  <div id="page-body">
     <div id="side-menu">
         <div id="timelines">
           <div class="timeline-div">
@@ -59,7 +59,7 @@
       <div id="projects">
         <div id="projects-title">
           <h2>Projects</h2>
-          <i class="fa-solid fa-plus fa-lg" style="border: 2px solid white; border-radius: 100%; padding: 10px 2.5px;"></i>
+          <i id="add-project" class="fa-solid fa-plus fa-lg" style="border: 2px solid white; border-radius: 100%; padding: 10px 2.5px;"></i>
         </div>
         <div id="projects-line"></div>
         <div class="project">
@@ -96,7 +96,7 @@
       </div>
       <div id="list-line">
         <h3>Things To Do  <span id="number-of-todos">(0)</span></h3>
-        <i class="fa-solid fa-plus fa-lg" style="border: 2px solid; border-radius: 100%; padding: 10px 2.5px;"></i>
+        <i id="add-todo" class="fa-solid fa-plus fa-lg" style="border: 2px solid; border-radius: 100%; padding: 10px 2.5px;"></i>
       </div>
       <div class="todo">
         <div class="checkbox-and-title">
@@ -112,7 +112,7 @@
       </div>
     </div>
   </div>
-  <div id="todo-form">
+  <div id="todo-form" class="invisible">
     <div class="form-topper">
       <div class="task-label"><h2>Enter Task</h2></div>
       <div id="closing-button">x</div>
@@ -131,7 +131,8 @@
       </div>
       <div id="priority-div">
         <label for="priority-input">Priority</label>
-        <select id="priority-input" type=''>
+        <select id="priority-input">
+          <option>Please Choose One</option>
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
