@@ -1,3 +1,6 @@
+'strict';
+import './styles.css';
+
 class ToDoItem {
   constructor(title, notes, deadLine, priority, project) {
     this.title = title;
@@ -5,6 +8,7 @@ class ToDoItem {
     this.deadLine = deadLine;
     this.priority = priority;
     // this.project = project.id
+    this.id = localStorage.length;
   }
 };
 
@@ -30,6 +34,7 @@ function storageAvailable (type) {
 const toDoList = [];
 
 const toDoForm = (() => {
+
   const pageBody = document.querySelector('#page-body');
   const pageHeader = document.querySelector('#page-header'); 
   const formClosingButton = document.querySelector("#closing-button");
@@ -61,14 +66,18 @@ const toDoForm = (() => {
   }
 
   const rePopulateToDoArray = (object) => {
-    while(toDoList.length >= 0) {
-      toDoList.pop();
+    if(toDoList.length > 0) {
+      while(toDoList.length > 0) {
+        toDoList.pop();
+      };
     }
 
-    for(let i = 0; i < object.length; i++) {
-      toDoList.push(object[i]);
+    for(const toDo in object) {
+      if(typeof object[toDo] === 'string') { 
+        toDoList.push(JSON.parse(object[toDo]))
+      }
     }
-    console.log(toDoList)
+    return {rePopulateToDoArray}
   }
 
   const createToDoItem = function () {
@@ -77,13 +86,13 @@ const toDoForm = (() => {
     closeForm();
     if(storageAvailable('localStorage')) {
       if(!localStorage.getItem(toDo.title)) {
-        localStorage.setItem(toDo.title, JSON.stringify(toDo));
+        localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
         rePopulateToDoArray(localStorage);
+        console.log(toDoList)
       }
     } else {
       alert('There is no local Storage here!')
     }
-    
   };
   
   formClosingButton.addEventListener('click', closeForm, false);
@@ -93,7 +102,29 @@ const toDoForm = (() => {
   return {toDoList};
 })();
 
+const populteThingsToDoOnPage = (() => {
+  toDoForm.rePopulateToDoArray(localStorage);
+
+  if(toDoList.length > 0) {
+    for(let i = 0; i < toDoList.length; i++) {
+      const toDoDiv = document.createElement('div');
+      const checkBox = document.createElement('i')
+      const toDoDivTitle = document.createElement('p');
+      const dateIconsForEditing = document.createElement('div');
+      const toDoDate = docuemnt.createElement('p');
+      const editSymbol = document.createElement('i');
+      const infoSymbol = documnent.createElement('i');
+      const trashCan = documnet.createElement('i')
+      
+      toDoDiv.classList.add('todo');
+      checkBox.classList.add('fa-regular fa-square fa-lg');
+      dateIconsForEditing.classList.add('')
+    }
+  }
+})();
+
 export{ toDoForm, toDoList }
+
 
 
 // if(localStorage.getItem('toDoList')) {
