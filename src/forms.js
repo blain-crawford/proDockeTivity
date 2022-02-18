@@ -36,13 +36,12 @@ function storageAvailable(type) {
 const clearThingsToDoBeforeRepopulation = () => {
   const toDoContainer = document.querySelector('#todo-container');
   toDoContainer.innerHTML = '';
-}
+};
 
-const addToDoListItmToThingsToDO = () => {
+const addToDoListItemToThingsToDo = () => {
   clearThingsToDoBeforeRepopulation();
   if (toDoList.length > 0) {
     for (let i = 0; i < toDoList.length; i++) {
-
       const toDoContainer = document.querySelector('#todo-container');
       const checkBoxAndTitle = document.createElement('div');
       const toDoDiv = document.createElement('div');
@@ -53,6 +52,9 @@ const addToDoListItmToThingsToDO = () => {
       const editSymbol = document.createElement('i');
       const infoSymbol = document.createElement('i');
       const trashCan = document.createElement('i');
+      const numberOfTodos = document.querySelector('#number-of-todos');
+  
+      console.log(toDoContainer.childElementCount);
 
       toDoDiv.classList.add('todo');
       checkBoxAndTitle.classList.add('checkbox-and-title');
@@ -62,6 +64,7 @@ const addToDoListItmToThingsToDO = () => {
       infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg');
       trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
 
+      numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`
       toDoDivTitle.innerText = toDoList[i].title;
       toDoDate.innerText = toDoList[i].deadLine;
       checkBoxAndTitle.appendChild(checkBox);
@@ -138,7 +141,7 @@ const toDoForm = (() => {
       if (!localStorage.getItem(toDo.title)) {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
         rePopulateToDoArray(localStorage);
-        addToDoListItmToThingsToDO();
+        addToDoListItemToThingsToDo();
         console.log(toDoList);
       }
     } else {
@@ -150,10 +153,10 @@ const toDoForm = (() => {
   addToDoButton.addEventListener('click', openTodoForm, false);
   toDoAddButton.addEventListener('click', createToDoItem, false);
 
-  return { toDoList };
+  return { toDoList, rePopulateToDoArray };
 })();
 
-export { toDoForm, toDoList };
+export { toDoForm, toDoList, addToDoListItemToThingsToDo };
 
 // if(localStorage.getItem('toDoList')) {
 //   localStorage.removeItem('toDoList');

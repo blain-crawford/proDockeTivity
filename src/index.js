@@ -1,6 +1,7 @@
+'strict';
 import './styles.css';
 import { compareAsc, format } from 'date-fns';
-import { toDoForm, toDoList } from './forms';
+import { toDoForm, toDoList, addToDoListItemToThingsToDo } from './forms';
 
 
 /**
@@ -35,6 +36,14 @@ const handleSideMenuAndTint = (() => {
   }
 
   menuDropper.addEventListener('click', showSideMenu, false);
+})();
+
+/**
+ * starts the document with locally stored toDo's present
+ */
+const autoPopulateThingsToDo = (() => {
+  toDoForm.rePopulateToDoArray(localStorage);
+  addToDoListItemToThingsToDo();
 })();
 
 
