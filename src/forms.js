@@ -56,6 +56,7 @@ const addToDoListItemToThingsToDo = () => {
   
       console.log(toDoContainer.childElementCount);
 
+      toDoDiv.id = toDoContainer.childElementCount;
       toDoDiv.classList.add('todo');
       checkBoxAndTitle.classList.add('checkbox-and-title');
       checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg');
