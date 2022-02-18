@@ -1,22 +1,12 @@
 class ToDoItem {
-  constructor(description, notes, deadLine, priority, project) {
-    this.description = description;
+  constructor(title, notes, deadLine, priority, project) {
+    this.title = title;
     this.notes = notes;
     this.deadLine = deadLine;
     this.priority = priority;
     // this.project = project.id
   }
 };
-
-// Storage.prototype.setObjs = function(key, toDoArray) {
-//   for (let i = 0; i < toDoArray.length; i++) {
-//     this.setItem(`${key}${i}`, JSON.stringify(toDoArray[i]));
-//   }
-// };
-
-// Storage.prototype.getObjs = function(key) {
-//   return JSON.parse(this.getItem(key));
-// }
 
 function storageAvailable (type) {
   let storage;
@@ -70,31 +60,46 @@ const toDoForm = (() => {
     priorityInput.value = 'Please Choose One';
   }
 
-  const createToDoItem = function () {
-    const toDo = new ToDoItem(titleInput.value, notesInput.value, deadLineInput.value, priorityInput.value);
-    toDoList.push(toDo);
-    clearToDoForm();
-    closeForm();
-
-    if(storageAvailable('localStorage')) {
-      if(localStorage.getItem('toDoList')) {
-        localStorage.removeItem('toDoList');
-        localStorage.setItem(`toDoList`, JSON.stringify(toDoList))
-        console.log(localStorage.length)
-      } else {
-        localStorage.setItem('toDoList', JSON.stringify(toDoList));
-      }
-    } else {
-        alert('There is no local Storage here!')
+  const rePopulateToDoArray = (object) => {
+    while(toDoList.length >= 0) {
+      toDoList.pop();
     }
 
-  };
+    for(let i = 0; i < object.length; i++) {
+      toDoList.push(object[i]);
+    }
+    console.log(toDoList)
+  }
 
+  const createToDoItem = function () {
+    const toDo = new ToDoItem(titleInput.value, notesInput.value, deadLineInput.value, priorityInput.value);
+    clearToDoForm();
+    closeForm();
+    if(storageAvailable('localStorage')) {
+      if(!localStorage.getItem(toDo.title)) {
+        localStorage.setItem(toDo.title, JSON.stringify(toDo));
+        rePopulateToDoArray(localStorage);
+      }
+    } else {
+      alert('There is no local Storage here!')
+    }
+    
+  };
+  
   formClosingButton.addEventListener('click', closeForm, false);
   addToDoButton.addEventListener('click', openTodoForm, false);
   toDoAddButton.addEventListener('click', createToDoItem, false);
-
+  
   return {toDoList};
 })();
 
 export{ toDoForm, toDoList }
+
+
+// if(localStorage.getItem('toDoList')) {
+//   localStorage.removeItem('toDoList');
+//   localStorage.setItem(`toDoList`, JSON.stringify(toDoList))
+//   console.log(localStorage.length)
+// } else {
+//   localStorage.setItem('toDoList', JSON.stringify(toDoList));
+// }
