@@ -38,7 +38,7 @@ const clearThingsToDoBeforeRepopulation = () => {
   toDoContainer.innerHTML = '';
 }
 
-const populteThingsToDoOnPage = () => {
+const addToDoListItmToThingsToDO = () => {
   clearThingsToDoBeforeRepopulation();
   if (toDoList.length > 0) {
     for (let i = 0; i < toDoList.length; i++) {
@@ -138,7 +138,7 @@ const toDoForm = (() => {
       if (!localStorage.getItem(toDo.title)) {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
         rePopulateToDoArray(localStorage);
-        populteThingsToDoOnPage();
+        addToDoListItmToThingsToDO();
         console.log(toDoList);
       }
     } else {
