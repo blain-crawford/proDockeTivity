@@ -25,6 +25,11 @@ const projectInteractions = (() => {
   }
 
   const createProjectOrganizers = (() => {
+    if(projectsArray.length > 0) {
+      while(projectsArray.length > 0) {
+        projectsArray.pop();
+      }
+    }
     if(projectList.length > 0) {
       projectList.forEach(project => {
         let projectOrganizer = new Project(project.innerText, []);
@@ -53,3 +58,4 @@ const projectInteractions = (() => {
 
 })();
 
+export { projectInteractions }

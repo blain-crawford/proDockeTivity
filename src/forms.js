@@ -1,5 +1,6 @@
 'strict';
 import './styles.css';
+import { projectInteractions } from './projects.js';
 
 class ToDoItem {
   constructor(title, notes, deadLine, priority, project = null) {
@@ -61,7 +62,6 @@ const addToDoListItemToThingsToDo = (list) => {
       editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg');
       infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg');
       trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
-      
       numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`
       toDoDivTitle.innerText = list[i].title;
       toDoDate.innerText = list[i].deadLine;
@@ -146,7 +146,7 @@ const toDoForm = (() => {
       priorityInput.value,
       selectedProject
     );
-
+    
     clearToDoForm();
     closeForm();
     if (storageAvailable('localStorage')) {
@@ -154,7 +154,7 @@ const toDoForm = (() => {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
         rePopulateArray(toDoList, localStorage);
         addToDoListItemToThingsToDo(toDoList);
-        console.log(toDoList);
+        projectInteractions;
       }
     } else {
       alert('There is no local Storage here!');
