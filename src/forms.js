@@ -62,7 +62,7 @@ const addToDoListItemToThingsToDo = (list) => {
       editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg');
       infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg');
       trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
-      numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`
+      numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`;
       toDoDivTitle.innerText = list[i].title;
       toDoDate.innerText = list[i].deadLine;
       checkBoxAndTitle.appendChild(checkBox);
@@ -91,9 +91,8 @@ const toDoForm = (() => {
   const deadLineInput = document.querySelector('#deadline-input');
   const priorityInput = document.querySelector('#priority-input');
   const toDoAddButton = document.getElementById('add');
-  const currentProject = document.querySelector('#current-project')
+  const currentProject = document.querySelector('#current-project');
   let selectedProject = null;
-  
 
   const closeForm = () => {
     toDoForm.classList.add('invisible');
@@ -123,18 +122,19 @@ const toDoForm = (() => {
 
     for (const toDo in toDoObject) {
       if (typeof toDoObject[toDo] === 'string') {
-        let currentToDo = JSON.parse(toDoObject[toDo])
+        let currentToDo = JSON.parse(toDoObject[toDo]);
         arrayToPopulate.push(currentToDo);
       }
     }
   };
 
   const createToDoItem = function () {
-    if(currentProject.textContent !== 'All' 
-    && currentProject.textContent !== 'Week' 
-    && currentProject.textContent !== 'Month'
-    && currentProject.textContent !== 'Most Important' 
-    && currentProject.textContent !== 'Completed'
+    if (
+      currentProject.textContent !== 'All' &&
+      currentProject.textContent !== 'Week' &&
+      currentProject.textContent !== 'Month' &&
+      currentProject.textContent !== 'Most Important' &&
+      currentProject.textContent !== 'Completed'
     ) {
       selectedProject = currentProject.textContent;
     }
@@ -146,18 +146,32 @@ const toDoForm = (() => {
       priorityInput.value,
       selectedProject
     );
-    
+
     clearToDoForm();
     closeForm();
     if (storageAvailable('localStorage')) {
       if (!localStorage.getItem(toDo.title)) {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
         rePopulateArray(toDoList, localStorage);
-        addToDoListItemToThingsToDo(toDoList);
-        projectInteractions;
+        if (
+          currentProject.textContent === 'All' ||
+          currentProject.textContent === 'Week' ||
+          currentProject.textContent === 'Month' ||
+          currentProject.textContent === 'Most Important' ||
+          currentProject.textContent === 'Completed'
+        ) {
+          addToDoListItemToThingsToDo(toDoList);
+        } else {
+          projectInteractions.createProjectOrganizers();
+          for(let i = 0; i < projectInteractions.projectsArray.length; i++) {
+            if (projectInteractions.projectsArray[i].title === currentProject.innerText) {
+              addToDoListItemToThingsToDo(projectInteractions.projectsArray[i].projectContainer);
+            } 
+          }
+        }
+      } else {
+        alert('There is no local Storage here!');
       }
-    } else {
-      alert('There is no local Storage here!');
     }
   };
 
@@ -169,4 +183,3 @@ const toDoForm = (() => {
 })();
 
 export { toDoForm, toDoList, addToDoListItemToThingsToDo };
-

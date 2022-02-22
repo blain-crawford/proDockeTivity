@@ -24,7 +24,7 @@ const projectInteractions = (() => {
     }
   }
 
-  const createProjectOrganizers = (() => {
+  const createProjectOrganizers = () => {
     if(projectsArray.length > 0) {
       while(projectsArray.length > 0) {
         projectsArray.pop();
@@ -37,7 +37,9 @@ const projectInteractions = (() => {
         projectsArray.push(projectOrganizer);
       })
     };
-  })();
+  };
+
+  createProjectOrganizers();
 
   const chooseProject = function () {
     currentProject.innerText = '';
@@ -54,7 +56,7 @@ const projectInteractions = (() => {
     project.addEventListener('click', chooseProject, false);
   });
 
-  return {createProjectOrganizers, populateProjectOrganizers}
+  return {createProjectOrganizers, populateProjectOrganizers, projectsArray}
 
 })();
 
