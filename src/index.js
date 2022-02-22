@@ -2,7 +2,8 @@
 import './styles.css';
 import { compareAsc, format } from 'date-fns';
 import { toDoForm, toDoList, addToDoListItemToThingsToDo } from './forms';
-import { projectInteractions } from './projects.js'
+import { projectInteractions } from './projects.js';
+import { timelineInteractions } from './timeline.js'
 
 /**
  * activate functionality for toDoForm
@@ -43,7 +44,7 @@ const handleSideMenuAndTint = (() => {
  */
 const autoPopulateThingsToDo = (() => {
   toDoForm.rePopulateToDoArray(localStorage);
-  addToDoListItemToThingsToDo();
+  addToDoListItemToThingsToDo(toDoList);
 })();
 
 

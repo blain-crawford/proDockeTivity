@@ -2,13 +2,12 @@
 import './styles.css';
 
 class ToDoItem {
-  constructor(title, notes, deadLine, priority, project) {
+  constructor(title, notes, deadLine, priority, project = null) {
     this.title = title;
     this.notes = notes;
     this.deadLine = deadLine;
     this.priority = priority;
-    this.project = project.id
-    this.id = project;
+    this.project = project;
   }
 }
 
@@ -38,10 +37,10 @@ const clearThingsToDoBeforeRepopulation = () => {
   toDoContainer.innerHTML = '';
 };
 
-const addToDoListItemToThingsToDo = () => {
+const addToDoListItemToThingsToDo = (list) => {
   clearThingsToDoBeforeRepopulation();
-  if (toDoList.length > 0) {
-    for (let i = 0; i < toDoList.length; i++) {
+  if (list.length > 0) {
+    for (let i = 0; i < list.length; i++) {
       const toDoContainer = document.querySelector('#todo-container');
       const checkBoxAndTitle = document.createElement('div');
       const toDoDiv = document.createElement('div');
@@ -64,8 +63,8 @@ const addToDoListItemToThingsToDo = () => {
       trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
 
       numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`
-      toDoDivTitle.innerText = toDoList[i].title;
-      toDoDate.innerText = toDoList[i].deadLine;
+      toDoDivTitle.innerText = list[i].title;
+      toDoDate.innerText = list[i].deadLine;
       checkBoxAndTitle.appendChild(checkBox);
       checkBoxAndTitle.appendChild(toDoDivTitle);
       toDoDiv.appendChild(checkBoxAndTitle);
@@ -93,6 +92,8 @@ const toDoForm = (() => {
   const priorityInput = document.querySelector('#priority-input');
   const toDoAddButton = document.getElementById('add');
   const currentProject = document.querySelector('#current-project')
+  let selectedProject = null;
+  
 
   const closeForm = () => {
     toDoForm.classList.add('invisible');
@@ -129,12 +130,24 @@ const toDoForm = (() => {
   };
 
   const createToDoItem = function () {
+    if(currentProject.textContent !== 'All' 
+    && currentProject.textContent !== 'Week' 
+    && currentProject.textContent !== 'Month'
+    && currentProject.textContent !== 'Most Important' 
+    && currentProject.textContent !== 'Completed'
+    ) {
+      selectedProject = currentProject.textContent;
+    }
+
+    console.log(selectedProject);
+
+   
     const toDo = new ToDoItem(
       titleInput.value,
       notesInput.value,
       deadLineInput.value,
       priorityInput.value,
-      currentProject.textContent
+      selectedProject
     );
 
     clearToDoForm();
@@ -143,7 +156,7 @@ const toDoForm = (() => {
       if (!localStorage.getItem(toDo.title)) {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
         rePopulateToDoArray(localStorage);
-        addToDoListItemToThingsToDo();
+        addToDoListItemToThingsToDo(toDoList);
         console.log(toDoList);
       }
     } else {
