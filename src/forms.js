@@ -7,8 +7,8 @@ class ToDoItem {
     this.notes = notes;
     this.deadLine = deadLine;
     this.priority = priority;
-    // this.project = project.id
-    this.id = localStorage.length;
+    this.project = project.id
+    this.id = project;
   }
 }
 
@@ -53,8 +53,6 @@ const addToDoListItemToThingsToDo = () => {
       const infoSymbol = document.createElement('i');
       const trashCan = document.createElement('i');
       const numberOfTodos = document.querySelector('#number-of-todos');
-  
-      console.log(toDoContainer.childElementCount);
 
       toDoDiv.id = toDoContainer.childElementCount;
       toDoDiv.classList.add('todo');
@@ -94,6 +92,7 @@ const toDoForm = (() => {
   const deadLineInput = document.querySelector('#deadline-input');
   const priorityInput = document.querySelector('#priority-input');
   const toDoAddButton = document.getElementById('add');
+  const currentProject = document.querySelector('#current-project')
 
   const closeForm = () => {
     toDoForm.classList.add('invisible');
@@ -134,8 +133,10 @@ const toDoForm = (() => {
       titleInput.value,
       notesInput.value,
       deadLineInput.value,
-      priorityInput.value
+      priorityInput.value,
+      currentProject.textContent
     );
+
     clearToDoForm();
     closeForm();
     if (storageAvailable('localStorage')) {
@@ -159,10 +160,3 @@ const toDoForm = (() => {
 
 export { toDoForm, toDoList, addToDoListItemToThingsToDo };
 
-// if(localStorage.getItem('toDoList')) {
-//   localStorage.removeItem('toDoList');
-//   localStorage.setItem(`toDoList`, JSON.stringify(toDoList))
-//   console.log(localStorage.length)
-// } else {
-//   localStorage.setItem('toDoList', JSON.stringify(toDoList));
-// }
