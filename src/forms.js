@@ -61,7 +61,7 @@ const addToDoListItemToThingsToDo = (list) => {
       editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg');
       infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg');
       trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
-
+      
       numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`
       toDoDivTitle.innerText = list[i].title;
       toDoDate.innerText = list[i].deadLine;
@@ -124,7 +124,6 @@ const toDoForm = (() => {
     for (const toDo in toDoObject) {
       if (typeof toDoObject[toDo] === 'string') {
         let currentToDo = JSON.parse(toDoObject[toDo])
-        console.log(currentToDo.project)
         arrayToPopulate.push(currentToDo);
       }
     }
@@ -153,7 +152,7 @@ const toDoForm = (() => {
     if (storageAvailable('localStorage')) {
       if (!localStorage.getItem(toDo.title)) {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
-        rePopulateArray(toDOList, localStorage);
+        rePopulateArray(toDoList, localStorage);
         addToDoListItemToThingsToDo(toDoList);
         console.log(toDoList);
       }
