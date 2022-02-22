@@ -43,7 +43,7 @@ const handleSideMenuAndTint = (() => {
  * starts the document with locally stored toDo's in ALL category present
  */
 const autoPopulateThingsToDo = (() => {
-  toDoForm.rePopulateToDoArray(localStorage);
+  toDoForm.rePopulateArray(toDoList, localStorage);
   addToDoListItemToThingsToDo(toDoList);
 })();
 

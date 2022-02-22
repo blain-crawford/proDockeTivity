@@ -114,19 +114,20 @@ const toDoForm = (() => {
     priorityInput.value = 'Please Choose One';
   };
 
-  const rePopulateToDoArray = (object) => {
-    if (toDoList.length > 0) {
-      while (toDoList.length > 0) {
-        toDoList.pop();
+  const rePopulateArray = (arrayToPopulate, toDoObject) => {
+    if (arrayToPopulate.length > 0) {
+      while (arrayToPopulate.length > 0) {
+        arrayToPopulate.pop();
       }
     }
 
-    for (const toDo in object) {
-      if (typeof object[toDo] === 'string') {
-        toDoList.push(JSON.parse(object[toDo]));
+    for (const toDo in toDoObject) {
+      if (typeof toDoObject[toDo] === 'string') {
+        let currentToDo = JSON.parse(toDoObject[toDo])
+        console.log(currentToDo.project)
+        arrayToPopulate.push(currentToDo);
       }
     }
-    return { rePopulateToDoArray };
   };
 
   const createToDoItem = function () {
@@ -139,9 +140,6 @@ const toDoForm = (() => {
       selectedProject = currentProject.textContent;
     }
 
-    console.log(selectedProject);
-
-   
     const toDo = new ToDoItem(
       titleInput.value,
       notesInput.value,
@@ -155,7 +153,7 @@ const toDoForm = (() => {
     if (storageAvailable('localStorage')) {
       if (!localStorage.getItem(toDo.title)) {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
-        rePopulateToDoArray(localStorage);
+        rePopulateArray(toDOList, localStorage);
         addToDoListItemToThingsToDo(toDoList);
         console.log(toDoList);
       }
@@ -168,7 +166,7 @@ const toDoForm = (() => {
   addToDoButton.addEventListener('click', openTodoForm, false);
   toDoAddButton.addEventListener('click', createToDoItem, false);
 
-  return { toDoList, rePopulateToDoArray };
+  return { toDoList, rePopulateArray };
 })();
 
 export { toDoForm, toDoList, addToDoListItemToThingsToDo };
