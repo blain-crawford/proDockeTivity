@@ -299,9 +299,6 @@ body {
 #closing-button {
   color: white;
   cursor: pointer;
-}
-
-#closing-button {
   line-height: 5px;
   font-size: 30px;
   padding: 10px;
@@ -394,6 +391,65 @@ body {
   font-size: 25px;
   background-color: white;
   cursor: pointer;
+}
+
+     
+#project-form {
+  width: 400px;
+  border-radius: 2%;
+  color: rgb(107, 102, 102);
+  box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
+  font-family: librarian;
+  margin: 0 auto;
+  z-index: 1;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(230, 229, 224);
+}
+
+#project-form-line {
+  width: 90%;
+  border-top: .5px solid rgb(173, 167, 167);
+  margin: 23px auto;
+  opacity: .6;
+}
+
+#project-form-footer {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+#project-form-closing-button {
+  color: white;
+  cursor: pointer;
+  line-height: 5px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+#project-title-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 10px auto 20px auto;
+  font-size: 20px;
+}
+
+#project-title-input {
+  height: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  max-width: 98%;
+  min-width: 98%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
 }
 
 @media only screen and (max-width: 1000px) {
