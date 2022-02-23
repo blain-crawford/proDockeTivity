@@ -163,10 +163,13 @@ const toDoForm = (() => {
           addToDoListItemToThingsToDo(toDoList);
         } else {
           projectInteractions.createProjectOrganizers();
-          for(let i = 0; i < projectInteractions.projectsArray.length; i++) {
-            if (projectInteractions.projectsArray[i].title === currentProject.innerText) {
-              addToDoListItemToThingsToDo(projectInteractions.projectsArray[i].projectContainer);
-            } 
+
+          for (let i = 0; i < projectInteractions.projectsArray.length; i++) {
+            let individualProject = projectInteractions.projectsArray[i];
+
+            if (individualProject.title === currentProject.innerText) {
+              addToDoListItemToThingsToDo(individualProject.projectContainer);
+            }
           }
         }
       } else {
