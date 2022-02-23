@@ -15,8 +15,18 @@ const projectInteractions = (() => {
   let projectsArray = [];
 
   const fillProjectsArray = function () {
-    projectsArray = JSON.parse(localStorage.projectsArray);
-    console.log(projectsArray);
+    if (localStorage.projectsArray) {
+      if(projectsArray.length >= 0) {
+        while(projectsArray.length > 0) {
+          projectsArray.pop();
+        }
+        for(let i = 0; i < JSON.parse(localStorage.projectsArray).length; i++) {
+          projectsArray.push(JSON.parse(localStorage.projectsArray)[i]);
+        }
+      }
+    } else {
+      return;
+    }
   }
 
   const addprojectsArrayToLocalStorage = function () {
@@ -29,6 +39,7 @@ const projectInteractions = (() => {
       }
     }
     fillProjectsArray();
+    
   }
   
 

@@ -1,7 +1,7 @@
 'strict';
 import './styles.css';
 import { compareAsc, format } from 'date-fns';
-import { toDoForm, toDoList } from './forms';
+import { toDoForm, toDoList, projectForm } from './forms';
 import { projectInteractions } from './projects.js';
 import { timelineInteractions } from './timeline.js'
 
@@ -75,5 +75,7 @@ const autoPopulateThingsToDo = (() => {
 
 const autoPopulateProjects = (() => {
   projectInteractions.fillProjectsArray();
+  console.log(projectInteractions.projectsArray)
+  projectInteractions.addprojectsArrayToLocalStorage();
 })();
 export{ storageAvailable }

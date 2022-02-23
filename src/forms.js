@@ -137,7 +137,7 @@ const toDoForm = (() => {
     }
 
     for (const toDo in toDoObject) {
-      if (typeof toDoObject[toDo] === 'string') {
+      if (typeof toDoObject[toDo] === 'string' && toDo !== 'projectsArray') {
         let currentToDo = JSON.parse(toDoObject[toDo]);
         arrayToPopulate.push(currentToDo);
       }
@@ -221,7 +221,7 @@ const projectForm = (() => {
     generalFormFunction.closeForm(projectForm, projectTitleInput);
   }
 
-  const createNewProjectOrganizer = function () {
+  const createProjectOrganizerDiv = function (title) {
     // create project elements
     const projectsContainerDiv = document.querySelector('#projects');
     const projectDiv = document.createElement('div');
@@ -234,7 +234,7 @@ const projectForm = (() => {
     projectDiv.classList = 'project';
     divTag.classList.add('fa-solid', 'fa-tag', 'fa-lg');
     projectName.classList.add('project-name');
-    projectName.innerHTML = `<span>${projectTitleInput.value}</span>`;
+    projectName.innerHTML = `<span>${title}</span>`;
     editSymbol.classList.add('fa-solid', 'fa-pen-to-square');
     trashCan.classList.add('fa-solid', 'fa-trash');
 
@@ -244,6 +244,10 @@ const projectForm = (() => {
     projectDiv.appendChild(editSymbol);
     projectDiv.appendChild(trashCan);
     projectsContainerDiv.appendChild(projectDiv);
+  }
+
+  const createNewProjectOrganizer = function () {
+    createProjectOrganizerDiv(projectTitleInput.value);
 
     projectInteractions.createProjectOrganizers();
     closeProjectForm();
@@ -254,6 +258,8 @@ const projectForm = (() => {
   closeProjectFormButton.addEventListener('click', closeProjectForm, false);
   cancelProjectButton.addEventListener('click', closeProjectForm, false);
   addProjectButton.addEventListener('click', createNewProjectOrganizer, false);
+
+  return {createNewProjectOrganizer, createProjectOrganizerDiv}
 
 })(); 
 
