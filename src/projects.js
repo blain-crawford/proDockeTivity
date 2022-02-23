@@ -10,7 +10,7 @@ class Project {
 
 const projectInteractions = (() => {
   const currentProject = document.querySelector('#current-project');
-  const projectList = document.querySelectorAll('.project-name');
+  let projectList = document.querySelectorAll('.project-name');
   const projectsArray = [];
  
   const populateProjectOrganizers = (projectObject, toDoObject) => {
@@ -24,22 +24,6 @@ const projectInteractions = (() => {
     }
   }
 
-  const createProjectOrganizers = () => {
-    if(projectsArray.length > 0) {
-      while(projectsArray.length > 0) {
-        projectsArray.pop();
-      }
-    }
-    if(projectList.length > 0) {
-      projectList.forEach(project => {
-        let projectOrganizer = new Project(project.innerText, []);
-        populateProjectOrganizers(projectOrganizer, localStorage);
-        projectsArray.push(projectOrganizer);
-      })
-    };
-  };
-
-  createProjectOrganizers();
 
   const chooseProject = function () {
     currentProject.innerText = '';
@@ -51,6 +35,26 @@ const projectInteractions = (() => {
       }
     }
   }
+
+  const createProjectOrganizers = () => {
+    projectList = document.querySelectorAll('.project-name');
+    if(projectsArray.length > 0) {
+      while(projectsArray.length > 0) {
+        projectsArray.pop();
+      }
+    }
+    if(projectList.length > 0) {
+      projectList.forEach(project => {
+        let projectOrganizer = new Project(project.innerText, []);
+        populateProjectOrganizers(projectOrganizer, localStorage);
+        projectsArray.push(projectOrganizer);
+        project.addEventListener('click', chooseProject, false);
+      })
+    };
+    
+  };
+
+  createProjectOrganizers();
   
   projectList.forEach(project => {
     project.addEventListener('click', chooseProject, false);

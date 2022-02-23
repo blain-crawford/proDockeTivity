@@ -1,6 +1,6 @@
 'strict';
 import './styles.css';
-import { projectInteraction, Project } from './projects.js';
+import { projectInteractions, Project } from './projects.js';
 import { secondsToMilliseconds } from 'date-fns';
 const pageBody = document.querySelector('#page-body');
 const pageHeader = document.querySelector('#page-header');
@@ -184,7 +184,7 @@ const toDoForm = (() => {
     );
 
     
-    generalFormFunction.clearForm(titleInput, notesInput, deadLineInput, priorityInput);
+    generalFormFunction.closeForm(toDoForm, titleInput, notesInput, deadLineInput, priorityInput);
 
     if (storageAvailable('localStorage')) {
       if (!localStorage.getItem(toDo.title)) {
@@ -238,7 +238,7 @@ const projectForm = (() => {
   }
 
   const closeProjectForm = function () {
-    generalFormFunction.closeForm(projectForm, projectTitle);
+    generalFormFunction.closeForm(projectForm, projectTitleInput);
   }
 
   const createNewProjectOrganizer = function () {
@@ -251,7 +251,7 @@ const projectForm = (() => {
     const trashCan = document.createElement('i');
 
     // stylize project elements
-    projectDiv.id = 'project';
+    projectDiv.classList = 'project';
     divTag.classList.add('fa-solid', 'fa-tag', 'fa-lg');
     projectName.classList.add('project-name');
     projectName.innerHTML = `<span>${projectTitleInput.value}</span>`;
@@ -265,6 +265,9 @@ const projectForm = (() => {
     projectDiv.appendChild(trashCan);
     projectsContainerDiv.appendChild(projectDiv);
 
+    projectInteractions.createProjectOrganizers();
+    closeProjectForm();
+    console.log(projectInteractions.projectsArray);
   }
 
   openProjectFormButton.addEventListener('click', openProjectForm, false);
