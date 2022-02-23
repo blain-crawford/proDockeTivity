@@ -1,6 +1,7 @@
 'strict';
 import './styles.css';
 import { projectInteraction, Project } from './projects.js';
+import { secondsToMilliseconds } from 'date-fns';
 const pageBody = document.querySelector('#page-body');
 const pageHeader = document.querySelector('#page-header');
 
@@ -46,10 +47,21 @@ const toDoList = [];
 
 const generalFormFunction = (() => {
   const clearForm = (title, notes = null, deadLine = null, priority = null) => {
-    title.value = '';
-    notes.value = '';
-    deadLine.value = 'MM-dd-yyyy';
-    priority.value = 'Please Choose One';
+    if (title) { 
+      title.value = '';
+    }
+
+    if (notes) {
+      notes.value = '';
+    }
+
+    if (deadLine) { 
+      deadLine.value = 'MM-dd-yyyy';
+    }
+
+    if (priority) {
+      priority.value = 'Please Choose One';
+    }
   };
 
   const closeForm = (form, title, notes = null, deadLine = null, priority = null) => {
@@ -86,7 +98,7 @@ const toDoForm = (() => {
   
     if (list.length > 0) {
       for (let i = 0; i < list.length; i++) {
-        //create elements for DOM
+        // create elements for DOM
         const toDoContainer = document.querySelector('#todo-container');
         const checkBoxAndTitle = document.createElement('div');
         const toDoDiv = document.createElement('div');
@@ -99,7 +111,7 @@ const toDoForm = (() => {
         const trashCan = document.createElement('i');
         const numberOfTodos = document.querySelector('#number-of-todos');
   
-        //style elements
+        // style elements
         toDoDiv.id = toDoContainer.childElementCount;
         toDoDiv.classList.add('todo');
         checkBoxAndTitle.classList.add('checkbox-and-title');
@@ -112,7 +124,7 @@ const toDoForm = (() => {
         toDoDivTitle.innerText = list[i].title;
         toDoDate.innerText = list[i].deadLine;
   
-        //add elements to DOM
+        // add elements to DOM
         checkBoxAndTitle.appendChild(checkBox);
         checkBoxAndTitle.appendChild(toDoDivTitle);
         toDoDiv.appendChild(checkBoxAndTitle);
@@ -212,9 +224,53 @@ const toDoForm = (() => {
 })();
 
 const projectForm = (() => {
+  const openProjectFormButton = document.querySelector('#add-project-organizer');
   const addProjectButton = document.querySelector('#add-project');
+  const projectTitleInput = document.querySelector('#project-title-input');
   const projectForm = document.querySelector('#project-form');
+  const projectTitle = document.querySelector('#project-title-div');
+  const closeProjectFormButton = document.querySelector('#project-form-closing-button');
 
+  const cancelProjectButton = document.querySelector('#cancel-project')
+
+  const openProjectForm = function () {
+    generalFormFunction.openForm(projectForm);
+  }
+
+  const closeProjectForm = function () {
+    generalFormFunction.closeForm(projectForm, projectTitle);
+  }
+
+  const createNewProjectOrganizer = function () {
+    // create project elements
+    const projectsContainerDiv = document.querySelector('#projects');
+    const projectDiv = document.createElement('div');
+    const divTag = document.createElement('i');
+    const projectName = document.createElement('div');
+    const editSymbol = document.createElement('i');
+    const trashCan = document.createElement('i');
+
+    // stylize project elements
+    projectDiv.id = 'project';
+    divTag.classList.add('fa-solid', 'fa-tag', 'fa-lg');
+    projectName.classList.add('project-name');
+    projectName.innerHTML = `<span>${projectTitleInput.value}</span>`;
+    editSymbol.classList.add('fa-solid', 'fa-pen-to-square');
+    trashCan.classList.add('fa-solid', 'fa-trash');
+
+    //add elements to DOM
+    projectDiv.appendChild(divTag);
+    projectDiv.appendChild(projectName);
+    projectDiv.appendChild(editSymbol);
+    projectDiv.appendChild(trashCan);
+    projectsContainerDiv.appendChild(projectDiv);
+
+  }
+
+  openProjectFormButton.addEventListener('click', openProjectForm, false);
+  closeProjectFormButton.addEventListener('click', closeProjectForm, false);
+  cancelProjectButton.addEventListener('click', closeProjectForm, false);
+  addProjectButton.addEventListener('click', createNewProjectOrganizer, false);
 
 })(); 
 

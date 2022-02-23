@@ -60,4 +60,4 @@ const projectInteractions = (() => {
 
 })();
 
-export { projectInteractions }
+export { projectInteractions, Project }
