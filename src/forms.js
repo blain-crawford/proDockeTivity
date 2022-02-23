@@ -2,6 +2,7 @@
 import './styles.css';
 import { projectInteractions, Project } from './projects.js';
 import { secondsToMilliseconds } from 'date-fns';
+import { storageAvailable } from './index.js'
 const pageBody = document.querySelector('#page-body');
 const pageHeader = document.querySelector('#page-header');
 
@@ -12,27 +13,6 @@ class ToDoItem {
     this.deadLine = deadLine;
     this.priority = priority;
     this.project = project;
-  }
-}
-
-function storageAvailable(type) {
-  let storage;
-  try {
-    storage = window[type];
-    let x = '__storage_test__';
-    storage.setItem(x, x);
-    storage.removeItem(x);
-    return true;
-  } catch (e) {
-    return (
-      e instanceof DOMException &&
-      (
-        e.code === 22 ||
-        e.code === 1014 ||
-        e.name === 'QuotaExceededError' ||
-        e.name === 'NS_ERROR_DOM_QUOTA_REACHED'
-      )(storage && storage.length !== 0)
-    );
   }
 }
 
@@ -267,7 +247,7 @@ const projectForm = (() => {
 
     projectInteractions.createProjectOrganizers();
     closeProjectForm();
-    console.log(projectInteractions.projectsArray);
+    projectInteractions.addprojectsArrayToLocalStorage();
   }
 
   openProjectFormButton.addEventListener('click', openProjectForm, false);
@@ -277,4 +257,4 @@ const projectForm = (() => {
 
 })(); 
 
-export { toDoForm, toDoList, generalFormFunction, projectForm };
+export { toDoForm, toDoList, generalFormFunction, projectForm, storageAvailable };

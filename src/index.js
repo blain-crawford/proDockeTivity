@@ -5,6 +5,32 @@ import { toDoForm, toDoList } from './forms';
 import { projectInteractions } from './projects.js';
 import { timelineInteractions } from './timeline.js'
 
+
+/**
+ * seeing if local storage is available
+ */
+ const storageAvailable = function (type) {
+  let storage;
+  try {
+    storage = window[type];
+    let x = '__storage_test__';
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return (
+      e instanceof DOMException &&
+      (
+        e.code === 22 ||
+        e.code === 1014 ||
+        e.name === 'QuotaExceededError' ||
+        e.name === 'NS_ERROR_DOM_QUOTA_REACHED'
+      )(storage && storage.length !== 0)
+    );
+  }
+}
+
+
 /**
  * activate functionality for toDoForm
  */
@@ -47,9 +73,7 @@ const autoPopulateThingsToDo = (() => {
   toDoForm.addToDoListItemToThingsToDo(toDoList);
 })();
 
-
-
-
-
-
-
+const autoPopulateProjects = (() => {
+  projectInteractions.fillProjectsArray();
+})();
+export{ storageAvailable }

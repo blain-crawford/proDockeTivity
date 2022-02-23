@@ -1,4 +1,5 @@
 import { toDoForm, toDoList, addToDoListItemToThingsToDo } from './forms.js';
+import { storageAvailable } from './index.js'
 
 class Project {
   constructor (title, projectContainer) {
@@ -11,11 +12,29 @@ class Project {
 const projectInteractions = (() => {
   const currentProject = document.querySelector('#current-project');
   let projectList = document.querySelectorAll('.project-name');
-  const projectsArray = [];
- 
+  let projectsArray = [];
+
+  const fillProjectsArray = function () {
+    projectsArray = JSON.parse(localStorage.projectsArray);
+    console.log(projectsArray);
+  }
+
+  const addprojectsArrayToLocalStorage = function () {
+    if(storageAvailable('localStorage')) {
+      if(!localStorage.getItem(projectsArray)) {
+        localStorage.setItem('projectsArray', JSON.stringify(projectsArray));
+      } else {
+        localStorage.removeItem('projectsArray')
+        localStorage.setItem('projectsArray', JSON.stringify(projectsArray));
+      }
+    }
+    fillProjectsArray();
+  }
+  
+
   const populateProjectOrganizers = (projectObject, toDoObject) => {
       for(let toDo in toDoObject) {
-        if(typeof toDoObject[toDo] === 'string') {  
+        if(typeof toDoObject[toDo] === 'string' && toDo !== projectsArray) {  
           let currentToDo = JSON.parse(toDoObject[toDo]);
             if(projectObject.title === currentToDo.project) {
               projectObject.projectContainer.push(currentToDo);
@@ -60,7 +79,7 @@ const projectInteractions = (() => {
     project.addEventListener('click', chooseProject, false);
   });
 
-  return {createProjectOrganizers, populateProjectOrganizers, projectsArray}
+  return {createProjectOrganizers, populateProjectOrganizers, projectsArray, addprojectsArrayToLocalStorage, fillProjectsArray}
 
 })();
 
