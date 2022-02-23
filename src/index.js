@@ -1,7 +1,7 @@
 'strict';
 import './styles.css';
 import { compareAsc, format } from 'date-fns';
-import { toDoForm, toDoList, addToDoListItemToThingsToDo } from './forms';
+import { toDoForm, toDoList } from './forms';
 import { projectInteractions } from './projects.js';
 import { timelineInteractions } from './timeline.js'
 
@@ -44,7 +44,7 @@ const handleSideMenuAndTint = (() => {
  */
 const autoPopulateThingsToDo = (() => {
   toDoForm.rePopulateArray(toDoList, localStorage);
-  addToDoListItemToThingsToDo(toDoList);
+  toDoForm.addToDoListItemToThingsToDo(toDoList);
 })();
 
 

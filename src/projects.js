@@ -47,7 +47,7 @@ const projectInteractions = (() => {
     for(let i = 0; i < projectList.length; i++) {
       let currentProject = projectsArray[i];
       if(currentProject.title === this.innerText) {
-          addToDoListItemToThingsToDo(currentProject.projectContainer);
+          toDoForm.addToDoListItemToThingsToDo(currentProject.projectContainer);
       }
     }
   }

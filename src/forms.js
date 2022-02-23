@@ -1,6 +1,6 @@
 'strict';
 import './styles.css';
-import { projectInteractions } from './projects.js';
+import { projectInteraction, Project } from './projects.js';
 
 class ToDoItem {
   constructor(title, notes, deadLine, priority, project = null) {
@@ -38,45 +38,7 @@ const clearThingsToDoBeforeRepopulation = () => {
   toDoContainer.innerHTML = '';
 };
 
-const addToDoListItemToThingsToDo = (list) => {
-  clearThingsToDoBeforeRepopulation();
-  if (list.length > 0) {
-    for (let i = 0; i < list.length; i++) {
-      const toDoContainer = document.querySelector('#todo-container');
-      const checkBoxAndTitle = document.createElement('div');
-      const toDoDiv = document.createElement('div');
-      const checkBox = document.createElement('i');
-      const toDoDivTitle = document.createElement('p');
-      const dateIconsForEditing = document.createElement('div');
-      const toDoDate = document.createElement('p');
-      const editSymbol = document.createElement('i');
-      const infoSymbol = document.createElement('i');
-      const trashCan = document.createElement('i');
-      const numberOfTodos = document.querySelector('#number-of-todos');
 
-      toDoDiv.id = toDoContainer.childElementCount;
-      toDoDiv.classList.add('todo');
-      checkBoxAndTitle.classList.add('checkbox-and-title');
-      checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg');
-      dateIconsForEditing.classList.add('date-icons-for-editing');
-      editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg');
-      infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg');
-      trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
-      numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`;
-      toDoDivTitle.innerText = list[i].title;
-      toDoDate.innerText = list[i].deadLine;
-      checkBoxAndTitle.appendChild(checkBox);
-      checkBoxAndTitle.appendChild(toDoDivTitle);
-      toDoDiv.appendChild(checkBoxAndTitle);
-      dateIconsForEditing.appendChild(toDoDate);
-      dateIconsForEditing.appendChild(editSymbol);
-      dateIconsForEditing.appendChild(infoSymbol);
-      dateIconsForEditing.appendChild(trashCan);
-      toDoDiv.appendChild(dateIconsForEditing);
-      toDoContainer.appendChild(toDoDiv);
-    }
-  }
-};
 
 const toDoList = [];
 
@@ -92,9 +54,63 @@ const toDoForm = (() => {
   const priorityInput = document.querySelector('#priority-input');
   const toDoAddButton = document.getElementById('add');
   const currentProject = document.querySelector('#current-project');
+  const cancelButton = document.querySelector('#cancel');
   let selectedProject = null;
 
+  const addToDoListItemToThingsToDo = (list) => {
+    clearThingsToDoBeforeRepopulation();
+  
+    if (list.length > 0) {
+      for (let i = 0; i < list.length; i++) {
+        //create elements for DOM
+        const toDoContainer = document.querySelector('#todo-container');
+        const checkBoxAndTitle = document.createElement('div');
+        const toDoDiv = document.createElement('div');
+        const checkBox = document.createElement('i');
+        const toDoDivTitle = document.createElement('p');
+        const dateIconsForEditing = document.createElement('div');
+        const toDoDate = document.createElement('p');
+        const editSymbol = document.createElement('i');
+        const infoSymbol = document.createElement('i');
+        const trashCan = document.createElement('i');
+        const numberOfTodos = document.querySelector('#number-of-todos');
+  
+        //style elements
+        toDoDiv.id = toDoContainer.childElementCount;
+        toDoDiv.classList.add('todo');
+        checkBoxAndTitle.classList.add('checkbox-and-title');
+        checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg');
+        dateIconsForEditing.classList.add('date-icons-for-editing');
+        editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg');
+        infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg');
+        trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
+        numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`;
+        toDoDivTitle.innerText = list[i].title;
+        toDoDate.innerText = list[i].deadLine;
+  
+        //add elements to DOM
+        checkBoxAndTitle.appendChild(checkBox);
+        checkBoxAndTitle.appendChild(toDoDivTitle);
+        toDoDiv.appendChild(checkBoxAndTitle);
+        dateIconsForEditing.appendChild(toDoDate);
+        dateIconsForEditing.appendChild(editSymbol);
+        dateIconsForEditing.appendChild(infoSymbol);
+        dateIconsForEditing.appendChild(trashCan);
+        toDoDiv.appendChild(dateIconsForEditing);
+        toDoContainer.appendChild(toDoDiv);
+      }
+    }
+  };
+  
+  const clearToDoForm = () => {
+    titleInput.value = '';
+    notesInput.value = '';
+    deadLineInput.value = 'MM-dd-yyyy';
+    priorityInput.value = 'Please Choose One';
+  };
+
   const closeForm = () => {
+    clearToDoForm();
     toDoForm.classList.add('invisible');
     pageBody.classList.remove('tint');
     pageHeader.classList.remove('tint');
@@ -106,12 +122,6 @@ const toDoForm = (() => {
     pageHeader.classList.add('tint');
   };
 
-  const clearToDoForm = () => {
-    titleInput.value = '';
-    notesInput.value = '';
-    deadLineInput.value = 'MM-dd-yyyy';
-    priorityInput.value = 'Please Choose One';
-  };
 
   const rePopulateArray = (arrayToPopulate, toDoObject) => {
     if (arrayToPopulate.length > 0) {
@@ -181,8 +191,13 @@ const toDoForm = (() => {
   formClosingButton.addEventListener('click', closeForm, false);
   addToDoButton.addEventListener('click', openTodoForm, false);
   toDoAddButton.addEventListener('click', createToDoItem, false);
+  cancelButton.addEventListener('click', closeForm, false);
 
-  return { toDoList, rePopulateArray };
+  return { toDoList, rePopulateArray, addToDoListItemToThingsToDo };
 })();
 
-export { toDoForm, toDoList, addToDoListItemToThingsToDo };
+const projectForm = (() => {
+
+})(); 
+
+export { toDoForm, toDoList };

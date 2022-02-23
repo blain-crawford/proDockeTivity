@@ -1,4 +1,4 @@
-import { addToDoListItemToThingsToDo, toDoList } from "./forms";
+import { addToDoListItemToThingsToDo, toDoList, toDoForm } from "./forms";
 
 const timelineInteractions = (() => {
   const currentProject = document.querySelector('#current-project')
@@ -7,7 +7,7 @@ const timelineInteractions = (() => {
   const chooseTimeLine = function () {
     currentProject.innerText = '';
     currentProject.innerText = this.innerText;
-    addToDoListItemToThingsToDo(toDoList);
+    toDoForm.addToDoListItemToThingsToDo(toDoList);
   }
 
   timeLineButtons.forEach(button => {
