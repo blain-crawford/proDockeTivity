@@ -1,6 +1,8 @@
 'strict';
 import './styles.css';
 import { projectInteraction, Project } from './projects.js';
+const pageBody = document.querySelector('#page-body');
+const pageHeader = document.querySelector('#page-header');
 
 class ToDoItem {
   constructor(title, notes, deadLine, priority, project = null) {
@@ -42,10 +44,32 @@ const clearThingsToDoBeforeRepopulation = () => {
 
 const toDoList = [];
 
+const generalFormFunction = (() => {
+  const clearForm = (title, notes = null, deadLine = null, priority = null) => {
+    title.value = '';
+    notes.value = '';
+    deadLine.value = 'MM-dd-yyyy';
+    priority.value = 'Please Choose One';
+  };
+
+  const closeForm = (form, title, notes = null, deadLine = null, priority = null) => {
+    clearForm(title, notes, deadLine, priority)
+    form.classList.add('invisible');
+    pageBody.classList.remove('tint');
+    pageHeader.classList.remove('tint');
+  };
+
+  const openForm = (form) => {
+    form.classList.remove('invisible');
+    pageBody.classList.add('tint');
+    pageHeader.classList.add('tint');
+  };
+  return {clearForm, closeForm, openForm}
+})();
+
 const toDoForm = (() => {
-  const pageBody = document.querySelector('#page-body');
-  const pageHeader = document.querySelector('#page-header');
-  const formClosingButton = document.querySelector('#closing-button');
+
+  const toDoformClosingButton = document.querySelector('#closing-button');
   const addToDoButton = document.querySelector('#add-todo');
   const toDoForm = document.querySelector('#todo-form');
   const titleInput = document.querySelector('#title-input');
@@ -101,25 +125,15 @@ const toDoForm = (() => {
       }
     }
   };
-  
-  const clearToDoForm = () => {
-    titleInput.value = '';
-    notesInput.value = '';
-    deadLineInput.value = 'MM-dd-yyyy';
-    priorityInput.value = 'Please Choose One';
-  };
 
-  const closeForm = () => {
-    clearToDoForm();
-    toDoForm.classList.add('invisible');
-    pageBody.classList.remove('tint');
-    pageHeader.classList.remove('tint');
-  };
 
-  const openTodoForm = () => {
-    toDoForm.classList.remove('invisible');
-    pageBody.classList.add('tint');
-    pageHeader.classList.add('tint');
+  const closeToDoForm = function () {
+    generalFormFunction.closeForm(toDoForm, titleInput, notesInput,deadLineInput, priorityInput);
+  }
+
+
+  const openToDoForm = () => {
+    generalFormFunction.openForm(toDoForm);
   };
 
 
@@ -157,8 +171,9 @@ const toDoForm = (() => {
       selectedProject
     );
 
-    clearToDoForm();
-    closeForm();
+    
+    generalFormFunction.clearForm(titleInput, notesInput, deadLineInput, priorityInput);
+
     if (storageAvailable('localStorage')) {
       if (!localStorage.getItem(toDo.title)) {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
@@ -188,16 +203,19 @@ const toDoForm = (() => {
     }
   };
 
-  formClosingButton.addEventListener('click', closeForm, false);
-  addToDoButton.addEventListener('click', openTodoForm, false);
+  toDoformClosingButton.addEventListener('click', closeToDoForm, false);
+  addToDoButton.addEventListener('click', openToDoForm, false);
   toDoAddButton.addEventListener('click', createToDoItem, false);
-  cancelButton.addEventListener('click', closeForm, false);
+  cancelButton.addEventListener('click', closeToDoForm, false);
 
   return { toDoList, rePopulateArray, addToDoListItemToThingsToDo };
 })();
 
 const projectForm = (() => {
-  
+  const addProjectButton = document.querySelector('#add-project');
+  const projectForm = document.querySelector('#project-form');
+
+
 })(); 
 
-export { toDoForm, toDoList };
+export { toDoForm, toDoList, generalFormFunction, projectForm };
