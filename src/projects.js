@@ -73,10 +73,6 @@ const projectInteractions = (() => {
       let currentProject = projectsArray[i];
       if(currentProject.title === this.innerText) {
           toDoForm.addToDoListItemToThingsToDo(currentProject.projectContainer);
-          for(let j = 0; j < currentProject.projectContainer.length; j++) {
-          //   toDoForm.createToDoListItemDiv(currentProject.projectContainer[j])
-            console.log(currentProject.projectContainer[j])
-          }
       }
     }
   };
@@ -120,6 +116,7 @@ const projectInteractions = (() => {
 
     clearProjectContainerDivBeforeRepopulation();
     addprojectsArrayToLocalStorage();
+    autoPopulateThingsToDo();
     autoPopulateProjects();
     projectForm.closeProjectForm();
   };

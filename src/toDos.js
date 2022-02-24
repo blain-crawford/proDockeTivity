@@ -15,6 +15,7 @@ const toDoInteractions = (() => {
           toDoList[i].complete = true;
           localStorage.removeItem(toDoList[i].title);
           localStorage.setItem(`${toDoList[i].title}`, JSON.stringify(toDoList[i]));
+          console.log(toDoList[i])
         }
       }
     } else if (this.classList.contains('fa-square-check')) {
@@ -25,11 +26,12 @@ const toDoInteractions = (() => {
           toDoList[i].complete = false;
           localStorage.removeItem(toDoList[i].title);
           localStorage.setItem(`${toDoList[i].title}`, JSON.stringify(toDoList[i]));
+          console.log(toDoList[i])
         }
       }
     }
+
     projectInteractions.clearProjectContainerDivBeforeRepopulation();
-    autoPopulateThingsToDo();
     autoPopulateProjects();
   }
 
