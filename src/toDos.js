@@ -1,4 +1,4 @@
-import { toDoForm, toDoList, addToDoListItemToThingsToDo, projectForm } from './forms.js';
+import { toDoForm, toDoList, addToDoListItemToThingsToDo, projectForm, clearThingsToDoBeforeRepopulation } from './forms.js';
 import { storageAvailable, autoPopulateThingsToDo, autoPopulateProjects } from './index.js';
 import { projectInteractions, Project } from './projects.js';
 
@@ -13,7 +13,8 @@ const toDoInteractions = (() => {
       for(let i = 0; i < toDoList.length; i++) {
         if(toDoList[i].title === toDoToCheck) {
           toDoList[i].complete = true;
-          console.log(toDoList[i])
+          localStorage.removeItem(toDoList[i].title);
+          localStorage.setItem(`${toDoList[i].title}`, JSON.stringify(toDoList[i]));
         }
       }
     } else if (this.classList.contains('fa-square-check')) {
@@ -22,9 +23,14 @@ const toDoInteractions = (() => {
       for(let i = 0; i < toDoList.length; i++) {
         if(toDoList[i].title === toDoToCheck) {
           toDoList[i].complete = false;
+          localStorage.removeItem(toDoList[i].title);
+          localStorage.setItem(`${toDoList[i].title}`, JSON.stringify(toDoList[i]));
         }
       }
     }
+    projectInteractions.clearProjectContainerDivBeforeRepopulation();
+    autoPopulateThingsToDo();
+    autoPopulateProjects();
   }
 
   return {markToDoAsComplete}
