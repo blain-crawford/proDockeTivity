@@ -68,16 +68,17 @@ const handleSideMenuAndTint = (() => {
 /**
  * starts the document with locally stored toDo's in ALL category present
  */
-const autoPopulateThingsToDo = (() => {
+const autoPopulateThingsToDo = () => {
   toDoForm.rePopulateArray(toDoList, localStorage);
   toDoForm.addToDoListItemToThingsToDo(toDoList);
-})();
+};
+autoPopulateThingsToDo();
 
 /**
  * Starts the document with locally stored projects populated
  * and linked to proper toDo list
  */
-const autoPopulateProjects = (() => {
+const autoPopulateProjects = () => {
   if(!localStorage.getItem('projectsArray')) {
     return;
   } else {
@@ -89,6 +90,7 @@ const autoPopulateProjects = (() => {
     }
     projectInteractions.createProjectOrganizers();
   }
-})();
+};
+autoPopulateProjects();
 
 export{ storageAvailable, autoPopulateThingsToDo, autoPopulateProjects }

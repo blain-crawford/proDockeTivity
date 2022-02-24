@@ -244,6 +244,11 @@ const projectForm = (() => {
     projectDiv.appendChild(editSymbol);
     projectDiv.appendChild(trashCan);
     projectsContainerDiv.appendChild(projectDiv);
+
+    //add functionality
+    editSymbol.addEventListener('click', projectInteractions.showEditProjectTitleForm, false);
+    trashCan.addEventListener('click', projectInteractions.deleteProject ,false);
+    
   }
 
   const createNewProjectOrganizer = function () {
@@ -259,7 +264,7 @@ const projectForm = (() => {
   cancelProjectButton.addEventListener('click', closeProjectForm, false);
   addProjectButton.addEventListener('click', createNewProjectOrganizer, false);
 
-  return {createNewProjectOrganizer, createProjectOrganizerDiv}
+  return {createNewProjectOrganizer, createProjectOrganizerDiv, openProjectForm, closeProjectForm}
 
 })(); 
 
