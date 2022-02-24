@@ -75,7 +75,8 @@ const autoPopulateThingsToDo = (() => {
 
 const autoPopulateProjects = (() => {
   projectInteractions.fillProjectsArray();
-  console.log(projectInteractions.projectsArray)
   projectInteractions.addprojectsArrayToLocalStorage();
+  console.log(projectInteractions.projectsArray)
+  console.log(JSON.parse(localStorage.projectsArray))
 })();
 export{ storageAvailable }
