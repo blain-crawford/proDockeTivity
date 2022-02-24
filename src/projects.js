@@ -10,6 +10,7 @@ class Project {
 
 
 const projectInteractions = (() => {
+  const currentProjectH1 = document.querySelector('#current-project');
   const projectsContainerDiv = document.querySelector('#projects');
   const currentProject = document.querySelector('#current-project');
   const addButton = document.querySelector('#add-project');
@@ -108,7 +109,7 @@ const projectInteractions = (() => {
         }
       }
     }
-
+    currentProjectH1.textContent = titleInputDiv.value;
     addButton.removeEventListener('click', changeTitle);
     addButton.addEventListener('click', projectForm.createNewProjectOrganizer, false);
 
