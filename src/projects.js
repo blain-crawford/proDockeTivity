@@ -1,4 +1,4 @@
-import { toDoForm, toDoList, addToDoListItemToThingsToDo, projectForm } from './forms.js';
+import { toDoForm, toDoList, addToDoListItemToThingsToDo, projectForm, clearThingsToDoBeforeRepopulation } from './forms.js';
 import { storageAvailable, autoPopulateThingsToDo, autoPopulateProjects } from './index.js'
 
 class Project {
@@ -68,10 +68,16 @@ const projectInteractions = (() => {
   const chooseProject = function () {
     currentProject.innerText = '';
     currentProject.innerText = this.innerText;
+    clearThingsToDoBeforeRepopulation();
     for(let i = 0; i < projectList.length; i++) {
       let currentProject = projectsArray[i];
       if(currentProject.title === this.innerText) {
           toDoForm.addToDoListItemToThingsToDo(currentProject.projectContainer);
+          // console.log(currentProject.projectContainer)
+          for(let j = 0; j < currentProject.projectContainer.length; j++) {
+          //   toDoForm.createToDoListItemDiv(currentProject.projectContainer[j])
+            console.log(currentProject.projectContainer[j])
+          }
       }
     }
   };

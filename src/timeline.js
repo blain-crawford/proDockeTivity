@@ -20,7 +20,7 @@ const timelineInteractions = (() => {
     clearThingsToDoBeforeRepopulation()
     for(let i = 0; i < toDoList.length; i++) {
       if(isThisWeek(parseISO(toDoList[i].deadLine))) {
-        toDoForm.createToDOListItemDiv(toDoList[i]);
+        toDoForm.createToDoListItemDiv(toDoList[i]);
       }
     }
   };
@@ -31,7 +31,7 @@ const timelineInteractions = (() => {
     clearThingsToDoBeforeRepopulation()
     for(let i = 0; i < toDoList.length; i++) {
       if(isThisMonth(parseISO(toDoList[i].deadLine))) {
-        toDoForm.createToDOListItemDiv(toDoList[i]);
+        toDoForm.createToDoListItemDiv(toDoList[i]);
       }
     }
   };
@@ -42,7 +42,7 @@ const timelineInteractions = (() => {
     clearThingsToDoBeforeRepopulation()
     for(let i = 0; i < toDoList.length; i++) {
       if(toDoList[i].priority === 'high') {
-        toDoForm.createToDOListItemDiv(toDoList[i]);
+        toDoForm.createToDoListItemDiv(toDoList[i]);
       }
     }
   };
@@ -53,7 +53,7 @@ const timelineInteractions = (() => {
     clearThingsToDoBeforeRepopulation()
     for(let i = 0; i < toDoList.length; i++) {
       if(toDoList[i].complete) {
-        toDoForm.createToDOListItemDiv(toDoList[i]);
+        toDoForm.createToDoListItemDiv(toDoList[i]);
       }
     }
   };

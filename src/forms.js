@@ -3,6 +3,7 @@ import './styles.css';
 import { projectInteractions, Project } from './projects.js';
 import { secondsToMilliseconds, format, compareAsc } from 'date-fns';
 import { storageAvailable } from './index.js'
+import { toDoInteractions } from './toDos';
 const pageBody = document.querySelector('#page-body');
 const pageHeader = document.querySelector('#page-header');
 
@@ -74,7 +75,7 @@ const toDoForm = (() => {
   const cancelButton = document.querySelector('#cancel');
   let selectedProject = null;
 
-  const createToDOListItemDiv = function (item) {
+  const createToDoListItemDiv = function (item) {
     // create elements for DOM
     const toDoContainer = document.querySelector('#todo-container');
     const checkBoxAndTitle = document.createElement('div');
@@ -92,7 +93,12 @@ const toDoForm = (() => {
     toDoDiv.id = toDoContainer.childElementCount;
     toDoDiv.classList.add('todo');
     checkBoxAndTitle.classList.add('checkbox-and-title');
-    checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg');
+    if(!item.complete) {
+      checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg', 'checkbox');
+    }
+    if(item.complete) {
+      checkBox.classList.add('fa-regular', 'fa-square-check', 'fa-lg', 'checkbox');
+    }
     dateIconsForEditing.classList.add('date-icons-for-editing');
     editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg');
     infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg');
@@ -111,6 +117,9 @@ const toDoForm = (() => {
     dateIconsForEditing.appendChild(trashCan);
     toDoDiv.appendChild(dateIconsForEditing);
     toDoContainer.appendChild(toDoDiv);
+
+    // add functionality
+    checkBox.addEventListener('click', toDoInteractions.markToDoAsComplete, false);
   }
 
   const addToDoListItemToThingsToDo = (list) => {
@@ -118,7 +127,7 @@ const toDoForm = (() => {
   
     if (list.length > 0) {
       for (let i = 0; i < list.length; i++) {
-        createToDOListItemDiv(list[i]);
+        createToDoListItemDiv(list[i]);
       }
     }
   };
@@ -205,7 +214,7 @@ const toDoForm = (() => {
   toDoAddButton.addEventListener('click', createToDoItem, false);
   cancelButton.addEventListener('click', closeToDoForm, false);
 
-  return { toDoList, rePopulateArray, addToDoListItemToThingsToDo, createToDOListItemDiv };
+  return { toDoList, rePopulateArray, addToDoListItemToThingsToDo, createToDoListItemDiv };
 })();
 
 const projectForm = (() => {
