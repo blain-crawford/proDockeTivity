@@ -74,9 +74,19 @@ const autoPopulateThingsToDo = (() => {
 })();
 
 const autoPopulateProjects = (() => {
-  projectInteractions.fillProjectsArray();
-  projectInteractions.addprojectsArrayToLocalStorage();
-  console.log(projectInteractions.projectsArray)
-  console.log(JSON.parse(localStorage.projectsArray))
+  // projectInteractions.addprojectsArrayToLocalStorage();
+  if(!localStorage.getItem('projectsArray')) {
+    return;
+  } else {
+    projectInteractions.fillProjectsArray();
+    console.log(projectInteractions.projectsArray)
+    console.log(localStorage.projectsArray)
+    for (let i = 0; i < projectInteractions.projectsArray.length; i++) {
+      let projectToCreate = projectInteractions.projectsArray[i];
+      projectForm.createProjectOrganizerDiv(projectToCreate.title);
+      
+    }
+    projectInteractions.createProjectOrganizers();
+  }
 })();
-export{ storageAvailable }
+export{ storageAvailable, autoPopulateThingsToDo, autoPopulateProjects }
