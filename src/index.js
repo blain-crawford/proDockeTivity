@@ -32,9 +32,9 @@ import { timelineInteractions } from './timeline.js'
 
 
 /**
- * activate functionality for toDoForm
+ * activate functionality for toDoForm?  May be able to delete
  */
-toDoForm
+// toDoForm
 
 /**
  * checks size of window for sideMenu placement/removes tent
@@ -73,14 +73,15 @@ const autoPopulateThingsToDo = (() => {
   toDoForm.addToDoListItemToThingsToDo(toDoList);
 })();
 
+/**
+ * Starts the document with locally stored projects populated
+ * and linked to proper toDo list
+ */
 const autoPopulateProjects = (() => {
-  // projectInteractions.addprojectsArrayToLocalStorage();
   if(!localStorage.getItem('projectsArray')) {
     return;
   } else {
     projectInteractions.fillProjectsArray();
-    console.log(projectInteractions.projectsArray)
-    console.log(localStorage.projectsArray)
     for (let i = 0; i < projectInteractions.projectsArray.length; i++) {
       let projectToCreate = projectInteractions.projectsArray[i];
       projectForm.createProjectOrganizerDiv(projectToCreate.title);
@@ -89,4 +90,5 @@ const autoPopulateProjects = (() => {
     projectInteractions.createProjectOrganizers();
   }
 })();
+
 export{ storageAvailable, autoPopulateThingsToDo, autoPopulateProjects }
