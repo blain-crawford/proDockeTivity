@@ -393,6 +393,90 @@ body {
   cursor: pointer;
 }
 
+#todo-info {
+  width: 400px;
+  border-radius: 2%;
+  color: rgb(107, 102, 102);
+  box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
+  font-family: librarian;
+  margin: 0 auto;
+  z-index: 1;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(230, 229, 224);
+}
+
+
+#info-closing-button {
+  color: white;
+  cursor: pointer;
+  line-height: 5px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+#info-title-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 10px auto 20px auto;
+  font-size: 20px;
+}
+
+#info-title-input {
+  height: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  max-width: 98%;
+  min-width: 98%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
+#info-notes-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 20px auto 20px auto;
+  font-size: 20px;
+}
+
+#info-notes-input {
+  font-size: 15px;
+  max-width: 98%;
+  max-height: 100px;
+  min-width: 98%;
+  min-height: 100px;
+  text-align: left;
+}
+
+#info-deadline-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 30px auto 20px auto;
+  font-size: 20px;
+}
+
+#info-deadline-input {
+  height: 40px;
+}
+
+#info-priority-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 30px auto 20px auto;
+  font-size: 20px;
+}
+
+#info-priority-input {
+  height: 40px;
+}
+
      
 #project-form {
   width: 400px;

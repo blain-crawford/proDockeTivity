@@ -101,7 +101,7 @@ const toDoForm = (() => {
     }
     dateIconsForEditing.classList.add('date-icons-for-editing');
     editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg');
-    infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg');
+    infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg', 'info-symbol');
     trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
     numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`;
     toDoDivTitle.innerText = item.title;
@@ -120,6 +120,7 @@ const toDoForm = (() => {
 
     // add functionality
     checkBox.addEventListener('click', toDoInteractions.markToDoAsComplete, false);
+    infoSymbol.addEventListener('click', toDoInteractions.checkToDoInfo, false);
   }
 
   const addToDoListItemToThingsToDo = (list) => {
@@ -214,7 +215,7 @@ const toDoForm = (() => {
   toDoAddButton.addEventListener('click', createToDoItem, false);
   cancelButton.addEventListener('click', closeToDoForm, false);
 
-  return { toDoList, rePopulateArray, addToDoListItemToThingsToDo, createToDoListItemDiv };
+  return { toDoList, rePopulateArray, addToDoListItemToThingsToDo, createToDoListItemDiv, openToDoForm };
 })();
 
 const projectForm = (() => {
