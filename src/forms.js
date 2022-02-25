@@ -100,7 +100,7 @@ const toDoForm = (() => {
       checkBox.classList.add('fa-regular', 'fa-square-check', 'fa-lg', 'checkbox');
     }
     dateIconsForEditing.classList.add('date-icons-for-editing');
-    editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg');
+    editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg', 'edit-symbol');
     infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg', 'info-symbol');
     trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
     numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`;
@@ -120,7 +120,9 @@ const toDoForm = (() => {
 
     // add functionality
     checkBox.addEventListener('click', toDoInteractions.markToDoAsComplete, false);
+    editSymbol.addEventListener('click', toDoInteractions.openEditToDoForm, false);
     infoSymbol.addEventListener('click', toDoInteractions.checkToDoInfo, false);
+    trashCan.addEventListener('click', toDoInteractions.deleteToDo, false);
   }
 
   const addToDoListItemToThingsToDo = (list) => {
@@ -136,6 +138,7 @@ const toDoForm = (() => {
 
   const closeToDoForm = function () {
     generalFormFunction.closeForm(toDoForm, titleInput, notesInput,deadLineInput, priorityInput);
+    toDoAddButton.innerText = 'Add'
   }
 
 
@@ -215,7 +218,7 @@ const toDoForm = (() => {
   toDoAddButton.addEventListener('click', createToDoItem, false);
   cancelButton.addEventListener('click', closeToDoForm, false);
 
-  return { toDoList, rePopulateArray, addToDoListItemToThingsToDo, createToDoListItemDiv, openToDoForm };
+  return { toDoList, rePopulateArray, addToDoListItemToThingsToDo, createToDoListItemDiv, closeToDoForm, openToDoForm, createToDoItem };
 })();
 
 const projectForm = (() => {
