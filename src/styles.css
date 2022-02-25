@@ -1,3 +1,7 @@
+@font-face {
+  font-family: title-font;
+  src: url(./fonts/MAROLA__.TTF);
+}
 html, 
 body {
   margin: 0;
@@ -26,6 +30,8 @@ body {
 }
 
 #page-header h1 {
+  font-family: title-font;
+  font-size: 50px;
   color: white;
   margin: 0 auto;
   text-align: center;
