@@ -40,7 +40,6 @@ const toDoInteractions = (() => {
           toDoList[i].complete = true;
           localStorage.removeItem(toDoList[i].title);
           localStorage.setItem(`${toDoList[i].title}`, JSON.stringify(toDoList[i]));
-          console.log(toDoList[i])
         }
       }
     } else if (this.classList.contains('fa-square-check')) {
@@ -51,7 +50,6 @@ const toDoInteractions = (() => {
           toDoList[i].complete = false;
           localStorage.removeItem(toDoList[i].title);
           localStorage.setItem(`${toDoList[i].title}`, JSON.stringify(toDoList[i]));
-          console.log(toDoList[i])
         }
       }
     }
@@ -133,7 +131,6 @@ const toDoInteractions = (() => {
     for (let i = 0; i < toDoList.length; i++) {
       if (toDoList[i].title === toDoListItemToDelete) {
         toDoList.splice(i, 1)
-        console.log(toDoList);
         for(let j = 0; j < localStorage.length; j++) {
           localStorage.removeItem(toDoListItemToDelete)
         }

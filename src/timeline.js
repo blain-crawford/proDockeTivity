@@ -2,16 +2,31 @@ import { addToDoListItemToThingsToDo, toDoList, toDoForm, clearThingsToDoBeforeR
 import { isThisMonth, isThisWeek, format, parseISO } from "date-fns";
 const timelineInteractions = (() => {
   const currentProject = document.querySelector('#current-project')
+  const timeLineDivs = document.querySelectorAll('.timeline-div');
   const allTimeLine = document.querySelector('#all');
   const weekTimeLine = document.querySelector('#week');
   const monthTimeLine = document.querySelector('#month');
   const mostImportantTimeLine = document.querySelector('#most-important');
   const completedTimeLine = document.querySelector('#completed');
+  const projectContainer = document.querySelector('#projects')
+  
+  const showSelectedTimeLine = function (timeLine) {
+    timeLineDivs.forEach(div => {
+      div.classList.remove('current-list-view');
+    })
 
+    projectContainer.childNodes.forEach(project => {
+      project.classList.remove('current-list-view');
+    })
+    
+    timeLine.classList.add('current-list-view');
+    
+  }
   const chooseAllTimeLine = function () {
     currentProject.innerText = '';
     currentProject.innerText = this.innerText;
     toDoForm.addToDoListItemToThingsToDo(toDoList);
+    showSelectedTimeLine(allTimeLine)
   };
 
   const chooseWeekTimeLine = function () {
@@ -23,6 +38,7 @@ const timelineInteractions = (() => {
         toDoForm.createToDoListItemDiv(toDoList[i]);
       }
     }
+    showSelectedTimeLine(weekTimeLine)
   };
 
   const chooseMonthTimeLine = function () {
@@ -34,6 +50,7 @@ const timelineInteractions = (() => {
         toDoForm.createToDoListItemDiv(toDoList[i]);
       }
     }
+    showSelectedTimeLine(monthTimeLine)
   };
 
   const chooseMostImportantTimeLine = function () {
@@ -45,6 +62,7 @@ const timelineInteractions = (() => {
         toDoForm.createToDoListItemDiv(toDoList[i]);
       }
     }
+    showSelectedTimeLine(mostImportantTimeLine)
   };
 
   const chooseCompletedTimeLine = function () {
@@ -56,9 +74,10 @@ const timelineInteractions = (() => {
         toDoForm.createToDoListItemDiv(toDoList[i]);
       }
     }
+    showSelectedTimeLine(completedTimeLine)
   };
 
-  allTimeLine.addEventListener('click', chooseAllTimeLine, false);
+  allTimeLine.addEventListener('click', chooseAllTimeLine.bind(allTimeLine), false);
   weekTimeLine.addEventListener('click', chooseWeekTimeLine, false);
   monthTimeLine.addEventListener('click', chooseMonthTimeLine, false);
   mostImportantTimeLine.addEventListener('click', chooseMostImportantTimeLine, false);

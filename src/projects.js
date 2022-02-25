@@ -19,6 +19,18 @@ const projectInteractions = (() => {
   let projectList = document.querySelectorAll('.project-name');
   const projectDeleteButtons = document.querySelectorAll('.fa-trash')
   let projectsArray = [];
+  const timeLineDivs = document.querySelectorAll('.timeline-div');
+
+  const showSelectedProject = function (project) {
+    timeLineDivs.forEach(div => {
+      div.classList.remove('current-list-view');
+    })
+    projectList.forEach(project => {
+      project.parentElement.classList.remove('current-list-view');
+    })
+    console.log(projectList);
+    project.parentElement.classList.add('current-list-view');
+  }
 
   const clearProjectContainerDivBeforeRepopulation = function () {
     projectsContainerDiv.innerHTML = '';
@@ -65,6 +77,7 @@ const projectInteractions = (() => {
   };
 
 
+
   const chooseProject = function () {
     currentProject.innerText = '';
     currentProject.innerText = this.innerText;
@@ -75,6 +88,7 @@ const projectInteractions = (() => {
           toDoForm.addToDoListItemToThingsToDo(currentProject.projectContainer);
       }
     }
+    showSelectedProject(this);
   };
 
   const createProjectOrganizers = () => {
@@ -106,7 +120,6 @@ const projectInteractions = (() => {
           currentToDo.project = titleInputDiv.value;
           localStorage.removeItem(currentToDo.title);
           localStorage.setItem(`${currentToDo.title}`, JSON.stringify(currentToDo))
-          console.log(projectsArray);
         }
       }
     }

@@ -87,25 +87,31 @@ const toDoForm = (() => {
     const editSymbol = document.createElement('i');
     const infoSymbol = document.createElement('i');
     const trashCan = document.createElement('i');
-    const numberOfTodos = document.querySelector('#number-of-todos');
 
     // style elements
     toDoDiv.id = toDoContainer.childElementCount;
     toDoDiv.classList.add('todo');
     checkBoxAndTitle.classList.add('checkbox-and-title');
+    dateIconsForEditing.classList.add('date-icons-for-editing');
+    editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg', 'edit-symbol');
+    infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg', 'info-symbol');
+    trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
+    toDoDivTitle.innerText = item.title;
+    toDoDate.innerText = item.deadLine;
+
+    // Style Edge Cases
     if(!item.complete) {
       checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg', 'checkbox');
     }
     if(item.complete) {
       checkBox.classList.add('fa-regular', 'fa-square-check', 'fa-lg', 'checkbox');
     }
-    dateIconsForEditing.classList.add('date-icons-for-editing');
-    editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg', 'edit-symbol');
-    infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg', 'info-symbol');
-    trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
-    numberOfTodos.innerText = `(${toDoContainer.childElementCount + 1})`;
-    toDoDivTitle.innerText = item.title;
-    toDoDate.innerText = item.deadLine;
+    if(item.priority === 'high') {
+      toDoDiv.classList.add('high-priority');
+    }
+    if(item.priority === 'medium') {
+      toDoDiv.classList.add('medium-priority');
+    }
 
     // add elements to DOM
     checkBoxAndTitle.appendChild(checkBox);
