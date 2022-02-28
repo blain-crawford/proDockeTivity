@@ -79,7 +79,6 @@ const toDoInteractions = (() => {
     toDoForm.closeToDoForm()
     projectInteractions.clearProjectContainerDivBeforeRepopulation();
     projectInteractions.addprojectsArrayToLocalStorage();
-    autoPopulateThingsToDo();
     autoPopulateProjects();
 
     //Change ToDoForm back to normal
