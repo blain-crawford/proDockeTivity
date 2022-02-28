@@ -6,11 +6,13 @@ import {
   clearThingsToDoBeforeRepopulation,
   generalFormFunction,
 } from './forms.js';
+
 import {
   storageAvailable,
   autoPopulateThingsToDo,
   autoPopulateProjects,
 } from './index.js';
+
 import { projectInteractions, Project } from './projects.js';
 
 const toDoInteractions = (() => {
@@ -43,7 +45,7 @@ const toDoInteractions = (() => {
   const addButton = document.querySelector('#add');
 
   const reloadTodos = function (project) {
-    console.log(project);
+    console.log(projectInteractions.projectsArray);
 
     // for (let i = 0; i < toDoList.length; i++) {
     //   console.log(toDoList[i].project);
@@ -95,6 +97,7 @@ const toDoInteractions = (() => {
    */
   const editToDoItem = function () {
     const toDoToEdit = toDoEditFormLabel.firstChild.innerText;
+    
     for (let i = 0; i < toDoList.length; i++) {
       if (toDoList[i].title === toDoToEdit) {
         toDoList[i].title = titleInput.value;

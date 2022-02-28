@@ -3,13 +3,12 @@ import './styles.css';
 import { compareAsc, format } from 'date-fns';
 import { toDoForm, toDoList, projectForm } from './forms';
 import { projectInteractions } from './projects.js';
-import { timelineInteractions } from './timeline.js'
-
+import { timelineInteractions } from './timeline.js';
 
 /**
  * seeing if local storage is available
  */
- const storageAvailable = function (type) {
+const storageAvailable = function (type) {
   let storage;
   try {
     storage = window[type];
@@ -28,13 +27,7 @@ import { timelineInteractions } from './timeline.js'
       )(storage && storage.length !== 0)
     );
   }
-}
-
-
-/**
- * activate functionality for toDoForm?  May be able to delete
- */
-// toDoForm
+};
 
 /**
  * checks size of window for sideMenu placement/removes tent
@@ -42,28 +35,28 @@ import { timelineInteractions } from './timeline.js'
 const handleSideMenuAndTint = (() => {
   const pageHeader = document.querySelector('#page-header');
   const pageBody = document.querySelector('#page-body');
-  const menuDropper = document.querySelector('.menu-dropper')
+  const menuDropper = document.querySelector('.menu-dropper');
   const sideMenu = document.querySelector('#side-menu');
   const todoListsDisplay = document.querySelector('#todo-lists');
 
   const removeTintForLargeScreens = (() => {
     window.addEventListener('resize', () => {
-      if(window.innerWidth > 1000 && !pageBody.classList.contains('tint')) {
+      if (window.innerWidth > 1000 && !pageBody.classList.contains('tint')) {
         sideMenu.classList.remove('show-side-menu');
         todoListsDisplay.classList.remove('tint');
         pageHeader.classList.remove('tint');
       }
-    })
+    });
   })();
 
   /**
    * when screen size is too small, this adds functionality to show it
    */
-  const showSideMenu = function () {  
+  const showSideMenu = function () {
     sideMenu.classList.toggle('show-side-menu');
     todoListsDisplay.classList.toggle('tint');
     pageHeader.classList.toggle('tint');
-  }
+  };
 
   menuDropper.addEventListener('click', showSideMenu, false);
 })();
@@ -82,18 +75,17 @@ autoPopulateThingsToDo();
  * and linked to proper toDo list
  */
 const autoPopulateProjects = () => {
-  if(!localStorage.getItem('projectsArray')) {
+  if (!localStorage.getItem('projectsArray')) {
     return;
   } else {
     projectInteractions.fillProjectsArray();
     for (let i = 0; i < projectInteractions.projectsArray.length; i++) {
       let projectToCreate = projectInteractions.projectsArray[i];
       projectForm.createProjectOrganizerDiv(projectToCreate.title);
-      
     }
     projectInteractions.createProjectOrganizers();
   }
 };
 autoPopulateProjects();
 
-export{ storageAvailable, autoPopulateThingsToDo, autoPopulateProjects }
+export { storageAvailable, autoPopulateThingsToDo, autoPopulateProjects };
