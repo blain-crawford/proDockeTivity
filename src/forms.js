@@ -187,7 +187,6 @@ const toDoForm = (() => {
       selectedProject
     );
 
-    
     generalFormFunction.closeForm(toDoForm, titleInput, notesInput, deadLineInput, priorityInput);
 
     if (storageAvailable('localStorage')) {
