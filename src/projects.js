@@ -28,7 +28,7 @@ const projectInteractions = (() => {
     projectList.forEach(project => {
       project.parentElement.classList.remove('current-list-view');
     })
-    console.log(projectList);
+    
     project.parentElement.classList.add('current-list-view');
   }
 
@@ -177,7 +177,7 @@ const projectInteractions = (() => {
   })
 
   return {createProjectOrganizers, populateProjectOrganizers, projectsArray, addprojectsArrayToLocalStorage, 
-    fillProjectsArray, deleteProject, showEditProjectTitleForm, clearProjectContainerDivBeforeRepopulation}
+    fillProjectsArray, deleteProject, showEditProjectTitleForm, clearProjectContainerDivBeforeRepopulation, showSelectedProject}
 
 })();
 

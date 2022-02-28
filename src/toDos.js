@@ -29,8 +29,17 @@ const toDoInteractions = (() => {
   const priorityInput = document.querySelector('#priority-input');
   const addButton = document.querySelector('#add');
 
+  const reloadTodos = function (project) {
+    console.log(project);
+    
+    // for (let i = 0; i < toDoList.length; i++) {
+    //   console.log(toDoList[i].project);
+    // }
+  }
+
   const markToDoAsComplete = function () {
     let toDoToCheck = this.nextSibling.textContent;
+    const projectList = document.querySelectorAll('.project-name');
 
     if(this.classList.contains('fa-square')) {
       this.classList.remove('fa-square');
@@ -80,6 +89,8 @@ const toDoInteractions = (() => {
     projectInteractions.clearProjectContainerDivBeforeRepopulation();
     projectInteractions.addprojectsArrayToLocalStorage();
     autoPopulateProjects();
+    autoPopulateThingsToDo();
+    reloadTodos(this);
 
     //Change ToDoForm back to normal
     toDoEditFormLabel.innerHTML = '<h2>Enter Task</h2>';
@@ -107,7 +118,6 @@ const toDoInteractions = (() => {
   }
 
   const checkToDoInfo = function () {
-
     const toDoListItemToCheck = this.parentElement.previousSibling.innerText
 
     for(let i = 0; i < toDoList.length; i++) {
