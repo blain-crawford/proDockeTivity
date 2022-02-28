@@ -2,13 +2,20 @@
 import './styles.css';
 import { projectInteractions, Project } from './projects.js';
 import { secondsToMilliseconds, format, compareAsc } from 'date-fns';
-import { storageAvailable } from './index.js'
+import { storageAvailable } from './index.js';
 import { toDoInteractions } from './toDos';
 const pageBody = document.querySelector('#page-body');
 const pageHeader = document.querySelector('#page-header');
 
 class ToDoItem {
-  constructor(title, notes, deadLine, priority, project = null, complete = false) {
+  constructor(
+    title,
+    notes,
+    deadLine,
+    priority,
+    project = null,
+    complete = false
+  ) {
     this.title = title;
     this.notes = notes;
     this.deadLine = deadLine;
@@ -18,18 +25,19 @@ class ToDoItem {
   }
 }
 
+// Clears main toDo container each time changes happen to prepare for repopulation
 const clearThingsToDoBeforeRepopulation = () => {
   const toDoContainer = document.querySelector('#todo-container');
   toDoContainer.innerHTML = '';
 };
 
-
-
+// Create Array that will store constantly updated toDo information
 const toDoList = [];
 
+// General Functionality all forms share
 const generalFormFunction = (() => {
   const clearForm = (title, notes = null, deadLine = null, priority = null) => {
-    if (title) { 
+    if (title) {
       title.value = '';
     }
 
@@ -37,7 +45,7 @@ const generalFormFunction = (() => {
       notes.value = '';
     }
 
-    if (deadLine) { 
+    if (deadLine) {
       deadLine.value = 'MM-dd-yyyy';
     }
 
@@ -46,8 +54,14 @@ const generalFormFunction = (() => {
     }
   };
 
-  const closeForm = (form, title, notes = null, deadLine = null, priority = null) => {
-    clearForm(title, notes, deadLine, priority)
+  const closeForm = (
+    form,
+    title,
+    notes = null,
+    deadLine = null,
+    priority = null
+  ) => {
+    clearForm(title, notes, deadLine, priority);
     form.classList.add('invisible');
     pageBody.classList.remove('tint');
     pageHeader.classList.remove('tint');
@@ -58,11 +72,12 @@ const generalFormFunction = (() => {
     pageBody.classList.add('tint');
     pageHeader.classList.add('tint');
   };
-  return {clearForm, closeForm, openForm}
+  return { clearForm, closeForm, openForm };
 })();
 
+// Full toDoForm functionality
 const toDoForm = (() => {
-
+  //Selecting DOM elements 
   const toDoformClosingButton = document.querySelector('#closing-button');
   const addToDoButton = document.querySelector('#add-todo');
   const toDoForm = document.querySelector('#todo-form');
@@ -75,6 +90,11 @@ const toDoForm = (() => {
   const cancelButton = document.querySelector('#cancel');
   let selectedProject = null;
 
+  /**
+   * Takes a toDo object and creates/styles/adds functionality to a toDo Div 
+   * in main toDo section of App
+   * @param {} item a toDo object
+   */
   const createToDoListItemDiv = function (item) {
     // create elements for DOM
     const toDoContainer = document.querySelector('#todo-container');
@@ -93,23 +113,38 @@ const toDoForm = (() => {
     toDoDiv.classList.add('todo');
     checkBoxAndTitle.classList.add('checkbox-and-title');
     dateIconsForEditing.classList.add('date-icons-for-editing');
-    editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg', 'edit-symbol');
-    infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg', 'info-symbol');
+    editSymbol.classList.add(
+      'fa-regular',
+      'fa-pen-to-square',
+      'fa-lg',
+      'edit-symbol'
+    );
+    infoSymbol.classList.add(
+      'fa-solid',
+      'fa-circle-info',
+      'fa-lg',
+      'info-symbol'
+    );
     trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
     toDoDivTitle.innerText = item.title;
     toDoDate.innerText = item.deadLine;
 
     // Style Edge Cases
-    if(!item.complete) {
+    if (!item.complete) {
       checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg', 'checkbox');
     }
-    if(item.complete) {
-      checkBox.classList.add('fa-regular', 'fa-square-check', 'fa-lg', 'checkbox');
+    if (item.complete) {
+      checkBox.classList.add(
+        'fa-regular',
+        'fa-square-check',
+        'fa-lg',
+        'checkbox'
+      );
     }
-    if(item.priority === 'high') {
+    if (item.priority === 'high') {
       toDoDiv.classList.add('high-priority');
     }
-    if(item.priority === 'medium') {
+    if (item.priority === 'medium') {
       toDoDiv.classList.add('medium-priority');
     }
 
@@ -129,11 +164,15 @@ const toDoForm = (() => {
     editSymbol.addEventListener('click', toDoInteractions.openEditToDoForm, false);
     infoSymbol.addEventListener('click', toDoInteractions.checkToDoInfo, false);
     trashCan.addEventListener('click', toDoInteractions.deleteToDo, false);
-  }
+  };
 
+  /**
+   * takes a list of toDo objects and creates DOM elements for each
+   * @param {} list toDo Array
+   */
   const addToDoListItemToThingsToDo = (list) => {
     clearThingsToDoBeforeRepopulation();
-  
+
     if (list.length > 0) {
       for (let i = 0; i < list.length; i++) {
         createToDoListItemDiv(list[i]);
@@ -141,18 +180,33 @@ const toDoForm = (() => {
     }
   };
 
-
+  /**
+   * closes toDoForm and clears inputs
+   */
   const closeToDoForm = function () {
-    generalFormFunction.closeForm(toDoForm, titleInput, notesInput,deadLineInput, priorityInput);
-    toDoAddButton.innerText = 'Add'
-  }
+    generalFormFunction.closeForm(
+      toDoForm,
+      titleInput,
+      notesInput,
+      deadLineInput,
+      priorityInput
+    );
+    toDoAddButton.innerText = 'Add';
+  };
 
-
+  /**
+   * opens toDoForm. . .lol
+   */
   const openToDoForm = () => {
     generalFormFunction.openForm(toDoForm);
   };
 
-
+  /**
+   * Takes an Array and an Object and clears the Array 
+   * then repopulates with objects from local Storage
+   * @param {*} arrayToPopulate toDoList 
+   * @param {*} toDoObject localStorage
+   */
   const rePopulateArray = (arrayToPopulate, toDoObject) => {
     if (arrayToPopulate.length > 0) {
       while (arrayToPopulate.length > 0) {
@@ -168,6 +222,9 @@ const toDoForm = (() => {
     }
   };
 
+  /**
+   * creates a toDo item and updates localStorage/toDoList to contain it
+   */
   const createToDoItem = function () {
     if (
       currentProject.textContent !== 'All' &&
@@ -179,6 +236,7 @@ const toDoForm = (() => {
       selectedProject = currentProject.textContent;
     }
 
+    //create new toDo class
     const toDo = new ToDoItem(
       titleInput.value,
       notesInput.value,
@@ -186,9 +244,17 @@ const toDoForm = (() => {
       priorityInput.value,
       selectedProject
     );
+    
+    //close toDo Form
+    generalFormFunction.closeForm(
+      toDoForm,
+      titleInput,
+      notesInput,
+      deadLineInput,
+      priorityInput
+    );
 
-    generalFormFunction.closeForm(toDoForm, titleInput, notesInput, deadLineInput, priorityInput);
-
+    //check to see if local storage is available, and if so add to local Storage
     if (storageAvailable('localStorage')) {
       if (!localStorage.getItem(toDo.title)) {
         localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
@@ -218,32 +284,52 @@ const toDoForm = (() => {
     }
   };
 
+  //Adding all event listeners
   toDoformClosingButton.addEventListener('click', closeToDoForm, false);
   addToDoButton.addEventListener('click', openToDoForm, false);
   toDoAddButton.addEventListener('click', createToDoItem, false);
   cancelButton.addEventListener('click', closeToDoForm, false);
 
-  return { toDoList, rePopulateArray, addToDoListItemToThingsToDo, createToDoListItemDiv, closeToDoForm, openToDoForm, createToDoItem };
+  return {
+    toDoList,
+    rePopulateArray,
+    addToDoListItemToThingsToDo,
+    createToDoListItemDiv,
+    closeToDoForm,
+    openToDoForm,
+    createToDoItem,
+  };
 })();
 
+// General functionality for project form
 const projectForm = (() => {
+  //DOM element selections
   const openProjectFormButton = document.querySelector('#add-project-organizer');
   const addProjectButton = document.querySelector('#add-project');
   const projectTitleInput = document.querySelector('#project-title-input');
   const projectForm = document.querySelector('#project-form');
   const projectTitle = document.querySelector('#project-title-div');
   const closeProjectFormButton = document.querySelector('#project-form-closing-button');
+  const cancelProjectButton = document.querySelector('#cancel-project');
 
-  const cancelProjectButton = document.querySelector('#cancel-project')
-
+  /**
+   * opens project form
+   */
   const openProjectForm = function () {
     generalFormFunction.openForm(projectForm);
-  }
+  };
 
+  /**
+   * closes project form
+   */
   const closeProjectForm = function () {
     generalFormFunction.closeForm(projectForm, projectTitleInput);
-  }
+  };
 
+  /**
+   * takes a title and creates a projectDiv/adds style and functionality
+   * @param {*} title 
+   */  
   const createProjectOrganizerDiv = function (title) {
     // create project elements
     const projectsContainerDiv = document.querySelector('#projects');
@@ -269,26 +355,48 @@ const projectForm = (() => {
     projectsContainerDiv.appendChild(projectDiv);
 
     //add functionality
-    editSymbol.addEventListener('click', projectInteractions.showEditProjectTitleForm, false);
-    trashCan.addEventListener('click', projectInteractions.deleteProject ,false);
-    
-  }
-
+    editSymbol.addEventListener(
+      'click',
+      projectInteractions.showEditProjectTitleForm,
+      false
+    );
+    trashCan.addEventListener(
+      'click',
+      projectInteractions.deleteProject,
+      false
+    );
+  };
+  
+  /**
+   * creates new project folder on sideMenu
+   */
   const createNewProjectOrganizer = function () {
     createProjectOrganizerDiv(projectTitleInput.value);
 
     projectInteractions.createProjectOrganizers();
     closeProjectForm();
     projectInteractions.addprojectsArrayToLocalStorage();
-  }
+  };
 
+  // Add functionality to project form
   openProjectFormButton.addEventListener('click', openProjectForm, false);
   closeProjectFormButton.addEventListener('click', closeProjectForm, false);
   cancelProjectButton.addEventListener('click', closeProjectForm, false);
   addProjectButton.addEventListener('click', createNewProjectOrganizer, false);
 
-  return {createNewProjectOrganizer, createProjectOrganizerDiv, openProjectForm, closeProjectForm}
+  return {
+    createNewProjectOrganizer,
+    createProjectOrganizerDiv,
+    openProjectForm,
+    closeProjectForm,
+  };
+})();
 
-})(); 
-
-export { toDoForm, toDoList, generalFormFunction, projectForm, storageAvailable, clearThingsToDoBeforeRepopulation };
+export {
+  toDoForm,
+  toDoList,
+  generalFormFunction,
+  projectForm,
+  storageAvailable,
+  clearThingsToDoBeforeRepopulation,
+};

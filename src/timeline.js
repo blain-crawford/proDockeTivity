@@ -4,7 +4,9 @@ import {
   toDoForm,
   clearThingsToDoBeforeRepopulation,
 } from './forms';
+
 import { isThisMonth, isThisWeek, format, parseISO } from 'date-fns';
+
 const timelineInteractions = (() => {
   //DOM creation
   const currentProject = document.querySelector('#current-project');
@@ -16,6 +18,10 @@ const timelineInteractions = (() => {
   const completedTimeLine = document.querySelector('#completed');
   const projectContainer = document.querySelector('#projects');
 
+  /**
+   * Changes Background of all timeLine Divs to show which is being views
+   * @param {*} timeLine current timeline to view
+   */
   const showSelectedTimeLine = function (timeLine) {
     timeLineDivs.forEach((div) => {
       div.classList.remove('current-list-view');
@@ -27,6 +33,8 @@ const timelineInteractions = (() => {
 
     timeLine.classList.add('current-list-view');
   };
+
+  // All functions for which timeline to view
   const chooseAllTimeLine = function () {
     currentProject.innerText = '';
     currentProject.innerText = this.innerText;
@@ -82,13 +90,9 @@ const timelineInteractions = (() => {
     showSelectedTimeLine(completedTimeLine);
   };
 
-  allTimeLine.addEventListener(
-    'click',
-    chooseAllTimeLine.bind(allTimeLine),
-    false
-  );
   
   // Add all event listeners
+  allTimeLine.addEventListener('click', chooseAllTimeLine.bind(allTimeLine), false);
   weekTimeLine.addEventListener('click', chooseWeekTimeLine, false);
   monthTimeLine.addEventListener('click', chooseMonthTimeLine, false);
   mostImportantTimeLine.addEventListener('click', chooseMostImportantTimeLine, false);

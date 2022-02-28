@@ -56,6 +56,9 @@ const handleSideMenuAndTint = (() => {
     })
   })();
 
+  /**
+   * when screen size is too small, this adds functionality to show it
+   */
   const showSideMenu = function () {  
     sideMenu.classList.toggle('show-side-menu');
     todoListsDisplay.classList.toggle('tint');
