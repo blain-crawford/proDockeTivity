@@ -650,9 +650,14 @@ body {
   }
 
   #todo-container {
-    width: 110%;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  #list-line {
+    width: 80%;
+   
   }
 
   .menu-dropper {
@@ -665,63 +670,6 @@ body {
   }
 
  
-}
-
-@media only screen and (max-width: 330px) {
-  #page-header h1 {
-    color: white;
-    margin: 0 auto;
-    text-align: center;
-    font-size: 25px;
-  }
-
-  #page-header span {
-    font-size: 30px;
-  }
-
-  .menu-dropper {
-    font-size: 20px;
-  }
-
-  .logo-small {
-    color: white;
-    --fa-animation-duration: 2.1s;
-    --fa-bounce-land-scale-x: 1.5;
-    --fa-animation-iteration-count: 1;
-    font-size: 15px;
-  }
-  
-  #todo-form {
-    width: 240px;
-    border-radius: 2%;
-    color: rgb(107, 102, 102);
-    box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
-    font-family: librarian;
-    margin: 0 auto;
-    z-index: 1;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(230, 229, 224);
-  }
-
-  #todo-info {
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    border-radius: 2%;
-    color: rgb(107, 102, 102);
-    box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
-    font-family: librarian;
-    margin: 0 auto;
-    z-index: 1;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(230, 229, 224);
-  }
 }
 
 @media only screen and (max-width: 500px) {
@@ -751,6 +699,14 @@ body {
     margin: 23px auto;
     padding: 5px;
   }
+
+  .todo p {
+    font-size: 12px;
+  }
+
+  #todo-info {
+    width: 100%;
+  }
   
   .checkbox-and-title {
     width: 40%;
@@ -771,4 +727,75 @@ body {
     align-items: center;
     gap: 5px;
   }
+}
+
+
+@media only screen and (max-width: 330px) {
+  #page-header h1 {
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 25px;
+  }
+
+  #page-header span {
+    font-size: 30px;
+  }
+
+  .menu-dropper {
+    font-size: 20px;
+  }
+
+  .logo-small {
+    color: white;
+    --fa-animation-duration: 2.1s;
+    --fa-bounce-land-scale-x: 1.5;
+    --fa-animation-iteration-count: 1;
+    font-size: 15px;
+  }
+
+  #list-line {
+    width: 90%;
+   
+  }
+  
+  #todo-form {
+    width: 240px;
+    border-radius: 2%;
+    color: rgb(107, 102, 102);
+    box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
+    font-family: todo-font;
+    margin: 0 auto;
+    z-index: 1;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(230, 229, 224);
+  }
+
+  #todo-info {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 100%;
+    border-radius: 2%;
+    color: rgb(107, 102, 102);
+    box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
+    font-family: todo-font;
+    margin: 0 auto;
+    z-index: 1;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(230, 229, 224);
+  }
+
+  #todo-info h2 {
+    font-size: 30px;
+    margin: 3px;
+    line-height: 70px;
+  }
+
 }

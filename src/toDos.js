@@ -19,6 +19,8 @@ const toDoInteractions = (() => {
   // General page DOM selection
   const pageBody = document.querySelector('#page-body');
   const pageHeader = document.querySelector('#page-header');
+  let projectList = document.querySelectorAll('.project-name');
+  const currentProject = document.querySelector('#current-project')
 
   // ToDo Div DOM selection
   const checkBox = document.querySelectorAll('.checkbox');
@@ -57,7 +59,7 @@ const toDoInteractions = (() => {
    */
   const markToDoAsComplete = function () {
     let toDoToCheck = this.nextSibling.textContent;
-    const projectList = document.querySelectorAll('.project-name');
+    
 
     if (this.classList.contains('fa-square')) {
       this.classList.remove('fa-square');
@@ -86,10 +88,23 @@ const toDoInteractions = (() => {
         }
       }
     }
-
+    
     // Re-render App
     projectInteractions.clearProjectContainerDivBeforeRepopulation();
     autoPopulateProjects();
+    projectList = document.querySelectorAll('.project-name')
+
+    for (let i = 0; i < toDoList.length; i++) {
+      if (toDoList[i].title === this.nextSibling.innerText) {
+        let projectToSelect = toDoList[i].project
+        for (let j = 0; j < projectList.length; j++) {
+          if (projectList[j].firstChild.innerText === projectToSelect && currentProject.innerText === projectToSelect) {
+            var projectOrganizerToSelect = projectList[j].parentElement
+            projectOrganizerToSelect.classList.add('current-list-view')
+          }
+        }
+      }
+    }
   };
 
   /**
@@ -123,6 +138,7 @@ const toDoInteractions = (() => {
     autoPopulateProjects();
     autoPopulateThingsToDo();
     reloadTodos();
+    currentProject.innerText = 'All'
 
     //Change ToDoForm back to normal
     toDoEditFormLabel.innerHTML = '<h2>Enter Task</h2>';
@@ -200,6 +216,7 @@ const toDoInteractions = (() => {
     projectInteractions.addprojectsArrayToLocalStorage();
     autoPopulateThingsToDo();
     autoPopulateProjects();
+    currentProject.innerText = 'All'
   };
 
   toDoInfoFormClosingButton.addEventListener('click', closeToDoInfoForm, false);
