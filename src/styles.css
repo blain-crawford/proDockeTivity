@@ -229,6 +229,67 @@ body {
   margin-left: 5px;
 }
 
+/* Form for entering and editing project containers */
+#project-form {
+  width: 400px;
+  border-radius: 2%;
+  color: rgb(107, 102, 102);
+  box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
+  font-family: librarian;
+  margin: 0 auto;
+  z-index: 1;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(230, 229, 224);
+}
+
+#project-form-line {
+  width: 90%;
+  border-top: .5px solid rgb(173, 167, 167);
+  margin: 23px auto;
+  opacity: .6;
+}
+
+#project-form-footer {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+#project-form-closing-button {
+  color: white;
+  cursor: pointer;
+  line-height: 5px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+#project-title-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 10px auto 20px auto;
+  font-size: 20px;
+}
+
+#project-title-input {
+  height: 20px;
+  min-height: 20px;
+  max-height: 20px;
+  max-width: 98%;
+  min-width: 98%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
+
+/* Main part of page with todo list */
 #todo-lists {
   width: 85%;
   border-left: 1px solid rgb(168, 26, 26);
@@ -282,6 +343,7 @@ body {
   transform: rotate(360deg);
 }
 
+/* Part of main page under line that houses todo list */
 .todo {
   background-color: rgb(251, 242, 242);
   display: flex;
@@ -325,13 +387,15 @@ body {
   gap: 20px;
 }
 
+/* Tint added when forms are openned */
 .tint {
   background:
     black,
     linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5));
   filter: brightness(50%);
 }
-     
+ 
+/* To do entry form */
 #todo-form {
   width: 400px;
   border-radius: 2%;
@@ -347,6 +411,7 @@ body {
   background-color: rgb(230, 229, 224);
 }
 
+/* style that makes forms disapear */
 .invisible {
   visibility: hidden;
 }
@@ -469,6 +534,7 @@ body {
   cursor: pointer;
 }
 
+/* Screen for viewing details about a to do */
 #todo-info {
   display: flex;
   flex-direction: column;
@@ -571,65 +637,7 @@ body {
   align-items: center;
 }
 
-     
-#project-form {
-  width: 400px;
-  border-radius: 2%;
-  color: rgb(107, 102, 102);
-  box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
-  font-family: librarian;
-  margin: 0 auto;
-  z-index: 1;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(230, 229, 224);
-}
-
-#project-form-line {
-  width: 90%;
-  border-top: .5px solid rgb(173, 167, 167);
-  margin: 23px auto;
-  opacity: .6;
-}
-
-#project-form-footer {
-  margin: 0 auto;
-  width: 90%;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  padding-bottom: 10px;
-}
-
-#project-form-closing-button {
-  color: white;
-  cursor: pointer;
-  line-height: 5px;
-  font-size: 30px;
-  padding: 10px;
-}
-
-#project-title-div {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  margin: 10px auto 20px auto;
-  font-size: 20px;
-}
-
-#project-title-input {
-  height: 20px;
-  min-height: 20px;
-  max-height: 20px;
-  max-width: 98%;
-  min-width: 98%;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-}
-
+/* re-styling for larger screened portable viewports */
 @media only screen and (max-width: 1000px) {
   #page-header h1 {
     font-size: 40px;
@@ -676,6 +684,7 @@ body {
  
 }
 
+/* Styling for mid sized phones */
 @media only screen and (max-width: 500px) {
   .logo-mid {
     color: white;
@@ -733,7 +742,7 @@ body {
   }
 }
 
-
+/* Styling for small screens */
 @media only screen and (max-width: 330px) {
   #page-header h1 {
     color: white;
