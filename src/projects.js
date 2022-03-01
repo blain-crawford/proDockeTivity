@@ -32,7 +32,7 @@ const projectInteractions = (() => {
   const timeLineDivs = document.querySelectorAll('.timeline-div');
 
   // Creates array for holding all projects
-  let projectsArray = [];
+  let projectsArray = [{title: 'Starter Project', projectContainer: [{title: 'Generic Thing to Do', notes: 'Better Get it done', deadLine: '2022-03-01', priority: 'high', project: "Starter Project", complete: false }]}];
 
   //Alter background color of project you're currently viewing
   const showSelectedProject = function (project) {
