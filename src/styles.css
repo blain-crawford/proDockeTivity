@@ -13,16 +13,16 @@
   src: url(./fonts/Wildy-Sans.ttf);
 }
 
+/* General page setup */
 html, 
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  height: 100vh;
-  width: 100vw;
   background-color: rgb(246, 246, 243);
 }
 
+/* Page header styling */
 #page-header {
   background: rgb(148,36,36);
   background: linear-gradient(105deg, rgba(148,36,36,0.9262079831932774) 16%, rgba(241,24,10,0.758140756302521) 97%);
@@ -93,6 +93,7 @@ body {
   height: 91vh;
 }
 
+/* Side menu styling */
 #side-menu {
   background-color: rgb(246, 246, 243);
   height: 100%;
@@ -104,6 +105,7 @@ body {
   overflow: scroll;
 }
 
+/* Top part of side menu with timeline divs */
 #timelines {
   width: 100%;
   margin: 20px auto;
@@ -144,6 +146,87 @@ body {
 .timeline-div span {
   font-family: todo-font;
   font-size: 22px;
+}
+
+
+#projects {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#projects-title {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgb(148,36,36);
+  background: linear-gradient(105deg, rgba(148,36,36,0.9262079831932774) 16%, rgba(241,24,10,0.758140756302521) 97%);
+  color: white;
+  width: 100%;
+  height: 50px;
+  line-height: 0px;
+  padding: 0;
+  text-align: center;
+}
+
+#projects-title h2 {
+  font-family: title-font;
+  font-size: 30px;
+}
+
+#projects-title span {
+  font-family: wavy-font;
+  font-size: 35px;
+}
+
+#add-project-organizer {
+  transition: 1s ease-in-out;
+  cursor: pointer;
+}
+
+#add-project-organizer:hover {
+  transform: rotate(360deg);
+}
+
+#projects-line {
+  margin-top: 20px;
+  width: 90%;
+  border-top: .5px solid rgb(173, 167, 167);
+  margin: 23px auto;
+  opacity: .6;
+}
+
+/* Bottom of side menu project area */
+.project {
+  width: 80%;
+  background-color: white;
+  border: 1px solid rgb(107, 102, 102);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: .5s ease-in-out;
+}
+
+.project:hover {
+  border: 1px solid rgb(134, 8, 8);
+  background-color: rgb(246, 242, 242);
+  box-shadow: 7px -2px 17px -7px rgba(0,0,0,0.38);
+
+}
+
+.project-name {
+  font-family: todo-font;
+  font-size: 20px;
+  width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 5px;
 }
 
 #todo-lists {
@@ -240,85 +323,6 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-}
-
-#projects {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#projects-title {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: rgb(148,36,36);
-  background: linear-gradient(105deg, rgba(148,36,36,0.9262079831932774) 16%, rgba(241,24,10,0.758140756302521) 97%);
-  color: white;
-  width: 100%;
-  height: 50px;
-  line-height: 0px;
-  padding: 0;
-  text-align: center;
-}
-
-#projects-title h2 {
-  font-family: title-font;
-  font-size: 30px;
-}
-
-#projects-title span {
-  font-family: wavy-font;
-  font-size: 35px;
-}
-
-#add-project-organizer {
-  transition: 1s ease-in-out;
-  cursor: pointer;
-}
-
-#add-project-organizer:hover {
-  transform: rotate(360deg);
-}
-
-#projects-line {
-  margin-top: 20px;
-  width: 90%;
-  border-top: .5px solid rgb(173, 167, 167);
-  margin: 23px auto;
-  opacity: .6;
-}
-
-.project {
-  width: 80%;
-  background-color: white;
-  border: 1px solid rgb(107, 102, 102);
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-  padding: 10px;
-  cursor: pointer;
-  transition: .5s ease-in-out;
-}
-
-.project:hover {
-  border: 1px solid rgb(134, 8, 8);
-  background-color: rgb(246, 242, 242);
-  box-shadow: 7px -2px 17px -7px rgba(0,0,0,0.38);
-
-}
-
-.project-name {
-  font-family: todo-font;
-  font-size: 20px;
-  width: 60%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-left: 5px;
 }
 
 .tint {
