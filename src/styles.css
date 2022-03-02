@@ -229,6 +229,17 @@ body {
   margin-left: 5px;
 }
 
+.fa-pen-to-square:hover {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.fa-trash:hover {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+
 /* Form for entering and editing project containers */
 #project-form {
   width: 400px;
@@ -380,6 +391,16 @@ body {
   gap: 10px;
 }
 
+.fa-square-check:hover {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.fa-square:hover {
+  cursor: pointer;
+  font-size: 22px;
+}
+
 .checkbox-and-title p {
   font-family: todo-font;
   font-size: 20px;
@@ -389,6 +410,16 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.fa-trash-can:hover {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.fa-circle-info:hover {
+  cursor: pointer;
+  font-size: 22px;
 }
 
 /* Tint added when forms are openned */
