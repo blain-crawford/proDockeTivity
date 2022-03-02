@@ -20,8 +20,8 @@ const toDoInteractions = (() => {
   const pageBody = document.querySelector('#page-body');
   const pageHeader = document.querySelector('#page-header');
   let projectList = document.querySelectorAll('.project-name');
-  const currentProject = document.querySelector('#current-project')
-  const allTimeLine = document.querySelector('#all')
+  const currentProject = document.querySelector('#current-project');
+  const allTimeLine = document.querySelector('#all');
 
   // ToDo Div DOM selection
   const checkBox = document.querySelectorAll('.checkbox');
@@ -131,7 +131,7 @@ const toDoInteractions = (() => {
     autoPopulateProjects();
     autoPopulateThingsToDo();
     currentProject.innerText = 'All'
-    allTimeLine.classList.add('current-list-view')
+    allTimeLine.classList.add('current-list-view');
 
     //Change ToDoForm back to normal
     toDoEditFormLabel.innerHTML = '<h2>Enter Task</h2>';
@@ -209,8 +209,8 @@ const toDoInteractions = (() => {
     projectInteractions.addprojectsArrayToLocalStorage();
     autoPopulateThingsToDo();
     autoPopulateProjects();
-    currentProject.innerText = 'All'
-    allTimeLine.classList.add('current-list-view')
+    currentProject.innerText = 'All';
+    allTimeLine.classList.add('current-list-view');
   };
 
   toDoInfoFormClosingButton.addEventListener('click', closeToDoInfoForm, false);
