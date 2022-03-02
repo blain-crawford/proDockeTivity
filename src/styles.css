@@ -235,7 +235,7 @@ body {
   border-radius: 2%;
   color: rgb(107, 102, 102);
   box-shadow: 2px 5px 16px 8px rgba(0,0,0,0.31);
-  font-family: librarian;
+  font-family: todo-font;
   margin: 0 auto;
   z-index: 1;
   position: fixed;
@@ -243,6 +243,10 @@ body {
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: rgb(230, 229, 224);
+}
+
+#project-form label {
+  font-size: 30px;
 }
 
 #project-form-line {

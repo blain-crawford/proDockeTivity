@@ -109,7 +109,6 @@ const toDoForm = (() => {
     const trashCan = document.createElement('i');
 
     // style elements
-    toDoDiv.id = toDoContainer.childElementCount;
     toDoDiv.classList.add('todo');
     checkBoxAndTitle.classList.add('checkbox-and-title');
     dateIconsForEditing.classList.add('date-icons-for-editing');

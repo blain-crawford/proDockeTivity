@@ -54,7 +54,7 @@ const handleSideMenuAndTint = (() => {
   const showSideMenu = function () {
     sideMenu.classList.toggle('show-side-menu');
     todoListsDisplay.classList.toggle('tint');
-    pageHeader.classList.toggle('tint');
+    
   };
 
   menuDropper.addEventListener('click', showSideMenu, false);
