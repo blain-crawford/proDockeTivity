@@ -30,6 +30,7 @@ const projectInteractions = (() => {
   let projectList = document.querySelectorAll('.project-name');
   const projectDeleteButtons = document.querySelectorAll('.fa-trash');
   const timeLineDivs = document.querySelectorAll('.timeline-div');
+  const allTimeLine = document.querySelector('#all');
 
   // Creates array for holding all projects
   let projectsArray = [];
@@ -216,6 +217,8 @@ const projectInteractions = (() => {
     addprojectsArrayToLocalStorage();
     autoPopulateProjects();
     autoPopulateThingsToDo();
+    currentProject.innerText = 'All';
+    allTimeLine.classList.add('current-list-view');
   };
 
   createProjectOrganizers();

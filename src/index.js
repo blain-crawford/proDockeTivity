@@ -1,6 +1,5 @@
 'strict';
 import './styles.css';
-import { compareAsc, format } from 'date-fns';
 import { toDoForm, toDoList, projectForm } from './forms';
 import { projectInteractions } from './projects.js';
 import { timelineInteractions } from './timeline.js';
