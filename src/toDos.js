@@ -46,14 +46,6 @@ const toDoInteractions = (() => {
   const priorityInput = document.querySelector('#priority-input');
   const addButton = document.querySelector('#add');
 
-  const reloadTodos = function (project) {
-    console.log(projectInteractions.projectsArray);
-
-    // for (let i = 0; i < toDoList.length; i++) {
-    //   console.log(toDoList[i].project);
-    // }
-  };
-
   /**
    * update toDo status as complete, and alter check box to marked
    */
@@ -137,7 +129,6 @@ const toDoInteractions = (() => {
     projectInteractions.addprojectsArrayToLocalStorage();
     autoPopulateProjects();
     autoPopulateThingsToDo();
-    reloadTodos();
     currentProject.innerText = 'All'
 
     //Change ToDoForm back to normal
