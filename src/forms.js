@@ -88,6 +88,7 @@ const toDoForm = (() => {
   const toDoAddButton = document.getElementById('add');
   const currentProject = document.querySelector('#current-project');
   const cancelButton = document.querySelector('#cancel');
+  const toDoEditFormLabel = document.querySelector('.task-label');
   let selectedProject = null;
 
   /**
@@ -198,6 +199,8 @@ const toDoForm = (() => {
    */
   const openToDoForm = () => {
     generalFormFunction.openForm(toDoForm);
+    toDoEditFormLabel.innerHTML = '<h2>Enter Task</h2>'
+    
   };
 
   /**
