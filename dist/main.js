@@ -2,6 +2,1090 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/forms.js":
+/*!**********************!*\
+  !*** ./src/forms.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "toDoForm": () => (/* binding */ toDoForm),
+/* harmony export */   "toDoList": () => (/* binding */ toDoList),
+/* harmony export */   "generalFormFunction": () => (/* binding */ generalFormFunction),
+/* harmony export */   "projectForm": () => (/* binding */ projectForm),
+/* harmony export */   "storageAvailable": () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_2__.storageAvailable),
+/* harmony export */   "clearThingsToDoBeforeRepopulation": () => (/* binding */ clearThingsToDoBeforeRepopulation)
+/* harmony export */ });
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
+/* harmony import */ var _projects_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./projects.js */ "./src/projects.js");
+/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.js */ "./src/index.js");
+/* harmony import */ var _toDos__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./toDos */ "./src/toDos.js");
+'strict';
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+
+
+
+var pageBody = document.querySelector('#page-body');
+var pageHeader = document.querySelector('#page-header');
+
+var ToDoItem = /*#__PURE__*/_createClass(function ToDoItem(title, notes, deadLine, priority) {
+  var project = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+  var complete = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+
+  _classCallCheck(this, ToDoItem);
+
+  this.title = title;
+  this.notes = notes;
+  this.deadLine = deadLine;
+  this.priority = priority;
+  this.project = project;
+  this.complete = complete;
+}); // Clears main toDo container each time changes happen to prepare for repopulation
+
+
+var clearThingsToDoBeforeRepopulation = function clearThingsToDoBeforeRepopulation() {
+  var toDoContainer = document.querySelector('#todo-container');
+  toDoContainer.innerHTML = '';
+}; // Create Array that will store constantly updated toDo information
+
+
+var toDoList = []; // General Functionality all forms share
+
+var generalFormFunction = function () {
+  var clearForm = function clearForm(title) {
+    var notes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var deadLine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var priority = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
+    if (title) {
+      title.value = '';
+    }
+
+    if (notes) {
+      notes.value = '';
+    }
+
+    if (deadLine) {
+      deadLine.value = 'MM-dd-yyyy';
+    }
+
+    if (priority) {
+      priority.value = 'Please Choose One';
+    }
+  };
+
+  var closeForm = function closeForm(form, title) {
+    var notes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var deadLine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+    var priority = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+    clearForm(title, notes, deadLine, priority);
+    form.classList.add('invisible');
+    pageBody.classList.remove('tint');
+    pageHeader.classList.remove('tint');
+  };
+
+  var openForm = function openForm(form) {
+    form.classList.remove('invisible');
+    pageBody.classList.add('tint');
+    pageHeader.classList.add('tint');
+  };
+
+  return {
+    clearForm: clearForm,
+    closeForm: closeForm,
+    openForm: openForm
+  };
+}(); // Full toDoForm functionality
+
+
+var toDoForm = function () {
+  //Selecting DOM elements 
+  var toDoformClosingButton = document.querySelector('#closing-button');
+  var addToDoButton = document.querySelector('#add-todo');
+  var toDoForm = document.querySelector('#todo-form');
+  var titleInput = document.querySelector('#title-input');
+  var notesInput = document.querySelector('#notes-input');
+  var deadLineInput = document.querySelector('#deadline-input');
+  var priorityInput = document.querySelector('#priority-input');
+  var toDoAddButton = document.getElementById('add');
+  var currentProject = document.querySelector('#current-project');
+  var cancelButton = document.querySelector('#cancel');
+  var toDoEditFormLabel = document.querySelector('.task-label');
+  var selectedProject = null;
+  /**
+   * Takes a toDo object and creates/styles/adds functionality to a toDo Div 
+   * in main toDo section of App
+   * @param {} item a toDo object
+   */
+
+  var createToDoListItemDiv = function createToDoListItemDiv(item) {
+    // create elements for DOM
+    var toDoContainer = document.querySelector('#todo-container');
+    var checkBoxAndTitle = document.createElement('div');
+    var toDoDiv = document.createElement('div');
+    var checkBox = document.createElement('i');
+    var toDoDivTitle = document.createElement('p');
+    var dateIconsForEditing = document.createElement('div');
+    var toDoDate = document.createElement('p');
+    var editSymbol = document.createElement('i');
+    var infoSymbol = document.createElement('i');
+    var trashCan = document.createElement('i'); // style elements
+
+    toDoDiv.classList.add('todo');
+    checkBoxAndTitle.classList.add('checkbox-and-title');
+    dateIconsForEditing.classList.add('date-icons-for-editing');
+    editSymbol.classList.add('fa-regular', 'fa-pen-to-square', 'fa-lg', 'edit-symbol');
+    infoSymbol.classList.add('fa-solid', 'fa-circle-info', 'fa-lg', 'info-symbol');
+    trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
+    toDoDivTitle.innerText = item.title;
+    toDoDate.innerText = item.deadLine; // Style Edge Cases
+
+    if (!item.complete) {
+      checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg', 'checkbox');
+    }
+
+    if (item.complete) {
+      checkBox.classList.add('fa-regular', 'fa-square-check', 'fa-lg', 'checkbox');
+    }
+
+    if (item.priority === 'high') {
+      toDoDiv.classList.add('high-priority');
+    }
+
+    if (item.priority === 'medium') {
+      toDoDiv.classList.add('medium-priority');
+    } // add elements to DOM
+
+
+    checkBoxAndTitle.appendChild(checkBox);
+    checkBoxAndTitle.appendChild(toDoDivTitle);
+    toDoDiv.appendChild(checkBoxAndTitle);
+    dateIconsForEditing.appendChild(toDoDate);
+    dateIconsForEditing.appendChild(editSymbol);
+    dateIconsForEditing.appendChild(infoSymbol);
+    dateIconsForEditing.appendChild(trashCan);
+    toDoDiv.appendChild(dateIconsForEditing);
+    toDoContainer.appendChild(toDoDiv); // add functionality
+
+    checkBox.addEventListener('click', _toDos__WEBPACK_IMPORTED_MODULE_3__.toDoInteractions.markToDoAsComplete, false);
+    editSymbol.addEventListener('click', _toDos__WEBPACK_IMPORTED_MODULE_3__.toDoInteractions.openEditToDoForm, false);
+    infoSymbol.addEventListener('click', _toDos__WEBPACK_IMPORTED_MODULE_3__.toDoInteractions.checkToDoInfo, false);
+    trashCan.addEventListener('click', _toDos__WEBPACK_IMPORTED_MODULE_3__.toDoInteractions.deleteToDo, false);
+  };
+  /**
+   * takes a list of toDo objects and creates DOM elements for each
+   * @param {} list toDo Array
+   */
+
+
+  var addToDoListItemToThingsToDo = function addToDoListItemToThingsToDo(list) {
+    clearThingsToDoBeforeRepopulation();
+
+    if (list.length > 0) {
+      for (var i = 0; i < list.length; i++) {
+        createToDoListItemDiv(list[i]);
+      }
+    }
+  };
+  /**
+   * closes toDoForm and clears inputs
+   */
+
+
+  var closeToDoForm = function closeToDoForm() {
+    generalFormFunction.closeForm(toDoForm, titleInput, notesInput, deadLineInput, priorityInput);
+    toDoAddButton.innerText = 'Add';
+  };
+  /**
+   * opens toDoForm. . .lol
+   */
+
+
+  var openToDoForm = function openToDoForm() {
+    generalFormFunction.openForm(toDoForm);
+    toDoEditFormLabel.innerHTML = '<h2>Enter Task</h2>';
+  };
+  /**
+   * Takes an Array and an Object and clears the Array 
+   * then repopulates with objects from local Storage
+   * @param {*} arrayToPopulate toDoList 
+   * @param {*} toDoObject localStorage
+   */
+
+
+  var rePopulateArray = function rePopulateArray(arrayToPopulate, toDoObject) {
+    if (arrayToPopulate.length > 0) {
+      while (arrayToPopulate.length > 0) {
+        arrayToPopulate.pop();
+      }
+    }
+
+    for (var toDo in toDoObject) {
+      if (typeof toDoObject[toDo] === 'string' && toDo !== 'projectsArray') {
+        var currentToDo = JSON.parse(toDoObject[toDo]);
+        arrayToPopulate.push(currentToDo);
+      }
+    }
+  };
+  /**
+   * creates a toDo item and updates localStorage/toDoList to contain it
+   */
+
+
+  var createToDoItem = function createToDoItem() {
+    if (currentProject.textContent !== 'All' && currentProject.textContent !== 'Week' && currentProject.textContent !== 'Month' && currentProject.textContent !== 'Most Important' && currentProject.textContent !== 'Completed') {
+      selectedProject = currentProject.textContent;
+    } //create new toDo class
+
+
+    var toDo = new ToDoItem(titleInput.value, notesInput.value, deadLineInput.value, priorityInput.value, selectedProject); //close toDo Form
+
+    generalFormFunction.closeForm(toDoForm, titleInput, notesInput, deadLineInput, priorityInput); //check to see if local storage is available, and if so add to local Storage
+
+    if ((0,_index_js__WEBPACK_IMPORTED_MODULE_2__.storageAvailable)('localStorage')) {
+      if (!localStorage.getItem(toDo.title)) {
+        localStorage.setItem("".concat(toDo.title), JSON.stringify(toDo));
+        rePopulateArray(toDoList, localStorage);
+
+        if (currentProject.textContent === 'All' || currentProject.textContent === 'Week' || currentProject.textContent === 'Month' || currentProject.textContent === 'Most Important' || currentProject.textContent === 'Completed') {
+          addToDoListItemToThingsToDo(toDoList);
+        } else {
+          _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.createProjectOrganizers();
+
+          for (var i = 0; i < _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.projectsArray.length; i++) {
+            var individualProject = _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.projectsArray[i];
+
+            if (individualProject.title === currentProject.innerText) {
+              addToDoListItemToThingsToDo(individualProject.projectContainer);
+            }
+          }
+        }
+      } else {
+        alert('There is no local Storage here!');
+      }
+    }
+  }; //Adding all event listeners
+
+
+  toDoformClosingButton.addEventListener('click', closeToDoForm, false);
+  addToDoButton.addEventListener('click', openToDoForm, false);
+  toDoAddButton.addEventListener('click', createToDoItem, false);
+  cancelButton.addEventListener('click', closeToDoForm, false);
+  return {
+    toDoList: toDoList,
+    rePopulateArray: rePopulateArray,
+    addToDoListItemToThingsToDo: addToDoListItemToThingsToDo,
+    createToDoListItemDiv: createToDoListItemDiv,
+    closeToDoForm: closeToDoForm,
+    openToDoForm: openToDoForm,
+    createToDoItem: createToDoItem
+  };
+}(); // General functionality for project form
+
+
+var projectForm = function () {
+  //DOM element selections
+  var openProjectFormButton = document.querySelector('#add-project-organizer');
+  var addProjectButton = document.querySelector('#add-project');
+  var projectTitleInput = document.querySelector('#project-title-input');
+  var projectForm = document.querySelector('#project-form');
+  var projectTitle = document.querySelector('#project-title-div');
+  var closeProjectFormButton = document.querySelector('#project-form-closing-button');
+  var cancelProjectButton = document.querySelector('#cancel-project');
+  /**
+   * opens project form
+   */
+
+  var openProjectForm = function openProjectForm() {
+    generalFormFunction.openForm(projectForm);
+  };
+  /**
+   * closes project form
+   */
+
+
+  var closeProjectForm = function closeProjectForm() {
+    generalFormFunction.closeForm(projectForm, projectTitleInput);
+  };
+  /**
+   * takes a title and creates a projectDiv/adds style and functionality
+   * @param {*} title 
+   */
+
+
+  var createProjectOrganizerDiv = function createProjectOrganizerDiv(title) {
+    // create project elements
+    var projectsContainerDiv = document.querySelector('#projects');
+    var projectDiv = document.createElement('div');
+    var divTag = document.createElement('i');
+    var projectName = document.createElement('div');
+    var editSymbol = document.createElement('i');
+    var trashCan = document.createElement('i'); // stylize project elements
+
+    projectDiv.classList = 'project';
+    divTag.classList.add('fa-solid', 'fa-tag', 'fa-lg');
+    projectName.classList.add('project-name');
+    projectName.innerHTML = "<span>".concat(title, "</span>");
+    editSymbol.classList.add('fa-solid', 'fa-pen-to-square');
+    trashCan.classList.add('fa-solid', 'fa-trash'); //add elements to DOM
+
+    projectDiv.appendChild(divTag);
+    projectDiv.appendChild(projectName);
+    projectDiv.appendChild(editSymbol);
+    projectDiv.appendChild(trashCan);
+    projectsContainerDiv.appendChild(projectDiv); //add functionality
+
+    editSymbol.addEventListener('click', _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.showEditProjectTitleForm, false);
+    trashCan.addEventListener('click', _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.deleteProject, false);
+  };
+  /**
+   * creates new project folder on sideMenu
+   */
+
+
+  var createNewProjectOrganizer = function createNewProjectOrganizer() {
+    createProjectOrganizerDiv(projectTitleInput.value);
+    _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.createProjectOrganizers();
+    closeProjectForm();
+    _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.addprojectsArrayToLocalStorage();
+  }; // Add functionality to project form
+
+
+  openProjectFormButton.addEventListener('click', openProjectForm, false);
+  closeProjectFormButton.addEventListener('click', closeProjectForm, false);
+  cancelProjectButton.addEventListener('click', closeProjectForm, false);
+  addProjectButton.addEventListener('click', createNewProjectOrganizer, false);
+  return {
+    createNewProjectOrganizer: createNewProjectOrganizer,
+    createProjectOrganizerDiv: createProjectOrganizerDiv,
+    openProjectForm: openProjectForm,
+    closeProjectForm: closeProjectForm
+  };
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "storageAvailable": () => (/* binding */ storageAvailable),
+/* harmony export */   "autoPopulateThingsToDo": () => (/* binding */ autoPopulateThingsToDo),
+/* harmony export */   "autoPopulateProjects": () => (/* binding */ autoPopulateProjects)
+/* harmony export */ });
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
+/* harmony import */ var _forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forms */ "./src/forms.js");
+/* harmony import */ var _projects_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./projects.js */ "./src/projects.js");
+/* harmony import */ var _timeline_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./timeline.js */ "./src/timeline.js");
+'strict';
+
+
+
+
+
+/**
+ * seeing if local storage is available
+ */
+
+var storageAvailable = function storageAvailable(type) {
+  var storage;
+
+  try {
+    storage = window[type];
+    var x = '__storage_test__';
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return e instanceof DOMException && (e.code === 22 || e.code === 1014 || e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED')(storage && storage.length !== 0);
+  }
+};
+/**
+ * checks size of window for sideMenu placement/removes tent
+ */
+
+
+var handleSideMenuAndTint = function () {
+  var pageHeader = document.querySelector('#page-header');
+  var pageBody = document.querySelector('#page-body');
+  var menuDropper = document.querySelector('.menu-dropper');
+  var sideMenu = document.querySelector('#side-menu');
+  var todoListsDisplay = document.querySelector('#todo-lists');
+
+  var removeTintForLargeScreens = function () {
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 1000 && !pageBody.classList.contains('tint')) {
+        sideMenu.classList.remove('show-side-menu');
+        todoListsDisplay.classList.remove('tint');
+        pageHeader.classList.remove('tint');
+      }
+    });
+  }();
+  /**
+   * when screen size is too small, this adds functionality to show it
+   */
+
+
+  var showSideMenu = function showSideMenu() {
+    sideMenu.classList.toggle('show-side-menu');
+    todoListsDisplay.classList.toggle('tint');
+  };
+
+  menuDropper.addEventListener('click', showSideMenu, false);
+}();
+/**
+ * starts the document with locally stored toDo's in ALL category present
+ */
+
+
+var autoPopulateThingsToDo = function autoPopulateThingsToDo() {
+  _forms__WEBPACK_IMPORTED_MODULE_1__.toDoForm.rePopulateArray(_forms__WEBPACK_IMPORTED_MODULE_1__.toDoList, localStorage);
+  _forms__WEBPACK_IMPORTED_MODULE_1__.toDoForm.addToDoListItemToThingsToDo(_forms__WEBPACK_IMPORTED_MODULE_1__.toDoList);
+};
+
+autoPopulateThingsToDo();
+/**
+ * Starts the document with locally stored projects populated
+ * and linked to proper toDo list
+ */
+
+var autoPopulateProjects = function autoPopulateProjects() {
+  if (!localStorage.getItem('projectsArray')) {
+    return;
+  } else {
+    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.fillProjectsArray();
+
+    for (var i = 0; i < _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.projectsArray.length; i++) {
+      var projectToCreate = _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.projectsArray[i];
+      _forms__WEBPACK_IMPORTED_MODULE_1__.projectForm.createProjectOrganizerDiv(projectToCreate.title);
+    }
+
+    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.createProjectOrganizers();
+  }
+};
+
+autoPopulateProjects();
+
+
+/***/ }),
+
+/***/ "./src/projects.js":
+/*!*************************!*\
+  !*** ./src/projects.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "projectInteractions": () => (/* binding */ projectInteractions),
+/* harmony export */   "Project": () => (/* binding */ Project)
+/* harmony export */ });
+/* harmony import */ var _forms_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms.js */ "./src/forms.js");
+/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.js */ "./src/index.js");
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+
+var Project = /*#__PURE__*/_createClass(function Project(title, projectContainer) {
+  _classCallCheck(this, Project);
+
+  this.title = title;
+  this.projectContainer = projectContainer;
+});
+
+var projectInteractions = function () {
+  // Select DOM elements in project Section of App
+  var currentProjectH1 = document.querySelector('#current-project');
+  var projectsContainerDiv = document.querySelector('#projects');
+  var currentProject = document.querySelector('#current-project');
+  var addButton = document.querySelector('#add-project');
+  var titleInputDiv = document.querySelector('#project-title-input');
+  var editProjectFormTitle = document.querySelector('#project-form-title');
+  var projectList = document.querySelectorAll('.project-name');
+  var projectDeleteButtons = document.querySelectorAll('.fa-trash');
+  var timeLineDivs = document.querySelectorAll('.timeline-div');
+  var allTimeLine = document.querySelector('#all'); // Creates array for holding all projects
+
+  var projectsArray = []; //Alter background color of project you're currently viewing
+
+  var showSelectedProject = function showSelectedProject(project) {
+    timeLineDivs.forEach(function (div) {
+      div.classList.remove('current-list-view');
+    });
+    projectList.forEach(function (project) {
+      project.parentElement.classList.remove('current-list-view');
+    });
+    project.parentElement.classList.add('current-list-view');
+  };
+  /**
+   * Clears side Menu project container before repopulating after projectArray change
+   */
+
+
+  var clearProjectContainerDivBeforeRepopulation = function clearProjectContainerDivBeforeRepopulation() {
+    projectsContainerDiv.innerHTML = '';
+  };
+  /**
+   * When session is opened this fills projectsArray from localMemory
+   * @returns
+   */
+
+
+  var fillProjectsArray = function fillProjectsArray() {
+    if (localStorage.projectsArray) {
+      if (projectsArray.length >= 0) {
+        while (projectsArray.length > 0) {
+          projectsArray.pop();
+        }
+
+        for (var i = 0; i < JSON.parse(localStorage.projectsArray).length; i++) {
+          projectsArray.push(JSON.parse(localStorage.projectsArray)[i]);
+        }
+      }
+    } else {
+      return;
+    }
+  };
+  /**
+   * when changes are made to projectsArray, this re-updates it in localStorage
+   */
+
+
+  var addprojectsArrayToLocalStorage = function addprojectsArrayToLocalStorage() {
+    if ((0,_index_js__WEBPACK_IMPORTED_MODULE_1__.storageAvailable)('localStorage')) {
+      if (!localStorage.getItem(projectsArray)) {
+        localStorage.setItem('projectsArray', JSON.stringify(projectsArray));
+      } else {
+        localStorage.removeItem('projectsArray');
+        localStorage.setItem('projectsArray', JSON.stringify(projectsArray));
+      }
+    }
+
+    fillProjectsArray();
+  };
+  /**
+   * Checks to see which project is selected and populates toDos in main page
+   * with toDo's from this project
+   * @param {*} projectObject object containing project list
+   * @param {*} toDoObject object containing key/value pairs of toDo objects
+   */
+
+
+  var populateProjectOrganizers = function populateProjectOrganizers(projectObject, toDoObject) {
+    for (var toDo in toDoObject) {
+      if (typeof toDoObject[toDo] === 'string' && toDo !== projectsArray) {
+        var currentToDo = JSON.parse(toDoObject[toDo]);
+
+        if (projectObject.title === currentToDo.project) {
+          projectObject.projectContainer.push(currentToDo);
+        }
+      }
+    }
+  };
+  /**
+   * Choose which project will be highlighted, and which project from projectsArray is used
+   * to populate the toDo page section
+   */
+
+
+  var chooseProject = function chooseProject() {
+    currentProject.innerText = '';
+    currentProject.innerText = this.innerText;
+    (0,_forms_js__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
+
+    for (var i = 0; i < projectList.length; i++) {
+      var _currentProject = projectsArray[i];
+
+      if (_currentProject.title === this.innerText) {
+        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.addToDoListItemToThingsToDo(_currentProject.projectContainer);
+      }
+    }
+
+    showSelectedProject(this);
+  };
+  /**
+   * Checks to see if there are any projects in projects arrary
+   * And populates the sideMedu projects session with them, as well
+   * as filling projectsArray with project objects
+   */
+
+
+  var createProjectOrganizers = function createProjectOrganizers() {
+    projectList = document.querySelectorAll('.project-name');
+
+    if (projectsArray.length > 0) {
+      while (projectsArray.length > 0) {
+        projectsArray.pop();
+      }
+    }
+
+    if (projectList.length > 0) {
+      projectList.forEach(function (project) {
+        var projectOrganizer = new Project(project.innerText, []);
+        populateProjectOrganizers(projectOrganizer, localStorage);
+        projectsArray.push(projectOrganizer);
+        project.addEventListener('click', chooseProject, false);
+      });
+    }
+  };
+  /**
+   * Changes the title of a projectContainer/ProjectObject and re-renders app
+   */
+
+
+  var changeTitle = function changeTitle() {
+    var titleToChange = editProjectFormTitle.textContent;
+    addButton.innerText = 'Add';
+
+    for (var i = 0; i < projectsArray.length; i++) {
+      if (projectsArray[i].title === titleToChange) {
+        projectsArray[i].title = titleInputDiv.value;
+
+        for (var j = 0; j < projectsArray[i].projectContainer.length; j++) {
+          var currentToDo = projectsArray[i].projectContainer[j];
+          currentToDo.project = titleInputDiv.value;
+          localStorage.removeItem(currentToDo.title);
+          localStorage.setItem("".concat(currentToDo.title), JSON.stringify(currentToDo));
+        }
+      }
+    }
+
+    currentProjectH1.textContent = titleInputDiv.value;
+    addButton.removeEventListener('click', changeTitle);
+    addButton.addEventListener('click', _forms_js__WEBPACK_IMPORTED_MODULE_0__.projectForm.createNewProjectOrganizer, false); //Rerender App
+
+    clearProjectContainerDivBeforeRepopulation();
+    addprojectsArrayToLocalStorage();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateThingsToDo)();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
+    _forms_js__WEBPACK_IMPORTED_MODULE_0__.projectForm.closeProjectForm();
+  };
+  /**
+   * Opens up form for altering project title
+   */
+
+
+  var showEditProjectTitleForm = function showEditProjectTitleForm() {
+    var projectOrganizerToEdit = this.parentElement.querySelector(':nth-child(2)').innerText;
+    editProjectFormTitle.firstChild.textContent = projectOrganizerToEdit;
+    addButton.innerText = 'Edit Title';
+    titleInputDiv.value = projectOrganizerToEdit; //change event listeners
+
+    addButton.removeEventListener('click', _forms_js__WEBPACK_IMPORTED_MODULE_0__.projectForm.createNewProjectOrganizer);
+    addButton.addEventListener('click', changeTitle, false);
+    _forms_js__WEBPACK_IMPORTED_MODULE_0__.projectForm.openProjectForm();
+  };
+  /**
+   * Deletes a project, clears it's toDos from the local storage
+   * Then re-renders app with updated info
+   */
+
+
+  var deleteProject = function deleteProject() {
+    var projectOrganizerToDelete = this.parentElement.querySelector(':nth-child(2)').innerText;
+
+    for (var i = 0; i < projectsArray.length; i++) {
+      if (projectsArray[i].title === projectOrganizerToDelete) {
+        var currentProjectContainer = projectsArray[i].projectContainer;
+
+        for (var j = 0; j < currentProjectContainer.length; j++) {
+          if (localStorage.getItem(currentProjectContainer[j].title) !== null) {
+            localStorage.removeItem(currentProjectContainer[j].title);
+          }
+        }
+
+        projectsArray.splice(i, 1);
+      }
+    }
+
+    clearProjectContainerDivBeforeRepopulation();
+    addprojectsArrayToLocalStorage();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateThingsToDo)();
+    currentProject.innerText = 'All';
+    allTimeLine.classList.add('current-list-view');
+  };
+
+  createProjectOrganizers();
+  /**
+   * Adds necessary event listeners
+   */
+
+  projectList.forEach(function (project) {
+    project.addEventListener('click', chooseProject, false);
+  });
+  projectDeleteButtons.forEach(function (button) {
+    button.addEventListener('click', deleteProject, false);
+  });
+  return {
+    createProjectOrganizers: createProjectOrganizers,
+    populateProjectOrganizers: populateProjectOrganizers,
+    projectsArray: projectsArray,
+    addprojectsArrayToLocalStorage: addprojectsArrayToLocalStorage,
+    fillProjectsArray: fillProjectsArray,
+    deleteProject: deleteProject,
+    showEditProjectTitleForm: showEditProjectTitleForm,
+    clearProjectContainerDivBeforeRepopulation: clearProjectContainerDivBeforeRepopulation,
+    showSelectedProject: showSelectedProject
+  };
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/timeline.js":
+/*!*************************!*\
+  !*** ./src/timeline.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms */ "./src/forms.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isThisWeek/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isThisMonth/index.js");
+
+
+
+var timelineInteractions = function () {
+  //DOM creation
+  var currentProject = document.querySelector('#current-project');
+  var timeLineDivs = document.querySelectorAll('.timeline-div');
+  var allTimeLine = document.querySelector('#all');
+  var weekTimeLine = document.querySelector('#week');
+  var monthTimeLine = document.querySelector('#month');
+  var mostImportantTimeLine = document.querySelector('#most-important');
+  var completedTimeLine = document.querySelector('#completed');
+  var projectContainer = document.querySelector('#projects');
+  /**
+   * Changes Background of all timeLine Divs to show which is being views
+   * @param {*} timeLine current timeline to view
+   */
+
+  var showSelectedTimeLine = function showSelectedTimeLine(timeLine) {
+    timeLineDivs.forEach(function (div) {
+      div.classList.remove('current-list-view');
+    });
+    projectContainer.childNodes.forEach(function (project) {
+      project.classList.remove('current-list-view');
+    });
+    timeLine.classList.add('current-list-view');
+  }; // All functions for which timeline to view
+
+
+  var chooseAllTimeLine = function chooseAllTimeLine() {
+    currentProject.innerText = '';
+    currentProject.innerText = this.innerText;
+    _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.addToDoListItemToThingsToDo(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList);
+    showSelectedTimeLine(allTimeLine);
+  };
+
+  var chooseWeekTimeLine = function chooseWeekTimeLine() {
+    currentProject.innerText = '';
+    currentProject.innerText = this.innerText;
+    (0,_forms__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
+
+    for (var i = 0; i < _forms__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+      if ((0,date_fns__WEBPACK_IMPORTED_MODULE_1__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine))) {
+        _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoListItemDiv(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]);
+      }
+    }
+
+    showSelectedTimeLine(weekTimeLine);
+  };
+
+  var chooseMonthTimeLine = function chooseMonthTimeLine() {
+    currentProject.innerText = '';
+    currentProject.innerText = this.innerText;
+    (0,_forms__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
+
+    for (var i = 0; i < _forms__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+      if ((0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine))) {
+        _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoListItemDiv(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]);
+      }
+    }
+
+    showSelectedTimeLine(monthTimeLine);
+  };
+
+  var chooseMostImportantTimeLine = function chooseMostImportantTimeLine() {
+    currentProject.innerText = '';
+    currentProject.innerText = this.innerText;
+    (0,_forms__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
+
+    for (var i = 0; i < _forms__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+      if (_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].priority === 'high') {
+        _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoListItemDiv(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]);
+      }
+    }
+
+    showSelectedTimeLine(mostImportantTimeLine);
+  };
+
+  var chooseCompletedTimeLine = function chooseCompletedTimeLine() {
+    currentProject.innerText = '';
+    currentProject.innerText = this.innerText;
+    (0,_forms__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
+
+    for (var i = 0; i < _forms__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+      if (_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].complete) {
+        _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoListItemDiv(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]);
+      }
+    }
+
+    showSelectedTimeLine(completedTimeLine);
+  }; // Add all event listeners
+
+
+  allTimeLine.addEventListener('click', chooseAllTimeLine.bind(allTimeLine), false);
+  weekTimeLine.addEventListener('click', chooseWeekTimeLine, false);
+  monthTimeLine.addEventListener('click', chooseMonthTimeLine, false);
+  mostImportantTimeLine.addEventListener('click', chooseMostImportantTimeLine, false);
+  completedTimeLine.addEventListener('click', chooseCompletedTimeLine, false);
+}();
+
+/***/ }),
+
+/***/ "./src/toDos.js":
+/*!**********************!*\
+  !*** ./src/toDos.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "toDoInteractions": () => (/* binding */ toDoInteractions)
+/* harmony export */ });
+/* harmony import */ var _forms_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms.js */ "./src/forms.js");
+/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.js */ "./src/index.js");
+/* harmony import */ var _projects_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./projects.js */ "./src/projects.js");
+
+
+
+
+var toDoInteractions = function () {
+  // General page DOM selection
+  var pageBody = document.querySelector('#page-body');
+  var pageHeader = document.querySelector('#page-header');
+  var projectList = document.querySelectorAll('.project-name');
+  var currentProject = document.querySelector('#current-project');
+  var allTimeLine = document.querySelector('#all'); // ToDo Div DOM selection
+
+  var checkBox = document.querySelectorAll('.checkbox');
+  var editSymbol = document.querySelector('#edit-symbol');
+  var infoSymbol = document.querySelectorAll('.info-symbol'); // Info-form DOM selection
+
+  var toDoInfoForm = document.querySelector('#todo-info');
+  var toDoInfoFormClosingButton = document.querySelector('#info-closing-button');
+  var titleDiv = document.querySelector('#info-title-input');
+  var notesDiv = document.querySelector('#info-notes-input');
+  var deadLineDiv = document.querySelector('#info-deadline-input');
+  var priorityDiv = document.querySelector('#info-priority-input'); //Edit-form DOM selection
+
+  var toDoEditForm = document.querySelector('todo-form');
+  var toDoEditFormLabel = document.querySelector('.task-label');
+  var titleInput = document.querySelector('#title-input');
+  var notesInput = document.querySelector('#notes-input');
+  var deadLineInput = document.querySelector('#deadline-input');
+  var priorityInput = document.querySelector('#priority-input');
+  var addButton = document.querySelector('#add');
+  /**
+   * update toDo status as complete, and alter check box to marked
+   */
+
+  var markToDoAsComplete = function markToDoAsComplete() {
+    var toDoToCheck = this.nextSibling.textContent;
+
+    if (this.classList.contains('fa-square')) {
+      this.classList.remove('fa-square');
+      this.classList.add('fa-square-check');
+
+      for (var i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+        if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoToCheck) {
+          _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].complete = true;
+          localStorage.removeItem(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title);
+          localStorage.setItem("".concat(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title), JSON.stringify(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]));
+        }
+      }
+    } else if (this.classList.contains('fa-square-check')) {
+      this.classList.remove('fa-square-check');
+      this.classList.add('fa-square');
+
+      for (var _i = 0; _i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; _i++) {
+        if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[_i].title === toDoToCheck) {
+          _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[_i].complete = false;
+          localStorage.removeItem(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[_i].title);
+          localStorage.setItem("".concat(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[_i].title), JSON.stringify(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[_i]));
+        }
+      }
+    } // Re-render App
+
+
+    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.clearProjectContainerDivBeforeRepopulation();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
+    projectList = document.querySelectorAll('.project-name');
+
+    for (var _i2 = 0; _i2 < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; _i2++) {
+      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[_i2].title === this.nextSibling.innerText) {
+        var projectToSelect = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[_i2].project;
+
+        for (var j = 0; j < projectList.length; j++) {
+          if (projectList[j].firstChild.innerText === projectToSelect && currentProject.innerText === projectToSelect) {
+            var projectOrganizerToSelect = projectList[j].parentElement;
+            projectOrganizerToSelect.classList.add('current-list-view');
+          }
+        }
+      }
+    }
+  };
+  /**
+   * Alter toDo and repopulate projects, toDoList, and local memory
+   */
+
+
+  var editToDoItem = function editToDoItem() {
+    var toDoToEdit = toDoEditFormLabel.firstChild.innerText;
+
+    for (var i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoToEdit) {
+        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title = titleInput.value;
+        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].notes = notesInput.value;
+        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine = deadLineInput.value;
+        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].priority = priorityInput.value;
+
+        for (var j = 0; j < localStorage.length; j++) {
+          if (localStorage[toDoToEdit]) {
+            localStorage.removeItem(toDoToEdit);
+            localStorage.setItem("".concat(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title), JSON.stringify(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]));
+          }
+        }
+      }
+    } //re-render App
+
+
+    _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.closeToDoForm();
+    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.clearProjectContainerDivBeforeRepopulation();
+    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.addprojectsArrayToLocalStorage();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateThingsToDo)();
+    currentProject.innerText = 'All';
+    allTimeLine.classList.add('current-list-view'); //Change ToDoForm back to normal
+
+    toDoEditFormLabel.innerHTML = '<h2>Enter Task</h2>';
+    addButton.innerText = 'Add';
+    addButton.removeEventListener('click', editToDoItem, false);
+    addButton.addEventListener('click', _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoItem, false);
+  };
+  /**
+   * Opens up form for editing toDo
+   */
+
+
+  var openEditToDoForm = function openEditToDoForm() {
+    _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.openToDoForm();
+    var toDoListItemToCheck = this.parentElement.previousSibling.innerText;
+    toDoEditFormLabel.innerHTML = "<h2>".concat(toDoListItemToCheck, "</h2>");
+
+    for (var i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoListItemToCheck) {
+        titleInput.value = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title;
+        notesInput.value = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].notes;
+        deadLineInput.value = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine;
+        priorityInput.value = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].priority;
+      }
+    }
+
+    addButton.innerText = 'Edit';
+    addButton.removeEventListener('click', _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoItem, false);
+    addButton.addEventListener('click', editToDoItem, false);
+  };
+  /**
+   * Opens up form showing toDo info
+   */
+
+
+  var checkToDoInfo = function checkToDoInfo() {
+    var toDoListItemToCheck = this.parentElement.previousSibling.innerText;
+
+    for (var i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoListItemToCheck) {
+        _forms_js__WEBPACK_IMPORTED_MODULE_0__.generalFormFunction.openForm(toDoInfoForm);
+        titleDiv.innerHTML = "<p>".concat(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title, "</p>");
+        notesDiv.innerHTML = "<p>".concat(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].notes, "</p>");
+        deadLineDiv.innerHTML = "<p>".concat(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine, "</p>");
+        priorityDiv.innerHTML = "<p>".concat(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].priority, "</p>");
+      }
+    }
+  };
+  /**
+   * closes info form
+   */
+
+
+  var closeToDoInfoForm = function closeToDoInfoForm() {
+    _forms_js__WEBPACK_IMPORTED_MODULE_0__.generalFormFunction.closeForm(toDoInfoForm, titleDiv, notesDiv, deadLineDiv, priorityDiv);
+  };
+  /**
+   * Deletes a toDo and re-renders getting rid of it in local storage and projectsArray/toDoList
+   */
+
+
+  var deleteToDo = function deleteToDo() {
+    var toDoListItemToDelete = this.parentElement.previousSibling.innerText;
+
+    for (var i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
+      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoListItemToDelete) {
+        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.splice(i, 1);
+
+        for (var j = 0; j < localStorage.length; j++) {
+          localStorage.removeItem(toDoListItemToDelete);
+        }
+      }
+    } // re-render App
+
+
+    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.clearProjectContainerDivBeforeRepopulation();
+    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.addprojectsArrayToLocalStorage();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateThingsToDo)();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
+    currentProject.innerText = 'All';
+    allTimeLine.classList.add('current-list-view');
+  };
+
+  toDoInfoFormClosingButton.addEventListener('click', closeToDoInfoForm, false);
+  return {
+    markToDoAsComplete: markToDoAsComplete,
+    checkToDoInfo: checkToDoInfo,
+    openEditToDoForm: openEditToDoForm,
+    deleteToDo: deleteToDo
+  };
+}();
+
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/styles.css":
 /*!**************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/styles.css ***!
@@ -1421,1130 +2505,6 @@ function styleTagTransform(css, styleElement) {
 }
 
 module.exports = styleTagTransform;
-
-/***/ }),
-
-/***/ "./src/forms.js":
-/*!**********************!*\
-  !*** ./src/forms.js ***!
-  \**********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "toDoForm": () => (/* binding */ toDoForm),
-/* harmony export */   "toDoList": () => (/* binding */ toDoList),
-/* harmony export */   "generalFormFunction": () => (/* binding */ generalFormFunction),
-/* harmony export */   "projectForm": () => (/* binding */ projectForm),
-/* harmony export */   "storageAvailable": () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_2__.storageAvailable),
-/* harmony export */   "clearThingsToDoBeforeRepopulation": () => (/* binding */ clearThingsToDoBeforeRepopulation)
-/* harmony export */ });
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
-/* harmony import */ var _projects_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./projects.js */ "./src/projects.js");
-/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.js */ "./src/index.js");
-/* harmony import */ var _toDos__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./toDos */ "./src/toDos.js");
-'strict';
-
-
-
-
-
-const pageBody = document.querySelector('#page-body');
-const pageHeader = document.querySelector('#page-header');
-
-class ToDoItem {
-  constructor(
-    title,
-    notes,
-    deadLine,
-    priority,
-    project = null,
-    complete = false
-  ) {
-    this.title = title;
-    this.notes = notes;
-    this.deadLine = deadLine;
-    this.priority = priority;
-    this.project = project;
-    this.complete = complete;
-  }
-}
-
-// Clears main toDo container each time changes happen to prepare for repopulation
-const clearThingsToDoBeforeRepopulation = () => {
-  const toDoContainer = document.querySelector('#todo-container');
-  toDoContainer.innerHTML = '';
-};
-
-// Create Array that will store constantly updated toDo information
-const toDoList = [];
-
-// General Functionality all forms share
-const generalFormFunction = (() => {
-  const clearForm = (title, notes = null, deadLine = null, priority = null) => {
-    if (title) {
-      title.value = '';
-    }
-
-    if (notes) {
-      notes.value = '';
-    }
-
-    if (deadLine) {
-      deadLine.value = 'MM-dd-yyyy';
-    }
-
-    if (priority) {
-      priority.value = 'Please Choose One';
-    }
-  };
-
-  const closeForm = (
-    form,
-    title,
-    notes = null,
-    deadLine = null,
-    priority = null
-  ) => {
-    clearForm(title, notes, deadLine, priority);
-    form.classList.add('invisible');
-    pageBody.classList.remove('tint');
-    pageHeader.classList.remove('tint');
-  };
-
-  const openForm = (form) => {
-    form.classList.remove('invisible');
-    pageBody.classList.add('tint');
-    pageHeader.classList.add('tint');
-  };
-  return { clearForm, closeForm, openForm };
-})();
-
-// Full toDoForm functionality
-const toDoForm = (() => {
-  //Selecting DOM elements 
-  const toDoformClosingButton = document.querySelector('#closing-button');
-  const addToDoButton = document.querySelector('#add-todo');
-  const toDoForm = document.querySelector('#todo-form');
-  const titleInput = document.querySelector('#title-input');
-  const notesInput = document.querySelector('#notes-input');
-  const deadLineInput = document.querySelector('#deadline-input');
-  const priorityInput = document.querySelector('#priority-input');
-  const toDoAddButton = document.getElementById('add');
-  const currentProject = document.querySelector('#current-project');
-  const cancelButton = document.querySelector('#cancel');
-  const toDoEditFormLabel = document.querySelector('.task-label');
-  let selectedProject = null;
-
-  /**
-   * Takes a toDo object and creates/styles/adds functionality to a toDo Div 
-   * in main toDo section of App
-   * @param {} item a toDo object
-   */
-  const createToDoListItemDiv = function (item) {
-    // create elements for DOM
-    const toDoContainer = document.querySelector('#todo-container');
-    const checkBoxAndTitle = document.createElement('div');
-    const toDoDiv = document.createElement('div');
-    const checkBox = document.createElement('i');
-    const toDoDivTitle = document.createElement('p');
-    const dateIconsForEditing = document.createElement('div');
-    const toDoDate = document.createElement('p');
-    const editSymbol = document.createElement('i');
-    const infoSymbol = document.createElement('i');
-    const trashCan = document.createElement('i');
-
-    // style elements
-    toDoDiv.classList.add('todo');
-    checkBoxAndTitle.classList.add('checkbox-and-title');
-    dateIconsForEditing.classList.add('date-icons-for-editing');
-    editSymbol.classList.add(
-      'fa-regular',
-      'fa-pen-to-square',
-      'fa-lg',
-      'edit-symbol'
-    );
-    infoSymbol.classList.add(
-      'fa-solid',
-      'fa-circle-info',
-      'fa-lg',
-      'info-symbol'
-    );
-    trashCan.classList.add('fa-regular', 'fa-trash-can', 'fa-lg');
-    toDoDivTitle.innerText = item.title;
-    toDoDate.innerText = item.deadLine;
-
-    // Style Edge Cases
-    if (!item.complete) {
-      checkBox.classList.add('fa-regular', 'fa-square', 'fa-lg', 'checkbox');
-    }
-    if (item.complete) {
-      checkBox.classList.add(
-        'fa-regular',
-        'fa-square-check',
-        'fa-lg',
-        'checkbox'
-      );
-    }
-    if (item.priority === 'high') {
-      toDoDiv.classList.add('high-priority');
-    }
-    if (item.priority === 'medium') {
-      toDoDiv.classList.add('medium-priority');
-    }
-
-    // add elements to DOM
-    checkBoxAndTitle.appendChild(checkBox);
-    checkBoxAndTitle.appendChild(toDoDivTitle);
-    toDoDiv.appendChild(checkBoxAndTitle);
-    dateIconsForEditing.appendChild(toDoDate);
-    dateIconsForEditing.appendChild(editSymbol);
-    dateIconsForEditing.appendChild(infoSymbol);
-    dateIconsForEditing.appendChild(trashCan);
-    toDoDiv.appendChild(dateIconsForEditing);
-    toDoContainer.appendChild(toDoDiv);
-
-    // add functionality
-    checkBox.addEventListener('click', _toDos__WEBPACK_IMPORTED_MODULE_3__.toDoInteractions.markToDoAsComplete, false);
-    editSymbol.addEventListener('click', _toDos__WEBPACK_IMPORTED_MODULE_3__.toDoInteractions.openEditToDoForm, false);
-    infoSymbol.addEventListener('click', _toDos__WEBPACK_IMPORTED_MODULE_3__.toDoInteractions.checkToDoInfo, false);
-    trashCan.addEventListener('click', _toDos__WEBPACK_IMPORTED_MODULE_3__.toDoInteractions.deleteToDo, false);
-  };
-
-  /**
-   * takes a list of toDo objects and creates DOM elements for each
-   * @param {} list toDo Array
-   */
-  const addToDoListItemToThingsToDo = (list) => {
-    clearThingsToDoBeforeRepopulation();
-
-    if (list.length > 0) {
-      for (let i = 0; i < list.length; i++) {
-        createToDoListItemDiv(list[i]);
-      }
-    }
-  };
-
-  /**
-   * closes toDoForm and clears inputs
-   */
-  const closeToDoForm = function () {
-    generalFormFunction.closeForm(
-      toDoForm,
-      titleInput,
-      notesInput,
-      deadLineInput,
-      priorityInput
-    );
-    toDoAddButton.innerText = 'Add';
-  };
-
-  /**
-   * opens toDoForm. . .lol
-   */
-  const openToDoForm = () => {
-    generalFormFunction.openForm(toDoForm);
-    toDoEditFormLabel.innerHTML = '<h2>Enter Task</h2>'
-    
-  };
-
-  /**
-   * Takes an Array and an Object and clears the Array 
-   * then repopulates with objects from local Storage
-   * @param {*} arrayToPopulate toDoList 
-   * @param {*} toDoObject localStorage
-   */
-  const rePopulateArray = (arrayToPopulate, toDoObject) => {
-    if (arrayToPopulate.length > 0) {
-      while (arrayToPopulate.length > 0) {
-        arrayToPopulate.pop();
-      }
-    }
-
-    for (const toDo in toDoObject) {
-      if (typeof toDoObject[toDo] === 'string' && toDo !== 'projectsArray') {
-        let currentToDo = JSON.parse(toDoObject[toDo]);
-        arrayToPopulate.push(currentToDo);
-      }
-    }
-  };
-
-  /**
-   * creates a toDo item and updates localStorage/toDoList to contain it
-   */
-  const createToDoItem = function () {
-    if (
-      currentProject.textContent !== 'All' &&
-      currentProject.textContent !== 'Week' &&
-      currentProject.textContent !== 'Month' &&
-      currentProject.textContent !== 'Most Important' &&
-      currentProject.textContent !== 'Completed'
-    ) {
-      selectedProject = currentProject.textContent;
-    }
-
-    //create new toDo class
-    const toDo = new ToDoItem(
-      titleInput.value,
-      notesInput.value,
-      deadLineInput.value,
-      priorityInput.value,
-      selectedProject
-    );
-    
-    //close toDo Form
-    generalFormFunction.closeForm(
-      toDoForm,
-      titleInput,
-      notesInput,
-      deadLineInput,
-      priorityInput
-    );
-
-    //check to see if local storage is available, and if so add to local Storage
-    if ((0,_index_js__WEBPACK_IMPORTED_MODULE_2__.storageAvailable)('localStorage')) {
-      if (!localStorage.getItem(toDo.title)) {
-        localStorage.setItem(`${toDo.title}`, JSON.stringify(toDo));
-        rePopulateArray(toDoList, localStorage);
-        if (
-          currentProject.textContent === 'All' ||
-          currentProject.textContent === 'Week' ||
-          currentProject.textContent === 'Month' ||
-          currentProject.textContent === 'Most Important' ||
-          currentProject.textContent === 'Completed'
-        ) {
-          addToDoListItemToThingsToDo(toDoList);
-        } else {
-          _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.createProjectOrganizers();
-
-          for (let i = 0; i < _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.projectsArray.length; i++) {
-            let individualProject = _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.projectsArray[i];
-
-            if (individualProject.title === currentProject.innerText) {
-              addToDoListItemToThingsToDo(individualProject.projectContainer);
-            }
-          }
-        }
-      } else {
-        alert('There is no local Storage here!');
-      }
-    }
-  };
-
-  //Adding all event listeners
-  toDoformClosingButton.addEventListener('click', closeToDoForm, false);
-  addToDoButton.addEventListener('click', openToDoForm, false);
-  toDoAddButton.addEventListener('click', createToDoItem, false);
-  cancelButton.addEventListener('click', closeToDoForm, false);
-
-  return {
-    toDoList,
-    rePopulateArray,
-    addToDoListItemToThingsToDo,
-    createToDoListItemDiv,
-    closeToDoForm,
-    openToDoForm,
-    createToDoItem,
-  };
-})();
-
-// General functionality for project form
-const projectForm = (() => {
-  //DOM element selections
-  const openProjectFormButton = document.querySelector('#add-project-organizer');
-  const addProjectButton = document.querySelector('#add-project');
-  const projectTitleInput = document.querySelector('#project-title-input');
-  const projectForm = document.querySelector('#project-form');
-  const projectTitle = document.querySelector('#project-title-div');
-  const closeProjectFormButton = document.querySelector('#project-form-closing-button');
-  const cancelProjectButton = document.querySelector('#cancel-project');
-
-  /**
-   * opens project form
-   */
-  const openProjectForm = function () {
-    generalFormFunction.openForm(projectForm);
-  };
-
-  /**
-   * closes project form
-   */
-  const closeProjectForm = function () {
-    generalFormFunction.closeForm(projectForm, projectTitleInput);
-  };
-
-  /**
-   * takes a title and creates a projectDiv/adds style and functionality
-   * @param {*} title 
-   */  
-  const createProjectOrganizerDiv = function (title) {
-    // create project elements
-    const projectsContainerDiv = document.querySelector('#projects');
-    const projectDiv = document.createElement('div');
-    const divTag = document.createElement('i');
-    const projectName = document.createElement('div');
-    const editSymbol = document.createElement('i');
-    const trashCan = document.createElement('i');
-
-    // stylize project elements
-    projectDiv.classList = 'project';
-    divTag.classList.add('fa-solid', 'fa-tag', 'fa-lg');
-    projectName.classList.add('project-name');
-    projectName.innerHTML = `<span>${title}</span>`;
-    editSymbol.classList.add('fa-solid', 'fa-pen-to-square');
-    trashCan.classList.add('fa-solid', 'fa-trash');
-
-    //add elements to DOM
-    projectDiv.appendChild(divTag);
-    projectDiv.appendChild(projectName);
-    projectDiv.appendChild(editSymbol);
-    projectDiv.appendChild(trashCan);
-    projectsContainerDiv.appendChild(projectDiv);
-
-    //add functionality
-    editSymbol.addEventListener(
-      'click',
-      _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.showEditProjectTitleForm,
-      false
-    );
-    trashCan.addEventListener(
-      'click',
-      _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.deleteProject,
-      false
-    );
-  };
-  
-  /**
-   * creates new project folder on sideMenu
-   */
-  const createNewProjectOrganizer = function () {
-    createProjectOrganizerDiv(projectTitleInput.value);
-
-    _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.createProjectOrganizers();
-    closeProjectForm();
-    _projects_js__WEBPACK_IMPORTED_MODULE_1__.projectInteractions.addprojectsArrayToLocalStorage();
-  };
-
-  // Add functionality to project form
-  openProjectFormButton.addEventListener('click', openProjectForm, false);
-  closeProjectFormButton.addEventListener('click', closeProjectForm, false);
-  cancelProjectButton.addEventListener('click', closeProjectForm, false);
-  addProjectButton.addEventListener('click', createNewProjectOrganizer, false);
-
-  return {
-    createNewProjectOrganizer,
-    createProjectOrganizerDiv,
-    openProjectForm,
-    closeProjectForm,
-  };
-})();
-
-
-
-
-/***/ }),
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "storageAvailable": () => (/* binding */ storageAvailable),
-/* harmony export */   "autoPopulateThingsToDo": () => (/* binding */ autoPopulateThingsToDo),
-/* harmony export */   "autoPopulateProjects": () => (/* binding */ autoPopulateProjects)
-/* harmony export */ });
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
-/* harmony import */ var _forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forms */ "./src/forms.js");
-/* harmony import */ var _projects_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./projects.js */ "./src/projects.js");
-/* harmony import */ var _timeline_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./timeline.js */ "./src/timeline.js");
-'strict';
-
-
-
-
-
-/**
- * seeing if local storage is available
- */
-const storageAvailable = function (type) {
-  let storage;
-  try {
-    storage = window[type];
-    let x = '__storage_test__';
-    storage.setItem(x, x);
-    storage.removeItem(x);
-    return true;
-  } catch (e) {
-    return (
-      e instanceof DOMException &&
-      (
-        e.code === 22 ||
-        e.code === 1014 ||
-        e.name === 'QuotaExceededError' ||
-        e.name === 'NS_ERROR_DOM_QUOTA_REACHED'
-      )(storage && storage.length !== 0)
-    );
-  }
-};
-
-/**
- * checks size of window for sideMenu placement/removes tent
- */
-const handleSideMenuAndTint = (() => {
-  const pageHeader = document.querySelector('#page-header');
-  const pageBody = document.querySelector('#page-body');
-  const menuDropper = document.querySelector('.menu-dropper');
-  const sideMenu = document.querySelector('#side-menu');
-  const todoListsDisplay = document.querySelector('#todo-lists');
-
-  const removeTintForLargeScreens = (() => {
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1000 && !pageBody.classList.contains('tint')) {
-        sideMenu.classList.remove('show-side-menu');
-        todoListsDisplay.classList.remove('tint');
-        pageHeader.classList.remove('tint');
-      }
-    });
-  })();
-
-  /**
-   * when screen size is too small, this adds functionality to show it
-   */
-  const showSideMenu = function () {
-    sideMenu.classList.toggle('show-side-menu');
-    todoListsDisplay.classList.toggle('tint');
-    
-  };
-
-  menuDropper.addEventListener('click', showSideMenu, false);
-})();
-
-/**
- * starts the document with locally stored toDo's in ALL category present
- */
-const autoPopulateThingsToDo = () => {
-  _forms__WEBPACK_IMPORTED_MODULE_1__.toDoForm.rePopulateArray(_forms__WEBPACK_IMPORTED_MODULE_1__.toDoList, localStorage);
-  _forms__WEBPACK_IMPORTED_MODULE_1__.toDoForm.addToDoListItemToThingsToDo(_forms__WEBPACK_IMPORTED_MODULE_1__.toDoList);
-};
-autoPopulateThingsToDo();
-
-/**
- * Starts the document with locally stored projects populated
- * and linked to proper toDo list
- */
-const autoPopulateProjects = () => {
-  if (!localStorage.getItem('projectsArray')) {
-    return;
-  } else {
-    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.fillProjectsArray();
-    for (let i = 0; i < _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.projectsArray.length; i++) {
-      let projectToCreate = _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.projectsArray[i];
-      _forms__WEBPACK_IMPORTED_MODULE_1__.projectForm.createProjectOrganizerDiv(projectToCreate.title);
-    }
-    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.createProjectOrganizers();
-  }
-};
-autoPopulateProjects();
-
-
-
-
-/***/ }),
-
-/***/ "./src/projects.js":
-/*!*************************!*\
-  !*** ./src/projects.js ***!
-  \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "projectInteractions": () => (/* binding */ projectInteractions),
-/* harmony export */   "Project": () => (/* binding */ Project)
-/* harmony export */ });
-/* harmony import */ var _forms_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms.js */ "./src/forms.js");
-/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.js */ "./src/index.js");
-
-
-
-
-class Project {
-  constructor(title, projectContainer) {
-    this.title = title;
-    this.projectContainer = projectContainer;
-  }
-}
-
-const projectInteractions = (() => {
-  // Select DOM elements in project Section of App
-  const currentProjectH1 = document.querySelector('#current-project');
-  const projectsContainerDiv = document.querySelector('#projects');
-  const currentProject = document.querySelector('#current-project');
-  const addButton = document.querySelector('#add-project');
-  const titleInputDiv = document.querySelector('#project-title-input');
-  const editProjectFormTitle = document.querySelector('#project-form-title');
-  let projectList = document.querySelectorAll('.project-name');
-  const projectDeleteButtons = document.querySelectorAll('.fa-trash');
-  const timeLineDivs = document.querySelectorAll('.timeline-div');
-  const allTimeLine = document.querySelector('#all');
-
-  // Creates array for holding all projects
-  let projectsArray = [];
-
-  //Alter background color of project you're currently viewing
-  const showSelectedProject = function (project) {
-    timeLineDivs.forEach((div) => {
-      div.classList.remove('current-list-view');
-    });
-    projectList.forEach((project) => {
-      project.parentElement.classList.remove('current-list-view');
-    });
-
-    project.parentElement.classList.add('current-list-view');
-  };
-
-  /**
-   * Clears side Menu project container before repopulating after projectArray change
-   */
-  const clearProjectContainerDivBeforeRepopulation = function () {
-    projectsContainerDiv.innerHTML = '';
-  };
-
-  /**
-   * When session is opened this fills projectsArray from localMemory
-   * @returns
-   */
-  const fillProjectsArray = function () {
-    if (localStorage.projectsArray) {
-      if (projectsArray.length >= 0) {
-        while (projectsArray.length > 0) {
-          projectsArray.pop();
-        }
-        for (let i = 0; i < JSON.parse(localStorage.projectsArray).length; i++) {
-          projectsArray.push(JSON.parse(localStorage.projectsArray)[i]);
-        }
-      }
-    } else {
-      return;
-    }
-  };
-
-  /**
-   * when changes are made to projectsArray, this re-updates it in localStorage
-   */
-  const addprojectsArrayToLocalStorage = function () {
-    if ((0,_index_js__WEBPACK_IMPORTED_MODULE_1__.storageAvailable)('localStorage')) {
-      if (!localStorage.getItem(projectsArray)) {
-        localStorage.setItem('projectsArray', JSON.stringify(projectsArray));
-      } else {
-        localStorage.removeItem('projectsArray');
-        localStorage.setItem('projectsArray', JSON.stringify(projectsArray));
-      }
-    }
-    fillProjectsArray();
-  };
-
-  /**
-   * Checks to see which project is selected and populates toDos in main page
-   * with toDo's from this project
-   * @param {*} projectObject object containing project list
-   * @param {*} toDoObject object containing key/value pairs of toDo objects
-   */
-  const populateProjectOrganizers = (projectObject, toDoObject) => {
-    for (let toDo in toDoObject) {
-      if (typeof toDoObject[toDo] === 'string' && toDo !== projectsArray) {
-        let currentToDo = JSON.parse(toDoObject[toDo]);
-        if (projectObject.title === currentToDo.project) {
-          projectObject.projectContainer.push(currentToDo);
-        }
-      }
-    }
-  };
-
-  /**
-   * Choose which project will be highlighted, and which project from projectsArray is used
-   * to populate the toDo page section
-   */
-  const chooseProject = function () {
-    currentProject.innerText = '';
-    currentProject.innerText = this.innerText;
-    (0,_forms_js__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
-    for (let i = 0; i < projectList.length; i++) {
-      let currentProject = projectsArray[i];
-      if (currentProject.title === this.innerText) {
-        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.addToDoListItemToThingsToDo(currentProject.projectContainer);
-      }
-    }
-    showSelectedProject(this);
-  };
-
-  /**
-   * Checks to see if there are any projects in projects arrary
-   * And populates the sideMedu projects session with them, as well
-   * as filling projectsArray with project objects
-   */
-  const createProjectOrganizers = () => {
-    projectList = document.querySelectorAll('.project-name');
-
-    if (projectsArray.length > 0) {
-      while (projectsArray.length > 0) {
-        projectsArray.pop();
-      }
-    }
-
-    if (projectList.length > 0) {
-      projectList.forEach((project) => {
-        let projectOrganizer = new Project(project.innerText, []);
-        populateProjectOrganizers(projectOrganizer, localStorage);
-        projectsArray.push(projectOrganizer);
-        project.addEventListener('click', chooseProject, false);
-      });
-    }
-  };
-
-  /**
-   * Changes the title of a projectContainer/ProjectObject and re-renders app
-   */
-  const changeTitle = function () {
-    let titleToChange = editProjectFormTitle.textContent;
-    addButton.innerText = 'Add';
-
-    for (let i = 0; i < projectsArray.length; i++) {
-      if (projectsArray[i].title === titleToChange) {
-        projectsArray[i].title = titleInputDiv.value;
-
-        for (let j = 0; j < projectsArray[i].projectContainer.length; j++) {
-          let currentToDo = projectsArray[i].projectContainer[j];
-          currentToDo.project = titleInputDiv.value;
-          localStorage.removeItem(currentToDo.title);
-          localStorage.setItem(`${currentToDo.title}`,JSON.stringify(currentToDo));
-        }
-      }
-    }
-
-    currentProjectH1.textContent = titleInputDiv.value;
-    addButton.removeEventListener('click', changeTitle);
-    addButton.addEventListener('click', _forms_js__WEBPACK_IMPORTED_MODULE_0__.projectForm.createNewProjectOrganizer, false);
-
-    //Rerender App
-    clearProjectContainerDivBeforeRepopulation();
-    addprojectsArrayToLocalStorage();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateThingsToDo)();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
-    _forms_js__WEBPACK_IMPORTED_MODULE_0__.projectForm.closeProjectForm();
-  };
-
-  /**
-   * Opens up form for altering project title
-   */
-  const showEditProjectTitleForm = function () {
-    let projectOrganizerToEdit = this.parentElement.querySelector(':nth-child(2)').innerText;
-
-    editProjectFormTitle.firstChild.textContent = projectOrganizerToEdit;
-    addButton.innerText = 'Edit Title';
-    titleInputDiv.value = projectOrganizerToEdit;
-
-    //change event listeners
-    addButton.removeEventListener('click', _forms_js__WEBPACK_IMPORTED_MODULE_0__.projectForm.createNewProjectOrganizer);
-    addButton.addEventListener('click', changeTitle, false);
-    _forms_js__WEBPACK_IMPORTED_MODULE_0__.projectForm.openProjectForm();
-  };
-
-  /**
-   * Deletes a project, clears it's toDos from the local storage
-   * Then re-renders app with updated info
-   */
-  const deleteProject = function () {
-    let projectOrganizerToDelete =
-      this.parentElement.querySelector(':nth-child(2)').innerText;
-
-    for (let i = 0; i < projectsArray.length; i++) {
-      if (projectsArray[i].title === projectOrganizerToDelete) {
-        let currentProjectContainer = projectsArray[i].projectContainer;
-        for (let j = 0; j < currentProjectContainer.length; j++) {
-          if (localStorage.getItem(currentProjectContainer[j].title) !== null) {
-            localStorage.removeItem(currentProjectContainer[j].title);
-          }
-        }
-        projectsArray.splice(i, 1);
-      }
-    }
-    clearProjectContainerDivBeforeRepopulation();
-    addprojectsArrayToLocalStorage();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateThingsToDo)();
-    currentProject.innerText = 'All';
-    allTimeLine.classList.add('current-list-view');
-  };
-
-  createProjectOrganizers();
-
-  /**
-   * Adds necessary event listeners
-   */
-  projectList.forEach((project) => {
-    project.addEventListener('click', chooseProject, false);
-  });
-
-  projectDeleteButtons.forEach((button) => {
-    button.addEventListener('click', deleteProject, false);
-  });
-
-  return {
-    createProjectOrganizers,
-    populateProjectOrganizers,
-    projectsArray,
-    addprojectsArrayToLocalStorage,
-    fillProjectsArray,
-    deleteProject,
-    showEditProjectTitleForm,
-    clearProjectContainerDivBeforeRepopulation,
-    showSelectedProject,
-  };
-})();
-
-
-
-
-/***/ }),
-
-/***/ "./src/timeline.js":
-/*!*************************!*\
-  !*** ./src/timeline.js ***!
-  \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms */ "./src/forms.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isThisWeek/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isThisMonth/index.js");
-
-
-
-
-const timelineInteractions = (() => {
-  //DOM creation
-  const currentProject = document.querySelector('#current-project');
-  const timeLineDivs = document.querySelectorAll('.timeline-div');
-  const allTimeLine = document.querySelector('#all');
-  const weekTimeLine = document.querySelector('#week');
-  const monthTimeLine = document.querySelector('#month');
-  const mostImportantTimeLine = document.querySelector('#most-important');
-  const completedTimeLine = document.querySelector('#completed');
-  const projectContainer = document.querySelector('#projects');
-
-  /**
-   * Changes Background of all timeLine Divs to show which is being views
-   * @param {*} timeLine current timeline to view
-   */
-  const showSelectedTimeLine = function (timeLine) {
-    timeLineDivs.forEach((div) => {
-      div.classList.remove('current-list-view');
-    });
-
-    projectContainer.childNodes.forEach((project) => {
-      project.classList.remove('current-list-view');
-    });
-
-    timeLine.classList.add('current-list-view');
-  };
-
-  // All functions for which timeline to view
-  const chooseAllTimeLine = function () {
-    currentProject.innerText = '';
-    currentProject.innerText = this.innerText;
-    _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.addToDoListItemToThingsToDo(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList);
-    showSelectedTimeLine(allTimeLine);
-  };
-
-  const chooseWeekTimeLine = function () {
-    currentProject.innerText = '';
-    currentProject.innerText = this.innerText;
-    (0,_forms__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
-    for (let i = 0; i < _forms__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if ((0,date_fns__WEBPACK_IMPORTED_MODULE_1__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine))) {
-        _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoListItemDiv(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]);
-      }
-    }
-    showSelectedTimeLine(weekTimeLine);
-  };
-
-  const chooseMonthTimeLine = function () {
-    currentProject.innerText = '';
-    currentProject.innerText = this.innerText;
-    (0,_forms__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
-    for (let i = 0; i < _forms__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if ((0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine))) {
-        _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoListItemDiv(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]);
-      }
-    }
-    showSelectedTimeLine(monthTimeLine);
-  };
-
-  const chooseMostImportantTimeLine = function () {
-    currentProject.innerText = '';
-    currentProject.innerText = this.innerText;
-    (0,_forms__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
-    for (let i = 0; i < _forms__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if (_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].priority === 'high') {
-        _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoListItemDiv(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]);
-      }
-    }
-    showSelectedTimeLine(mostImportantTimeLine);
-  };
-
-  const chooseCompletedTimeLine = function () {
-    currentProject.innerText = '';
-    currentProject.innerText = this.innerText;
-    (0,_forms__WEBPACK_IMPORTED_MODULE_0__.clearThingsToDoBeforeRepopulation)();
-    for (let i = 0; i < _forms__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if (_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].complete) {
-        _forms__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoListItemDiv(_forms__WEBPACK_IMPORTED_MODULE_0__.toDoList[i]);
-      }
-    }
-    showSelectedTimeLine(completedTimeLine);
-  };
-
-  
-  // Add all event listeners
-  allTimeLine.addEventListener('click', chooseAllTimeLine.bind(allTimeLine), false);
-  weekTimeLine.addEventListener('click', chooseWeekTimeLine, false);
-  monthTimeLine.addEventListener('click', chooseMonthTimeLine, false);
-  mostImportantTimeLine.addEventListener('click', chooseMostImportantTimeLine, false);
-  completedTimeLine.addEventListener('click', chooseCompletedTimeLine, false);
-})();
-
-
-/***/ }),
-
-/***/ "./src/toDos.js":
-/*!**********************!*\
-  !*** ./src/toDos.js ***!
-  \**********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "toDoInteractions": () => (/* binding */ toDoInteractions)
-/* harmony export */ });
-/* harmony import */ var _forms_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms.js */ "./src/forms.js");
-/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.js */ "./src/index.js");
-/* harmony import */ var _projects_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./projects.js */ "./src/projects.js");
-
-
-
-
-
-
-const toDoInteractions = (() => {
-  // General page DOM selection
-  const pageBody = document.querySelector('#page-body');
-  const pageHeader = document.querySelector('#page-header');
-  let projectList = document.querySelectorAll('.project-name');
-  const currentProject = document.querySelector('#current-project');
-  const allTimeLine = document.querySelector('#all');
-
-  // ToDo Div DOM selection
-  const checkBox = document.querySelectorAll('.checkbox');
-  const editSymbol = document.querySelector('#edit-symbol');
-  const infoSymbol = document.querySelectorAll('.info-symbol');
-
-  // Info-form DOM selection
-  const toDoInfoForm = document.querySelector('#todo-info');
-  const toDoInfoFormClosingButton = document.querySelector(
-    '#info-closing-button'
-  );
-  const titleDiv = document.querySelector('#info-title-input');
-  const notesDiv = document.querySelector('#info-notes-input');
-  const deadLineDiv = document.querySelector('#info-deadline-input');
-  const priorityDiv = document.querySelector('#info-priority-input');
-
-  //Edit-form DOM selection
-  const toDoEditForm = document.querySelector('todo-form');
-  const toDoEditFormLabel = document.querySelector('.task-label');
-  const titleInput = document.querySelector('#title-input');
-  const notesInput = document.querySelector('#notes-input');
-  const deadLineInput = document.querySelector('#deadline-input');
-  const priorityInput = document.querySelector('#priority-input');
-  const addButton = document.querySelector('#add');
-
-  /**
-   * update toDo status as complete, and alter check box to marked
-   */
-  const markToDoAsComplete = function () {
-    let toDoToCheck = this.nextSibling.textContent;
-    
-
-    if (this.classList.contains('fa-square')) {
-      this.classList.remove('fa-square');
-      this.classList.add('fa-square-check');
-      for (let i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-        if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoToCheck) {
-          _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].complete = true;
-          localStorage.removeItem(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title);
-          localStorage.setItem(
-            `${_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title}`,
-            JSON.stringify(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i])
-          );
-        }
-      }
-    } else if (this.classList.contains('fa-square-check')) {
-      this.classList.remove('fa-square-check');
-      this.classList.add('fa-square');
-      for (let i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-        if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoToCheck) {
-          _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].complete = false;
-          localStorage.removeItem(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title);
-          localStorage.setItem(
-            `${_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title}`,
-            JSON.stringify(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i])
-          );
-        }
-      }
-    }
-    
-    // Re-render App
-    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.clearProjectContainerDivBeforeRepopulation();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
-    projectList = document.querySelectorAll('.project-name')
-
-    for (let i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === this.nextSibling.innerText) {
-        let projectToSelect = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].project
-        for (let j = 0; j < projectList.length; j++) {
-          if (projectList[j].firstChild.innerText === projectToSelect && currentProject.innerText === projectToSelect) {
-            var projectOrganizerToSelect = projectList[j].parentElement
-            projectOrganizerToSelect.classList.add('current-list-view')
-          }
-        }
-      }
-    }
-  };
-
-  /**
-   * Alter toDo and repopulate projects, toDoList, and local memory
-   */
-  const editToDoItem = function () {
-    const toDoToEdit = toDoEditFormLabel.firstChild.innerText;
-    
-    for (let i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoToEdit) {
-        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title = titleInput.value;
-        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].notes = notesInput.value;
-        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine = deadLineInput.value;
-        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].priority = priorityInput.value;
-        for (let j = 0; j < localStorage.length; j++) {
-          if (localStorage[toDoToEdit]) {
-            localStorage.removeItem(toDoToEdit);
-            localStorage.setItem(
-              `${_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title}`,
-              JSON.stringify(_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i])
-            );
-          }
-        }
-      }
-    }
-
-    //re-render App
-    _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.closeToDoForm();
-    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.clearProjectContainerDivBeforeRepopulation();
-    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.addprojectsArrayToLocalStorage();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateThingsToDo)();
-    currentProject.innerText = 'All'
-    allTimeLine.classList.add('current-list-view');
-
-    //Change ToDoForm back to normal
-    toDoEditFormLabel.innerHTML = '<h2>Enter Task</h2>';
-    addButton.innerText = 'Add';
-    addButton.removeEventListener('click', editToDoItem, false);
-    addButton.addEventListener('click', _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoItem, false);
-  };
-
-  /**
-   * Opens up form for editing toDo
-   */
-  const openEditToDoForm = function () {
-    _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.openToDoForm();
-    const toDoListItemToCheck = this.parentElement.previousSibling.innerText;
-    toDoEditFormLabel.innerHTML = `<h2>${toDoListItemToCheck}</h2>`;
-
-    for (let i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoListItemToCheck) {
-        titleInput.value = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title;
-        notesInput.value = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].notes;
-        deadLineInput.value = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine;
-        priorityInput.value = _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].priority;
-      }
-    }
-    addButton.innerText = 'Edit';
-    addButton.removeEventListener('click', _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoForm.createToDoItem, false);
-    addButton.addEventListener('click', editToDoItem, false);
-  };
-
-  /**
-   * Opens up form showing toDo info
-   */
-  const checkToDoInfo = function () {
-    const toDoListItemToCheck = this.parentElement.previousSibling.innerText;
-
-    for (let i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoListItemToCheck) {
-        _forms_js__WEBPACK_IMPORTED_MODULE_0__.generalFormFunction.openForm(toDoInfoForm);
-        titleDiv.innerHTML = `<p>${_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title}</p>`;
-        notesDiv.innerHTML = `<p>${_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].notes}</p>`;
-        deadLineDiv.innerHTML = `<p>${_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].deadLine}</p>`;
-        priorityDiv.innerHTML = `<p>${_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].priority}</p>`;
-      }
-    }
-  };
-
-  /**
-   * closes info form
-   */
-  const closeToDoInfoForm = function () {
-    _forms_js__WEBPACK_IMPORTED_MODULE_0__.generalFormFunction.closeForm(
-      toDoInfoForm,
-      titleDiv,
-      notesDiv,
-      deadLineDiv,
-      priorityDiv
-    );
-  };
-
-  /**
-   * Deletes a toDo and re-renders getting rid of it in local storage and projectsArray/toDoList
-   */
-  const deleteToDo = function () {
-    const toDoListItemToDelete = this.parentElement.previousSibling.innerText;
-    for (let i = 0; i < _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.length; i++) {
-      if (_forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList[i].title === toDoListItemToDelete) {
-        _forms_js__WEBPACK_IMPORTED_MODULE_0__.toDoList.splice(i, 1);
-        for (let j = 0; j < localStorage.length; j++) {
-          localStorage.removeItem(toDoListItemToDelete);
-        }
-      }
-    }
-    // re-render App
-    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.clearProjectContainerDivBeforeRepopulation();
-    _projects_js__WEBPACK_IMPORTED_MODULE_2__.projectInteractions.addprojectsArrayToLocalStorage();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateThingsToDo)();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.autoPopulateProjects)();
-    currentProject.innerText = 'All';
-    allTimeLine.classList.add('current-list-view');
-  };
-
-  toDoInfoFormClosingButton.addEventListener('click', closeToDoInfoForm, false);
-
-  return { markToDoAsComplete, checkToDoInfo, openEditToDoForm, deleteToDo };
-})();
-
-
-
 
 /***/ }),
 
