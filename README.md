@@ -8,6 +8,7 @@ Created to be used as a dynamic task manager with access to local storage so use
 
 ## Deployed at:
 https://blain-crawford.github.io/proDockeTivity/
+<br><br><br>
 
 This Project is from the [Odin Project](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/todo-list) curriculum.
 
@@ -20,6 +21,7 @@ This Project is from the [Odin Project](https://www.theodinproject.com/paths/ful
   - Visual Studio Code
   - Git/Github
   - localStorage
+  - babel
 
 ## Third Party code:
   - [date-fns library](https://date-fns.org/docs/Getting-Started)
