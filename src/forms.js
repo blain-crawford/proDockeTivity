@@ -95,7 +95,6 @@ const toDoForm = (() => {
   const cancelButton = document.querySelector('#cancel');
   const toDoEditFormLabel = document.querySelector('.task-label');
   const errorText = document.querySelectorAll('.error');
-
   let selectedProject = null;
 
   /**
@@ -217,6 +216,9 @@ const toDoForm = (() => {
     errorText.forEach((error) => {
       error.innerText = ''
 ;    })
+    toDoInputs.childNodes.forEach((node) => {
+      console.log(node.nodeType);
+    })
   };
 
   /**
@@ -326,11 +328,12 @@ const toDoForm = (() => {
       for(let i = 0; i < inputsArray.length; i++) {
         if(!inputsArray[i].validity.valid) {
           showError(inputsArray[i]);
+          event.preventDefault()
         } else {
           clearError(inputsArray[i]);
+          event.preventDefault()
         }
       }
-      
     } else {
       for (let i = 0; i < inputsArray.length; i++) {
         clearError(inputsArray[i]);
@@ -355,6 +358,7 @@ const toDoForm = (() => {
     closeToDoForm,
     openToDoForm,
     createToDoItem,
+    toDoFormValidation
   };
 })();
 
