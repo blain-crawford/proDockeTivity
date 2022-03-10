@@ -503,6 +503,10 @@ body {
   align-items: center;
 }
 
+#title-input:invalid {
+  background-color: pink;
+}
+
 #notes-div {
   display: flex;
   flex-direction: column;
@@ -520,6 +524,10 @@ body {
   text-align: left;
 }
 
+#notes-input:invalid {
+  background-color: pink;
+}
+
 #deadline-div {
   display: flex;
   flex-direction: column;
@@ -532,6 +540,10 @@ body {
   height: 40px;
 }
 
+#deadline-input:invalid {
+  background-color: pink;
+}
+
 #priority-div {
   display: flex;
   flex-direction: column;
@@ -542,6 +554,10 @@ body {
 
 #priority-input {
   height: 40px;
+}
+
+#priority-input:invalid {
+  background-color: pink;
 }
 
 #form-line {

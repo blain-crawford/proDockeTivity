@@ -75,12 +75,17 @@ const generalFormFunction = (() => {
   return { clearForm, closeForm, openForm };
 })();
 
+const assertFormValidation = (() => {
+
+})();
+
 // Full toDoForm functionality
 const toDoForm = (() => {
   //Selecting DOM elements 
+  const toDoForm = document.querySelector('#todo-form');
+  const toDoInputs = document.querySelector('#todo-inputs');
   const toDoformClosingButton = document.querySelector('#closing-button');
   const addToDoButton = document.querySelector('#add-todo');
-  const toDoForm = document.querySelector('#todo-form');
   const titleInput = document.querySelector('#title-input');
   const notesInput = document.querySelector('#notes-input');
   const deadLineInput = document.querySelector('#deadline-input');
@@ -89,7 +94,23 @@ const toDoForm = (() => {
   const currentProject = document.querySelector('#current-project');
   const cancelButton = document.querySelector('#cancel');
   const toDoEditFormLabel = document.querySelector('.task-label');
+  const errorText = document.querySelectorAll('.error');
+
   let selectedProject = null;
+
+  /**
+   * shows error if form is not fully filled out
+   */
+  const showError = function (fieldWithError) {
+        fieldWithError.nextElementSibling.textContent = 'ALL FIELDS REQUIRED*';
+  }
+
+  /**
+   * clear errors after form submission
+   */
+  const clearError = function (errorToClear) {
+        errorToClear.nextElementSibling.textContent = '';
+  }
 
   /**
    * Takes a toDo object and creates/styles/adds functionality to a toDo Div 
@@ -108,6 +129,7 @@ const toDoForm = (() => {
     const editSymbol = document.createElement('i');
     const infoSymbol = document.createElement('i');
     const trashCan = document.createElement('i');
+    
 
     // style elements
     toDoDiv.classList.add('todo');
@@ -192,6 +214,9 @@ const toDoForm = (() => {
       priorityInput
     );
     toDoAddButton.innerText = 'Add';
+    errorText.forEach((error) => {
+      error.innerText = ''
+;    })
   };
 
   /**
@@ -286,10 +311,40 @@ const toDoForm = (() => {
     }
   };
 
+  /**
+   * check if form is fully filled out before entering
+   */
+  const toDoFormValidation = function (event) {
+    const inputsArray = [titleInput, notesInput, deadLineInput, priorityInput];
+    for (let i = 0; i < inputsArray.length; i++) {
+      inputsArray[i].setAttribute('required', '');
+    }
+    if (!titleInput.validity.valid || 
+      !notesInput.validity.valid ||
+      !deadLineInput.validity.valid ||
+      !priorityInput.validity.valid) {
+      for(let i = 0; i < inputsArray.length; i++) {
+        if(!inputsArray[i].validity.valid) {
+          showError(inputsArray[i]);
+        } else {
+          clearError(inputsArray[i]);
+        }
+      }
+      
+    } else {
+      for (let i = 0; i < inputsArray.length; i++) {
+        clearError(inputsArray[i]);
+      }
+      createToDoItem();
+    }
+  
+    
+  };
+
   //Adding all event listeners
   toDoformClosingButton.addEventListener('click', closeToDoForm, false);
   addToDoButton.addEventListener('click', openToDoForm, false);
-  toDoAddButton.addEventListener('click', createToDoItem, false);
+  toDoAddButton.addEventListener('click', toDoFormValidation, false);
   cancelButton.addEventListener('click', closeToDoForm, false);
 
   return {
