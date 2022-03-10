@@ -82,17 +82,21 @@
         <div class="task-label"><h2 id="todo-form-title">Enter Task</h2></div>
         <div id="closing-button">x</div>
       </div>
+      
       <div id="title-div">
         <label for="title-input">Title</label>
         <textarea id="title-input" type='text' required></textarea>
+        <span class="error"></span>
       </div>
       <div id="notes-div">
         <label for="notes-input">Notes</label>
         <textarea id="notes-input" name="notes-input"></textarea>
+        <span class="error"></span>
       </div>
       <div id="deadline-div">
         <label for="deadline-input">Deadline</label>
         <input id="deadline-input" type='date'></input>
+        <span class="error"></span>
       </div>
       <div id="priority-div">
         <label for="priority-input">Priority</label>
@@ -102,6 +106,7 @@
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
+        <span class="error"></span>
       </div>
       <div id="form-line"></div>
       <div id="form-footer">

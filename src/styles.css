@@ -573,6 +573,11 @@ body {
   cursor: pointer;
 }
 
+.error {
+  color: red;
+  font-size: 15px;
+}
+
 /* Screen for viewing details about a to do */
 #todo-info {
   display: flex;
