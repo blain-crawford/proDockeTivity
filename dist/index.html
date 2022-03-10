@@ -77,13 +77,14 @@
     </div>
   </div>
   <div id="todo-form" class="invisible">
-    <div class="form-topper">
-      <div class="task-label"><h2 id="todo-form-title">Enter Task</h2></div>
-      <div id="closing-button">x</div>
-    </div>
+    <form id="todo-inputs">
+      <div class="form-topper">
+        <div class="task-label"><h2 id="todo-form-title">Enter Task</h2></div>
+        <div id="closing-button">x</div>
+      </div>
       <div id="title-div">
         <label for="title-input">Title</label>
-        <textarea id="title-input" type='text'></textarea>
+        <textarea id="title-input" type='text' required></textarea>
       </div>
       <div id="notes-div">
         <label for="notes-input">Notes</label>
@@ -96,7 +97,7 @@
       <div id="priority-div">
         <label for="priority-input">Priority</label>
         <select id="priority-input">
-          <option>Please Choose One</option>
+          <option value="">Please Choose One</option>
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
@@ -107,7 +108,8 @@
         <div class="form-button" id="add">Add</div>
         <div class="form-button" id="cancel">Cancel</div>
       </div>
-    </div>
+    </form>
+  </div>
   <div id="todo-info" class="invisible">
     <div class="form-topper">
       <div class="task-label"><h2>Info</h2></div>
@@ -132,10 +134,11 @@
       </div>
     </div>
   <div id="project-form" class="invisible">
-    <div class="form-topper">
-      <div class="task-label"><h2 id="project-form-title">Enter Project</h2></div>
-      <div id="project-form-closing-button">x</div>
-    </div>
+    <form id="project-inputs">
+      <div class="form-topper">
+        <div class="task-label"><h2 id="project-form-title">Enter Project</h2></div>
+        <div id="project-form-closing-button">x</div>
+      </div>
       <div id="project-title-div">
         <label for="title-input">Title</label>
         <textarea id="project-title-input" type='text'></textarea>
@@ -145,7 +148,9 @@
         <div class="form-button" id="add-project">Add</div>
         <div class="form-button" id="cancel-project">Cancel</div>
       </div>
-    </div>
+    </form>
+  </div>
+  </form>
   </div>
   <script type="text/javascript" src="main.js"></script>
 </body>
