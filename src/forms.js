@@ -216,9 +216,6 @@ const toDoForm = (() => {
     errorText.forEach((error) => {
       error.innerText = ''
 ;    })
-    toDoInputs.childNodes.forEach((node) => {
-      console.log(node.nodeType);
-    })
   };
 
   /**
